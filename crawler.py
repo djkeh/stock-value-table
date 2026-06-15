@@ -1,6 +1,7 @@
 import os
 import csv
 import json
+import time
 import requests
 from bs4 import BeautifulSoup
 
@@ -27,11 +28,29 @@ def clean_and_format_op(val_str):
     except ValueError:
         return val_str
 
+def get_with_retry(url, headers, timeout=10, max_retries=3, backoff_factor=2):
+    """
+    Performs a GET request with retry logic for connection/timeout issues
+    and transient HTTP errors.
+    """
+    for attempt in range(max_retries):
+        try:
+            resp = requests.get(url, headers=headers, timeout=timeout)
+            if resp.status_code in [500, 502, 503, 504]:
+                raise requests.exceptions.HTTPError(f"Status {resp.status_code}")
+            return resp
+        except (requests.exceptions.RequestException, requests.exceptions.Timeout) as e:
+            if attempt == max_retries - 1:
+                raise e
+            sleep_time = backoff_factor ** attempt
+            print(f"      [Retry] Connection failed ({e}). Retrying in {sleep_time}s... ({attempt + 1}/{max_retries})")
+            time.sleep(sleep_time)
+
 def crawl_stock(gicode, fallback_name=""):
     try:
         # 1. Fetch and Parse Main Page
         main_url = f"https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?pGB=1&gicode={gicode}"
-        resp_main = requests.get(main_url, headers=headers, timeout=10)
+        resp_main = get_with_retry(main_url, headers=headers, timeout=10)
         if resp_main.status_code != 200:
             print(f"[{gicode}] Error fetching main page: {resp_main.status_code}")
             return None
@@ -67,7 +86,7 @@ def crawl_stock(gicode, fallback_name=""):
         # 2. Fetch and Parse Consensus JSON
         # Path: /SVO2/json/data/01_06/01_{gicode}_A_D.json (Annual, Consolidated)
         json_url = f"https://comp.fnguide.com/SVO2/json/data/01_06/01_{gicode}_A_D.json"
-        resp_json = requests.get(json_url, headers=headers, timeout=10)
+        resp_json = get_with_retry(json_url, headers=headers, timeout=10)
         if resp_json.status_code != 200:
             print(f"[{gicode}] Error fetching consensus JSON: {resp_json.status_code}")
             return None
@@ -140,6 +159,8 @@ def main():
                 print(f"Successfully crawled {name}.")
             else:
                 print(f"Failed to crawl {name}.")
+            # Sleep 1 second between requests to respect the server and prevent timeouts/blocking
+            time.sleep(1.0)
     
     # Save output to data/stocks.json
     os.makedirs("data", exist_ok=True)
