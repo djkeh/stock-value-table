@@ -27,6 +27,11 @@
 * **상세 지표 수집:** FnGuide 내부 JSON API(`01_06/01_{gicode}_A_D.json`)를 연계 호출하여 2025~2028년의 PBR, PER, EPS, 영업이익 데이터를 수집합니다.
 * **데이터 저장:** 수집된 원본 수치 데이터를 정제(영업이익은 정수 반올림 가공)한 뒤 `data/stocks.json` 파일에 저장합니다.
 
+**[NEW] [requirements.txt](file:///Users/uno/Documents/github/stock-value-table/requirements.txt)**
+
+* **패키지 명시:** `requests`, `beautifulsoup4`, `lxml` 등 프로젝트 구동에 필요한 파이썬 라이브러리 목록을 명시하여 GitHub Actions의 파이썬 캐시(`cache: 'pip'`) 매칭 및 패키지 설치에 사용합니다.
+
+
 ### 프런트엔드 (웹 클라이언트)
 
 **[NEW] [index.html](file:///Users/uno/Documents/github/stock-value-table/index.html)**
