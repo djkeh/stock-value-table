@@ -178,14 +178,47 @@ def write_github_summary(successful_count, failures):
     except Exception as e:
         print(f"Error writing to GITHUB_STEP_SUMMARY: {e}")
 
+def load_existing_stocks(filepath="data/stocks.json"):
+    if os.path.exists(filepath):
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                return {item["gicode"]: item for item in data if "gicode" in item}
+        except Exception as e:
+            print(f"Warning: Failed to load existing stocks from {filepath}: {e}")
+            
+    # If local file is not found (like in a clean GitHub Actions runner),
+    # attempt to fetch the last deployed data from the gh-pages branch.
+    repo = os.environ.get('GITHUB_REPOSITORY')
+    if repo:
+        remote_url = f"https://raw.githubusercontent.com/{repo}/gh-pages/data/stocks.json"
+        print(f"Attempting to fetch previous stocks.json from: {remote_url}")
+        try:
+            resp = requests.get(remote_url, timeout=10)
+            if resp.status_code == 200:
+                data = resp.json()
+                print("Successfully fetched previous stocks data from gh-pages branch.")
+                return {item["gicode"]: item for item in data if "gicode" in item}
+            else:
+                print(f"Notice: Could not fetch remote stocks.json (HTTP {resp.status_code})")
+        except Exception as e:
+            print(f"Warning: Failed to fetch remote stocks.json: {e}")
+            
+    return {}
+
 def main():
     csv_path = "target-gicodes.csv"
     if not os.path.exists(csv_path):
         print(f"Error: {csv_path} not found.")
         return
         
+    stocks_path = "data/stocks.json"
+    existing_stocks = load_existing_stocks(stocks_path)
+    
     stocks_data = []
     failures = []
+    successful_crawl_count = 0
+    
     with open(csv_path, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
         header = next(reader, None)  # Skip header
@@ -197,6 +230,7 @@ def main():
             stock_info, error = crawl_stock(gicode, fallback_name=name)
             if stock_info:
                 stocks_data.append(stock_info)
+                successful_crawl_count += 1
                 print(f"Successfully crawled {name}.")
             else:
                 failures.append({
@@ -204,18 +238,23 @@ def main():
                     "gicode": gicode,
                     "error": error
                 })
-                print(f"Failed to crawl {name}: {error}")
+                # If crawling fails, try to preserve existing data for this stock
+                if gicode in existing_stocks:
+                    stocks_data.append(existing_stocks[gicode])
+                    print(f"Failed to crawl {name}: {error}. Retained existing cached data.")
+                else:
+                    print(f"Failed to crawl {name}: {error}. No existing cached data available.")
             # Sleep 1 second between requests to respect the server and prevent timeouts/blocking
             time.sleep(1.0)
     
     # Save output to data/stocks.json
     os.makedirs("data", exist_ok=True)
-    with open("data/stocks.json", "w", encoding="utf-8") as f:
+    with open(stocks_path, "w", encoding="utf-8") as f:
         json.dump(stocks_data, f, ensure_ascii=False, indent=2)
     print("All crawl data written to data/stocks.json.")
 
     # Write GitHub Actions Job Summary
-    write_github_summary(len(stocks_data), failures)
+    write_github_summary(successful_crawl_count, failures)
 
 if __name__ == '__main__':
     main()
