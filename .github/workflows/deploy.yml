@@ -1,0 +1,49 @@
+name: Crawl and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # 4:30 PM KST on weekdays (Monday to Friday)
+    # KST is UTC+9, so 16:30 KST - 9 hours = 07:30 UTC
+    - cron: '30 7 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 lxml
+
+      - name: Run Crawler
+        run: |
+          python crawler.py
+
+      - name: Prepare Build Directory
+        run: |
+          mkdir -p build/data
+          cp index.html index.css app.js target-gicodes.csv build/
+          cp data/stocks.json build/data/
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
+          branch: gh-pages
+          clean: true
