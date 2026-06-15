@@ -60,6 +60,7 @@
 **[NEW] [.github/workflows/deploy.yml](file:///Users/uno/Documents/github/stock-value-table/.github/workflows/deploy.yml)**
 
 * **실행 트리거:** 매 평일 오후 4시 30분 KST (cron: `30 7 * * 1-5`) 및 `main` 브랜치에 코드가 push될 때 구동되는 GitHub Actions 워크플로 파일입니다.
+* **Node.js 24 환경 대응:** 2026년 기준 깃헙 액션의 Node.js 20 지원이 종료(Deprecation)됨에 따라, `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` 환경변수를 설정하여 모든 자바스크립트 기반 액션들이 안정적인 Node.js 24 환경 위에서 실행되도록 구성합니다.
 * **의존성 설치:** 파이썬 가상환경을 구축하고 `requests`, `beautifulsoup4`, `lxml` 패키지를 설치합니다.
 * **수집 태스크:** `crawler.py` 스크립트를 구동하여 최신 데이터를 수집해 `data/stocks.json`을 새로 생성/갱신합니다.
 * **자동 배포:** 수집된 데이터와 정적 파일(`index.html`, `index.css`, `app.js`)들을 결합하여 GitHub Pages(`gh-pages` 브랜치)로 자동 빌드 및 배포합니다.
