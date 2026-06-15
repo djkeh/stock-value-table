@@ -264,3 +264,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/venv,macos,python,windows,visualstudiocode
+
+# Ignore stock crawl outputs generated locally
+data/stocks.json
