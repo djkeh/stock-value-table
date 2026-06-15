@@ -53,7 +53,7 @@ def crawl_stock(gicode, fallback_name=""):
         resp_main = get_with_retry(main_url, headers=headers, timeout=10)
         if resp_main.status_code != 200:
             print(f"[{gicode}] Error fetching main page: {resp_main.status_code}")
-            return None
+            return None, f"Error fetching main page: HTTP {resp_main.status_code}"
         
         soup_main = BeautifulSoup(resp_main.content, 'lxml')
         
@@ -89,7 +89,7 @@ def crawl_stock(gicode, fallback_name=""):
         resp_json = get_with_retry(json_url, headers=headers, timeout=10)
         if resp_json.status_code != 200:
             print(f"[{gicode}] Error fetching consensus JSON: {resp_json.status_code}")
-            return None
+            return None, f"Error fetching consensus JSON: HTTP {resp_json.status_code}"
             
         resp_json.encoding = 'utf-8-sig'
         jsondata = resp_json.json()
@@ -133,10 +133,50 @@ def crawl_stock(gicode, fallback_name=""):
             "PER": per_list,
             "EPS": eps_list,
             "영업이익": op_list
-        }
+        }, None
     except Exception as e:
         print(f"Error crawling {gicode}: {e}")
-        return None
+        return None, str(e)
+
+def write_github_summary(successful_count, failures):
+    summary_file = os.environ.get('GITHUB_STEP_SUMMARY')
+    if not summary_file:
+        return
+    
+    total = successful_count + len(failures)
+    
+    lines = []
+    lines.append("# 📈 주식 정보 크롤링 리포트 (Stock Crawl Report)")
+    lines.append("")
+    
+    if failures:
+        lines.append("> [!WARNING]")
+        lines.append(f"> **일부 종목 수집 중 에러가 발생했습니다.** ({len(failures)}개 종목 실패)")
+        lines.append("")
+        lines.append("### 📊 수집 현황 (Crawl Status)")
+        lines.append(f"- **전체 종목**: {total}개")
+        lines.append(f"- **성공**: {successful_count}개")
+        lines.append(f"- **실패**: {len(failures)}개")
+        lines.append("")
+        lines.append("### ❌ 실패 상세 정보 (Failure Details)")
+        lines.append("| 종목명 | 종목코드 | 에러 원인 |")
+        lines.append("| :--- | :--- | :--- |")
+        for f in failures:
+            lines.append(f"| {f['name']} | `{f['gicode']}` | {f['error']} |")
+    else:
+        lines.append("> [!NOTE]")
+        lines.append("> **모든 종목이 성공적으로 수집되었습니다.**")
+        lines.append("")
+        lines.append("### 📊 수집 현황 (Crawl Status)")
+        lines.append(f"- **전체 종목**: {total}개")
+        lines.append(f"- **성공**: {successful_count}개")
+        lines.append(f"- **실패**: {len(failures)}개")
+        
+    try:
+        with open(summary_file, 'a', encoding='utf-8') as sf:
+            sf.write("\n".join(lines) + "\n")
+    except Exception as e:
+        print(f"Error writing to GITHUB_STEP_SUMMARY: {e}")
 
 def main():
     csv_path = "target-gicodes.csv"
@@ -145,6 +185,7 @@ def main():
         return
         
     stocks_data = []
+    failures = []
     with open(csv_path, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
         header = next(reader, None)  # Skip header
@@ -153,12 +194,17 @@ def main():
                 continue
             name, gicode = row[0].strip(), row[1].strip()
             print(f"Crawling {name} ({gicode})...")
-            stock_info = crawl_stock(gicode, fallback_name=name)
+            stock_info, error = crawl_stock(gicode, fallback_name=name)
             if stock_info:
                 stocks_data.append(stock_info)
                 print(f"Successfully crawled {name}.")
             else:
-                print(f"Failed to crawl {name}.")
+                failures.append({
+                    "name": name,
+                    "gicode": gicode,
+                    "error": error
+                })
+                print(f"Failed to crawl {name}: {error}")
             # Sleep 1 second between requests to respect the server and prevent timeouts/blocking
             time.sleep(1.0)
     
@@ -167,6 +213,9 @@ def main():
     with open("data/stocks.json", "w", encoding="utf-8") as f:
         json.dump(stocks_data, f, ensure_ascii=False, indent=2)
     print("All crawl data written to data/stocks.json.")
+
+    # Write GitHub Actions Job Summary
+    write_github_summary(len(stocks_data), failures)
 
 if __name__ == '__main__':
     main()
