@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상장주식 재무정보 대시보드</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="index.css">
+  
+  <!-- Anti-FOUC (Flash of Unstyled Content) Theme Selector Script -->
+  <meta name="color-scheme" content="light dark">
+  <script>
+    {
+      const savedTheme = localStorage.getItem("color-scheme");
+      if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      } else {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <div class="brand">
+        <h1>상장주식 재무정보 대시보드</h1>
+        <p class="subtitle">FnGuide 크롤링 기반 주요 시세 및 4개년 컨센서스 재무 지표</p>
+      </div>
+      
+      <!-- Theme Switch Button -->
+      <div class="theme-switch" id="theme-toggle" role="button" aria-label="화면 테마 토글" tabindex="0">
+        <!-- Sun icon (Light) -->
+        <svg viewBox="0 0 24 24">
+          <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.02.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41zm-12.37 12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41z"/>
+        </svg>
+        <div class="toggle-dot"></div>
+        <!-- Moon icon (Dark) -->
+        <svg viewBox="0 0 24 24">
+          <path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.7 3.3-8.8 8-9.8.7-.2 1.3.3 1.3 1 0 .4-.2.8-.6.9-3.7 1.3-6.2 4.9-6.2 8.9 0 4.4 3.6 8 8 8 4 0 7.6-2.5 8.9-6.2.2-.4.6-.6.9-.6.7 0 1.2.6 1 1.3-.9 4.7-5 8-9.9 8z"/>
+        </svg>
+      </div>
+    </header>
+
+    <!-- Table Card -->
+    <main class="table-card">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col" class="sortable" id="th-name" title="종목명을 기준으로 정렬합니다">
+                종목명 <span class="sort-icon" id="sort-icon-name">▼</span>
+              </th>
+              <th scope="col">현재가 (원)</th>
+              <th scope="col">시가총액 (억원)</th>
+              <th scope="col">2026(E) PER (배)</th>
+              <th scope="col">2026(E) PBR (배)</th>
+            </tr>
+          </thead>
+          <tbody id="stocks-tbody">
+            <!-- Loaded dynamically from app.js -->
+            <tr id="loading-row">
+              <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 3rem;">
+                데이터를 로딩 중입니다...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
