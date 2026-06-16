@@ -393,6 +393,7 @@ def test_write_github_summary_io_exception(tmp_path):
             write_github_summary(5, [])
 
 
+@patch.dict(os.environ, {}, clear=True)
 def test_load_existing_stocks_parse_exception(tmp_path):
     f = tmp_path / "corrupted.json"
     f.write_text("invalid json contents", encoding="utf-8")
