@@ -7,6 +7,108 @@ document.addEventListener("DOMContentLoaded", () => {
   const tablesContainer = document.getElementById("tables-container");
   const themeToggle = document.getElementById("theme-toggle");
 
+  // Tooltip Logic
+  const tooltip = document.getElementById("disparity-tooltip");
+  let activeTrigger = null;
+  let hideTimeoutId = null;
+  let fadeOutTimeoutId = null;
+
+  const showTooltip = (trigger) => {
+    if (hideTimeoutId) {
+      clearTimeout(hideTimeoutId);
+      hideTimeoutId = null;
+    }
+    if (fadeOutTimeoutId) {
+      clearTimeout(fadeOutTimeoutId);
+      fadeOutTimeoutId = null;
+    }
+    activeTrigger = trigger;
+    
+    if (tooltip) {
+      tooltip.style.display = "block";
+      // Force a reflow
+      void tooltip.offsetHeight;
+      tooltip.classList.add("visible");
+      tooltip.setAttribute("aria-hidden", "false");
+      
+      const rect = trigger.getBoundingClientRect();
+      const tooltipWidth = tooltip.offsetWidth;
+      const tooltipHeight = tooltip.offsetHeight;
+      
+      // Calculate centered coordinates
+      let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+      let top = rect.top - tooltipHeight - 8; // 8px gap
+      
+      // Boundary check
+      if (left < 8) {
+        left = 8;
+      } else if (left + tooltipWidth > window.innerWidth - 8) {
+        left = window.innerWidth - tooltipWidth - 8;
+      }
+      
+      if (top < 8) {
+        // Show below the trigger if it overflows top of screen
+        top = rect.bottom + 8;
+      }
+      
+      tooltip.style.left = `${left + window.scrollX}px`;
+      tooltip.style.top = `${top + window.scrollY}px`;
+    }
+  };
+
+  const scheduleHide = () => {
+    if (hideTimeoutId) clearTimeout(hideTimeoutId);
+    hideTimeoutId = setTimeout(() => {
+      if (tooltip) {
+        tooltip.classList.remove("visible");
+        tooltip.setAttribute("aria-hidden", "true");
+        
+        if (fadeOutTimeoutId) clearTimeout(fadeOutTimeoutId);
+        fadeOutTimeoutId = setTimeout(() => {
+          if (!tooltip.classList.contains("visible")) {
+            tooltip.style.display = "none";
+          }
+        }, 150); // Matches CSS transition duration
+      }
+      activeTrigger = null;
+    }, 150); // 150ms hover delay
+  };
+
+  const cancelHide = () => {
+    if (hideTimeoutId) {
+      clearTimeout(hideTimeoutId);
+      hideTimeoutId = null;
+    }
+    if (fadeOutTimeoutId) {
+      clearTimeout(fadeOutTimeoutId);
+      fadeOutTimeoutId = null;
+    }
+  };
+
+  // Add listeners to tooltip itself to allow hovering over its content
+  if (tooltip) {
+    tooltip.addEventListener("mouseenter", () => {
+      cancelHide();
+      tooltip.classList.add("visible");
+      tooltip.setAttribute("aria-hidden", "false");
+    });
+    tooltip.addEventListener("mouseleave", scheduleHide);
+  }
+
+  // Global escape key to dismiss tooltip
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && tooltip && (tooltip.classList.contains("visible") || tooltip.style.display === "block")) {
+      tooltip.classList.remove("visible");
+      tooltip.setAttribute("aria-hidden", "true");
+      if (hideTimeoutId) clearTimeout(hideTimeoutId);
+      if (fadeOutTimeoutId) clearTimeout(fadeOutTimeoutId);
+      fadeOutTimeoutId = setTimeout(() => {
+        tooltip.style.display = "none";
+      }, 150);
+      activeTrigger = null;
+    }
+  });
+
   // Helper: check if a value string is negative
   const isNegative = (valStr) => {
     const clean = valStr.trim();
@@ -73,7 +175,14 @@ document.addEventListener("DOMContentLoaded", () => {
             </th>
             <th scope="col">현재가 (원)</th>
             <th scope="col">시가총액 (억원)</th>
-            <th scope="col">괴리율 (%)</th>
+            <th scope="col" class="th-disparity">
+              괴리율 (%)
+              <button type="button" class="tooltip-trigger" aria-label="괴리율 계산 공식 및 의미 설명" aria-describedby="disparity-tooltip">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
+                </svg>
+              </button>
+            </th>
             <th scope="col">2026(E) PER (배)</th>
             <th scope="col">2026(E) PBR (배)</th>
           </tr>
@@ -208,6 +317,18 @@ document.addEventListener("DOMContentLoaded", () => {
       wrapperEl.appendChild(tableEl);
       cardEl.appendChild(wrapperEl);
       tablesContainer.appendChild(cardEl);
+    });
+
+    // Setup tooltip triggers
+    const triggers = tablesContainer.querySelectorAll(".tooltip-trigger");
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("mouseenter", () => showTooltip(trigger));
+      trigger.addEventListener("mouseleave", () => scheduleHide());
+      trigger.addEventListener("focus", () => showTooltip(trigger));
+      trigger.addEventListener("blur", () => scheduleHide());
+      trigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
     });
   };
 
