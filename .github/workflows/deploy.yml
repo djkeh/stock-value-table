@@ -75,6 +75,10 @@ jobs:
           fi
           rm -rf gh-pages-temp
 
+      - name: Recalculate derived metrics in stocks.json
+        run: |
+          python recalculate.py build/data/stocks.json
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

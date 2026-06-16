@@ -29,45 +29,6 @@ def clean_and_format_op(val_str):
     except ValueError:
         return val_str
 
-def calculate_disparity_rate(market_cap_str, op_list):
-    """
-    Calculates the disparity rate between target market cap and current market cap.
-    Target Market Cap = Most future observable operating profit * 10
-    Disparity Rate (%) = (Target Market Cap - Market Cap) / Market Cap * 100
-    Returns a string rounded to 1 decimal place (e.g. "135.0") or "-" if unavailable.
-    """
-    if not market_cap_str or not op_list:
-        return "-"
-    
-    mcap_clean = market_cap_str.replace(",", "").strip()
-    if mcap_clean in ["", "-", "N/A"]:
-        return "-"
-    try:
-        mcap_val = float(mcap_clean)
-        if mcap_val <= 0:
-            return "-"
-    except ValueError:
-        return "-"
-    
-    # Find the most future observable operating profit (reversed search)
-    target_op_str = None
-    for op in reversed(op_list):
-        if op and op.strip() not in ["", "-", "N/A"]:
-            target_op_str = op.strip()
-            break
-            
-    if not target_op_str:
-        return "-"
-        
-    try:
-        op_clean = target_op_str.replace(",", "")
-        op_val = float(op_clean)
-        target_mcap = op_val * 10
-        rate = (target_mcap - mcap_val) / mcap_val * 100
-        return f"{rate:.1f}"
-    except ValueError:
-        return "-"
-
 def get_with_retry(session, url, headers, timeout=5, max_retries=3, backoff_factor=2):
     """
     Performs a GET request with retry logic for connection/timeout issues
@@ -163,13 +124,11 @@ def crawl_stock(session, gicode, fallback_name=""):
         eps_list = [v if v != "" else "-" for v in eps_list]
         op_list = [v if v != "" else "-" for v in op_list]
         
-        disparity_rate = calculate_disparity_rate(market_cap, op_list)
         return {
             "gicode": gicode,
             "name": gi_name,
             "current_price": current_price,
             "market_cap": market_cap,
-            "disparity_rate": disparity_rate,
             "years": years,
             "PBR": pbr_list,
             "PER": per_list,
@@ -286,7 +245,6 @@ def main():
                     if gicode in existing_stocks:
                         saved_info = existing_stocks[gicode]
                         saved_info["category"] = category
-                        saved_info.setdefault("disparity_rate", "-")
                         stocks_data.append(saved_info)
                         print(f"Failed to crawl {name}: {error}. Retained existing cached data.")
                     else:
@@ -294,6 +252,10 @@ def main():
                 # Sleep 2~3 seconds randomly between requests to respect the server and prevent timeouts/blocking
                 time.sleep(random.uniform(2.0, 3.0))
     
+    # Recalculate derived metrics (like disparity_rate)
+    from recalculate import recalculate_data
+    recalculate_data(stocks_data)
+
     # Save output to data/stocks.json
     os.makedirs("data", exist_ok=True)
     with open(stocks_path, "w", encoding="utf-8") as f:
