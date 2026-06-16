@@ -223,12 +223,13 @@ def main():
         reader = csv.reader(f)
         header = next(reader, None)  # Skip header
         for row in reader:
-            if not row or len(row) < 2:
+            if not row or len(row) < 3:
                 continue
-            name, gicode = row[0].strip(), row[1].strip()
-            print(f"Crawling {name} ({gicode})...")
+            category, name, gicode = row[0].strip(), row[1].strip(), row[2].strip()
+            print(f"Crawling {name} ({gicode}) in category {category}...")
             stock_info, error = crawl_stock(gicode, fallback_name=name)
             if stock_info:
+                stock_info["category"] = category
                 stocks_data.append(stock_info)
                 successful_crawl_count += 1
                 print(f"Successfully crawled {name}.")
@@ -240,7 +241,9 @@ def main():
                 })
                 # If crawling fails, try to preserve existing data for this stock
                 if gicode in existing_stocks:
-                    stocks_data.append(existing_stocks[gicode])
+                    saved_info = existing_stocks[gicode]
+                    saved_info["category"] = category
+                    stocks_data.append(saved_info)
                     print(f"Failed to crawl {name}: {error}. Retained existing cached data.")
                 else:
                     print(f"Failed to crawl {name}: {error}. No existing cached data available.")

@@ -48,30 +48,10 @@
       </div>
     </header>
 
-    <!-- Table Card -->
-    <main class="table-card">
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col" class="sortable" id="th-name" title="종목명을 기준으로 정렬합니다">
-                종목명 <span class="sort-icon" id="sort-icon-name">▼</span>
-              </th>
-              <th scope="col">현재가 (원)</th>
-              <th scope="col">시가총액 (억원)</th>
-              <th scope="col">2026(E) PER (배)</th>
-              <th scope="col">2026(E) PBR (배)</th>
-            </tr>
-          </thead>
-          <tbody id="stocks-tbody">
-            <!-- Loaded dynamically from app.js -->
-            <tr id="loading-row">
-              <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 3rem;">
-                데이터를 로딩 중입니다...
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- Tables Container (Will be filled dynamically by app.js) -->
+    <main class="tables-container" id="tables-container">
+      <div id="loading-message" style="text-align: center; color: var(--text-secondary); padding: 3rem; background: var(--container-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--container-border); border-radius: 1rem;">
+        데이터를 로딩 중입니다...
       </div>
     </main>
   </div>
