@@ -230,23 +230,129 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Theme Toggler logic
-  const setTheme = (theme) => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("color-scheme", theme);
+  const systemThemeCheckbox = document.getElementById("system-theme-checkbox");
+  let autoThemeTimeoutId = null;
+
+  const updateTheme = (theme) => {
+    const currentTheme = document.documentElement.getAttribute("data-theme");
+    if (currentTheme !== theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
   };
 
+  const updateAutoTheme = () => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    
+    // 밤 시간: 20시 ~ 다음날 07시 (오후 8시 ~ 오전 7시)
+    const isNight = currentHour >= 20 || currentHour < 7;
+    const targetTheme = isNight ? "dark" : "light";
+    updateTheme(targetTheme);
+
+    // 다음 전환 시간 계산
+    let nextTransition = new Date(now);
+    if (currentHour >= 7 && currentHour < 20) {
+      // 낮 시간대 -> 다음 전환은 오늘 오후 8시
+      nextTransition.setHours(20, 0, 0, 0);
+    } else {
+      // 밤 시간대 -> 다음 전환은 오전 7시
+      if (currentHour >= 20) {
+        // 이미 오늘 오후 8시를 넘었으므로 다음 오전 7시는 내일
+        nextTransition.setDate(now.getDate() + 1);
+      }
+      nextTransition.setHours(7, 0, 0, 0);
+    }
+
+    const msUntilTransition = nextTransition.getTime() - now.getTime();
+
+    // 기존 타이머 취소 후 재등록
+    if (autoThemeTimeoutId) {
+      clearTimeout(autoThemeTimeoutId);
+    }
+
+    // 500ms 여유를 두어 정확한 시점 전환 보장
+    autoThemeTimeoutId = setTimeout(() => {
+      updateAutoTheme();
+    }, msUntilTransition + 500);
+  };
+
+  const setManualTheme = (theme) => {
+    // 수동 제어 시 자동 전환 타이머는 완전히 제거
+    if (autoThemeTimeoutId) {
+      clearTimeout(autoThemeTimeoutId);
+      autoThemeTimeoutId = null;
+    }
+    updateTheme(theme);
+    localStorage.setItem("manual-theme", theme);
+  };
+
+  const handleSystemThemeCheckboxChange = () => {
+    const isChecked = systemThemeCheckbox.checked;
+    localStorage.setItem("system-theme-enabled", isChecked ? "true" : "false");
+
+    if (isChecked) {
+      themeToggle.classList.add("disabled");
+      updateAutoTheme();
+    } else {
+      themeToggle.classList.remove("disabled");
+      if (autoThemeTimeoutId) {
+        clearTimeout(autoThemeTimeoutId);
+        autoThemeTimeoutId = null;
+      }
+      // 체크를 해제할 때 현재 테마 상태를 수동 테마로 고정
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+      localStorage.setItem("manual-theme", currentTheme);
+    }
+  };
+
+  // 탭 재진입/포커스 또는 절전모드 해제 시 시간 동기화
+  const handleVisibilityOrFocus = () => {
+    const isChecked = systemThemeCheckbox.checked;
+    if (isChecked && document.visibilityState === "visible") {
+      updateAutoTheme();
+    }
+  };
+
+  // 초기 상태 로드
+  const initTheme = () => {
+    const systemThemeEnabled = localStorage.getItem("system-theme-enabled") !== "false";
+    systemThemeCheckbox.checked = systemThemeEnabled;
+
+    if (systemThemeEnabled) {
+      themeToggle.classList.add("disabled");
+      updateAutoTheme();
+    } else {
+      themeToggle.classList.remove("disabled");
+      const savedManualTheme = localStorage.getItem("manual-theme") || "light";
+      setManualTheme(savedManualTheme);
+    }
+  };
+
+  // Event Listeners
+  systemThemeCheckbox.addEventListener("change", handleSystemThemeCheckboxChange);
+
   themeToggle.addEventListener("click", () => {
-    const currentTheme = document.documentElement.getAttribute("data-theme");
+    // System Auto가 켜져 있으면 토글 클릭 무반응
+    if (systemThemeCheckbox.checked) return;
+
+    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
     const newTheme = currentTheme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
+    setManualTheme(newTheme);
   });
 
   themeToggle.addEventListener("keydown", (e) => {
+    if (systemThemeCheckbox.checked) return;
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       themeToggle.click();
     }
   });
+
+  document.addEventListener("visibilitychange", handleVisibilityOrFocus);
+  window.addEventListener("focus", handleVisibilityOrFocus);
+
+  // Initialize Theme Settings
+  initTheme();
 
   // Load Data
   fetch("data/stocks.json")
