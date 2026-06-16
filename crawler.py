@@ -2,6 +2,7 @@ import os
 import csv
 import json
 import time
+import random
 import requests
 from bs4 import BeautifulSoup
 
@@ -28,14 +29,14 @@ def clean_and_format_op(val_str):
     except ValueError:
         return val_str
 
-def get_with_retry(url, headers, timeout=10, max_retries=3, backoff_factor=2):
+def get_with_retry(session, url, headers, timeout=5, max_retries=3, backoff_factor=2):
     """
     Performs a GET request with retry logic for connection/timeout issues
-    and transient HTTP errors.
+    and transient HTTP errors using a requests.Session.
     """
     for attempt in range(max_retries):
         try:
-            resp = requests.get(url, headers=headers, timeout=timeout)
+            resp = session.get(url, headers=headers, timeout=timeout)
             if resp.status_code in [500, 502, 503, 504]:
                 raise requests.exceptions.HTTPError(f"Status {resp.status_code}")
             return resp
@@ -46,11 +47,11 @@ def get_with_retry(url, headers, timeout=10, max_retries=3, backoff_factor=2):
             print(f"      [Retry] Connection failed ({e}). Retrying in {sleep_time}s... ({attempt + 1}/{max_retries})")
             time.sleep(sleep_time)
 
-def crawl_stock(gicode, fallback_name=""):
+def crawl_stock(session, gicode, fallback_name=""):
     try:
         # 1. Fetch and Parse Main Page
         main_url = f"https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?pGB=1&gicode={gicode}"
-        resp_main = get_with_retry(main_url, headers=headers, timeout=10)
+        resp_main = get_with_retry(session, main_url, headers=headers, timeout=5)
         if resp_main.status_code != 200:
             print(f"[{gicode}] Error fetching main page: {resp_main.status_code}")
             return None, f"Error fetching main page: HTTP {resp_main.status_code}"
@@ -82,11 +83,11 @@ def crawl_stock(gicode, fallback_name=""):
                 if cells[0] == "종가/ 전일대비/ 수익률":
                     val = cells[1]
                     current_price = val.split('/')[0].strip()
-
+ 
         # 2. Fetch and Parse Consensus JSON
         # Path: /SVO2/json/data/01_06/01_{gicode}_A_D.json (Annual, Consolidated)
         json_url = f"https://comp.fnguide.com/SVO2/json/data/01_06/01_{gicode}_A_D.json"
-        resp_json = get_with_retry(json_url, headers=headers, timeout=10)
+        resp_json = get_with_retry(session, json_url, headers=headers, timeout=5)
         if resp_json.status_code != 200:
             print(f"[{gicode}] Error fetching consensus JSON: {resp_json.status_code}")
             return None, f"Error fetching consensus JSON: HTTP {resp_json.status_code}"
@@ -194,7 +195,7 @@ def load_existing_stocks(filepath="data/stocks.json"):
         remote_url = f"https://raw.githubusercontent.com/{repo}/gh-pages/data/stocks.json"
         print(f"Attempting to fetch previous stocks.json from: {remote_url}")
         try:
-            resp = requests.get(remote_url, timeout=10)
+            resp = requests.get(remote_url, timeout=5)
             if resp.status_code == 200:
                 data = resp.json()
                 print("Successfully fetched previous stocks data from gh-pages branch.")
@@ -219,36 +220,37 @@ def main():
     failures = []
     successful_crawl_count = 0
     
-    with open(csv_path, "r", encoding="utf-8") as f:
-        reader = csv.reader(f)
-        header = next(reader, None)  # Skip header
-        for row in reader:
-            if not row or len(row) < 3:
-                continue
-            category, name, gicode = row[0].strip(), row[1].strip(), row[2].strip()
-            print(f"Crawling {name} ({gicode}) in category {category}...")
-            stock_info, error = crawl_stock(gicode, fallback_name=name)
-            if stock_info:
-                stock_info["category"] = category
-                stocks_data.append(stock_info)
-                successful_crawl_count += 1
-                print(f"Successfully crawled {name}.")
-            else:
-                failures.append({
-                    "name": name,
-                    "gicode": gicode,
-                    "error": error
-                })
-                # If crawling fails, try to preserve existing data for this stock
-                if gicode in existing_stocks:
-                    saved_info = existing_stocks[gicode]
-                    saved_info["category"] = category
-                    stocks_data.append(saved_info)
-                    print(f"Failed to crawl {name}: {error}. Retained existing cached data.")
+    with requests.Session() as session:
+        with open(csv_path, "r", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            header = next(reader, None)  # Skip header
+            for row in reader:
+                if not row or len(row) < 3:
+                    continue
+                category, name, gicode = row[0].strip(), row[1].strip(), row[2].strip()
+                print(f"Crawling {name} ({gicode}) in category {category}...")
+                stock_info, error = crawl_stock(session, gicode, fallback_name=name)
+                if stock_info:
+                    stock_info["category"] = category
+                    stocks_data.append(stock_info)
+                    successful_crawl_count += 1
+                    print(f"Successfully crawled {name}.")
                 else:
-                    print(f"Failed to crawl {name}: {error}. No existing cached data available.")
-            # Sleep 1 second between requests to respect the server and prevent timeouts/blocking
-            time.sleep(1.0)
+                    failures.append({
+                        "name": name,
+                        "gicode": gicode,
+                        "error": error
+                    })
+                    # If crawling fails, try to preserve existing data for this stock
+                    if gicode in existing_stocks:
+                        saved_info = existing_stocks[gicode]
+                        saved_info["category"] = category
+                        stocks_data.append(saved_info)
+                        print(f"Failed to crawl {name}: {error}. Retained existing cached data.")
+                    else:
+                        print(f"Failed to crawl {name}: {error}. No existing cached data available.")
+                # Sleep 2~3 seconds randomly between requests to respect the server and prevent timeouts/blocking
+                time.sleep(random.uniform(2.0, 3.0))
     
     # Save output to data/stocks.json
     os.makedirs("data", exist_ok=True)
