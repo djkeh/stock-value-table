@@ -5,6 +5,7 @@ import requests
 from unittest.mock import MagicMock, patch
 from crawler import (
     clean_and_format_op,
+    calculate_disparity_rate,
     get_with_retry,
     crawl_stock,
     load_existing_stocks,
@@ -25,6 +26,40 @@ def test_clean_and_format_op():
     assert clean_and_format_op("") == "-"
     assert clean_and_format_op(None) == "-"
     assert clean_and_format_op("invalid_number") == "invalid_number"
+
+
+# -------------------------------------------------------------------------
+# 1b. calculate_disparity_rate Tests
+# -------------------------------------------------------------------------
+def test_calculate_disparity_rate():
+    # Samsung Electronics Example:
+    # market_cap = "19,701,959", op_list = ['436,011', '3,563,998', '4,673,105', '4,629,076']
+    # Target Market Cap = 4,629,076 * 10 = 46,290,760
+    # Disparity = (46,290,760 - 19,701,959) / 19,701,959 * 100 = 134.955... -> 135.0%
+    assert calculate_disparity_rate("19,701,959", ['436,011', '3,563,998', '4,673,105', '4,629,076']) == "135.0"
+    
+    # Fallback to previous years when D_7 is missing:
+    assert calculate_disparity_rate("19,701,959", ['436,011', '3,563,998', '4,673,105', '-']) == "137.2"
+    assert calculate_disparity_rate("19,701,959", ['436,011', '3,563,998', '-', '-']) == "80.9"
+    assert calculate_disparity_rate("19,701,959", ['436,011', '-', '-', '-']) == "-77.9"
+    
+    # All operating profits missing:
+    assert calculate_disparity_rate("19,701,959", ['-', '-', '-', '-']) == "-"
+    
+    # Missing market cap:
+    assert calculate_disparity_rate("-", ['436,011', '3,563,998', '4,673,105', '4,629,076']) == "-"
+    assert calculate_disparity_rate("", ['436,011', '3,563,998', '4,673,105', '4,629,076']) == "-"
+    assert calculate_disparity_rate(None, ['436,011', '3,563,998', '4,673,105', '4,629,076']) == "-"
+    assert calculate_disparity_rate("0", ['436,011']) == "-"
+    assert calculate_disparity_rate("-10", ['436,011']) == "-"
+    assert calculate_disparity_rate("invalid", ['436,011']) == "-"
+    
+    # Missing/empty op_list:
+    assert calculate_disparity_rate("100", []) == "-"
+    assert calculate_disparity_rate("100", None) == "-"
+    
+    # Invalid numbers in op_list:
+    assert calculate_disparity_rate("100", ["invalid_op"]) == "-"
 
 
 # -------------------------------------------------------------------------
@@ -134,6 +169,7 @@ def test_crawl_stock_success():
     assert result["name"] == "테스트전자"
     assert result["current_price"] == "70,000"
     assert result["market_cap"] == "420,000"
+    assert result["disparity_rate"] == "-64.3"
     assert result["PER"] == ["10.5", "9.2", "8.5", "7.8"]
     assert result["PBR"] == ["1.2", "1.1", "1.0", "0.9"]
     assert result["EPS"] == ["6000", "7500", "8000", "9000"]
@@ -249,6 +285,7 @@ def test_main_flow(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load):
             "name": "삼성전자",
             "current_price": "60,000",
             "market_cap": "4,000,000",
+            "disparity_rate": "1.2",
             "years": ["2025","2026","2027","2028"],
             "PER": ["1","2","3","4"],
             "PBR": ["1","2","3","4"],
@@ -263,7 +300,7 @@ def test_main_flow(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load):
     # - Kia: crawl fails
     mock_crawl.side_effect = [
         (None, "Connection error"),
-        ({"gicode": "005380", "name": "현대차", "current_price": "200,000", "market_cap": "50,000,000", "years": ["2025","2026","2027","2028"], "PER": ["1","2","3","4"], "PBR": ["1","2","3","4"], "EPS": ["1","2","3","4"], "영업이익": ["1","2","3","4"]}, None),
+        ({"gicode": "005380", "name": "현대차", "current_price": "200,000", "market_cap": "50,000,000", "disparity_rate": "-100.0", "years": ["2025","2026","2027","2028"], "PER": ["1","2","3","4"], "PBR": ["1","2","3","4"], "EPS": ["1","2","3","4"], "영업이익": ["1","2","3","4"]}, None),
         (None, "HTTP 404")
     ]
     
@@ -321,6 +358,7 @@ def test_crawl_stock_real():
     # Check numeric-like values (PBR, PER, EPS, 영업이익, current_price, market_cap)
     assert stock_info["current_price"] != "-"
     assert stock_info["market_cap"] != "-"
+    assert "disparity_rate" in stock_info
     
     assert len(stock_info["years"]) == 4
     assert len(stock_info["PBR"]) == 4

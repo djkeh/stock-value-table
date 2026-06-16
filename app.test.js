@@ -58,6 +58,7 @@ describe('Stock Value Table Dashboard UI', () => {
             category: "전기전자",
             current_price: "70,000",
             market_cap: "4,200,000",
+            disparity_rate: "135.0",
             years: ["2025", "2026", "2027", "2028"],
             PBR: ["1.2", "1.1", "1.0", "0.9"],
             PER: ["10.5", "-9.2", "8.5", "7.8"],
@@ -70,6 +71,7 @@ describe('Stock Value Table Dashboard UI', () => {
             category: "자동차",
             current_price: "200,000",
             market_cap: "420,000",
+            disparity_rate: "-10.5",
             years: ["2025", "2026", "2027", "2028"],
             PBR: ["0.6", "-0.5", "0.4", "0.3"],
             PER: ["5.5", "4.8", "4.2", "3.9"],
@@ -203,6 +205,7 @@ describe('Stock Value Table Dashboard UI', () => {
             category: "전기전자",
             current_price: "70,000",
             market_cap: "4,200,000",
+            disparity_rate: "135.0",
             years: ["2025", "2026", "2027", "2028"],
             PBR: ["1.2", "1.1", "1.0", "0.9"],
             PER: ["10.5", "9.2", "8.5", "7.8"],
@@ -215,6 +218,7 @@ describe('Stock Value Table Dashboard UI', () => {
             category: "전기전자",
             current_price: "150,000",
             market_cap: "1,000,000",
+            disparity_rate: "45.2",
             years: ["2025", "2026", "2027", "2028"],
             PBR: ["1.5", "1.4", "1.3", "1.2"],
             PER: ["12.5", "11.2", "10.5", "9.8"],
@@ -519,6 +523,43 @@ describe('Stock Value Table Dashboard UI', () => {
     
     // Verify theme changed (from light to dark)
     expect(customDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+  });
+
+  it('renders disparity_rate column in summary table and handles negative highlighting', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const headers = Array.from(customDocument.querySelectorAll('thead th')).map(el => el.textContent.trim());
+    // The columns: 기업명, 현재가 (원), 시가총액 (억원), 괴리율 (%), 2026(E) PER (배), 2026(E) PBR (배)
+    expect(headers[3]).toBe('괴리율 (%)');
+
+    // Check Samsung Electronics row (positive disparity rate: "135.0")
+    const samsungRow = customDocument.querySelector('#main-row-A005930');
+    const samsungCells = samsungRow.querySelectorAll('td');
+    expect(samsungCells[3].textContent).toBe('135.0');
+    expect(samsungCells[3].classList.contains('col-disparity')).toBe(true);
+    expect(samsungCells[3].classList.contains('negative')).toBe(false);
+
+    // Check Hyundai row (negative disparity rate: "-10.5")
+    const hyundaiRow = customDocument.querySelector('#main-row-A005380');
+    const hyundaiCells = hyundaiRow.querySelectorAll('td');
+    expect(hyundaiCells[3].textContent).toBe('-10.5');
+    expect(hyundaiCells[3].classList.contains('col-disparity')).toBe(true);
+    expect(hyundaiCells[3].classList.contains('negative')).toBe(true);
+
+    // Check 부실기업 row (missing disparity rate: "-")
+    const busilRow = customDocument.querySelector('#main-row-A999999');
+    const busilCells = busilRow.querySelectorAll('td');
+    expect(busilCells[3].textContent).toBe('-');
+    expect(busilCells[3].classList.contains('col-disparity')).toBe(true);
+    expect(busilCells[3].classList.contains('negative')).toBe(false);
+
+    // Check detail row colspan is 6
+    const detailRow = customDocument.querySelector('#detail-row-A005930');
+    const detailTd = detailRow.querySelector('td');
+    expect(detailTd.getAttribute('colspan')).toBe('6');
   });
 });
 
