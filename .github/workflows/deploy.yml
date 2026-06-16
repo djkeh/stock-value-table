@@ -26,7 +26,7 @@ jobs:
       - name: Prepare Build Directory
         run: |
           mkdir -p build/data
-          cp index.html index.css app.js target-gicodes.csv build/
+          cp index.html index.css app.js target-gicodes.csv .gitignore build/
           
           # Copy stocks.json from the gh-pages checkout if it exists, otherwise fall back to repo's data/stocks.json
           if [ -d gh-pages-temp ] && [ -f gh-pages-temp/data/stocks.json ]; then
