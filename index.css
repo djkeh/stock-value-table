@@ -37,25 +37,25 @@
 /* Fallback/System Preferences for Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-gradient-start: #0f172a;
-    --bg-gradient-end: #020617;
-    --container-bg: rgba(15, 23, 42, 0.6);
+    --bg-gradient-start: #161716;
+    --bg-gradient-end: #0d0e0d;
+    --container-bg: rgba(28, 29, 28, 0.7);
     --container-border: rgba(255, 255, 255, 0.08);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --accent-color: #3b82f6;
-    --accent-hover: #60a5fa;
-    --table-hdr-bg: rgba(30, 41, 59, 0.8);
-    --table-border: rgba(51, 65, 85, 0.5);
-    --row-hover: rgba(30, 41, 59, 0.5);
-    --expanded-bg: rgba(30, 41, 59, 0.3);
+    --text-primary: #f1f3f0;
+    --text-secondary: #b5bcae;
+    --accent-color: #8fa87a;
+    --accent-hover: #a3ba90;
+    --table-hdr-bg: rgba(38, 39, 38, 0.85);
+    --table-border: rgba(120, 125, 120, 0.25);
+    --row-hover: rgba(48, 50, 48, 0.5);
+    --expanded-bg: rgba(38, 39, 38, 0.4);
     
-    --card-bg: rgba(30, 41, 59, 0.7);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    --card-bg: rgba(38, 39, 38, 0.75);
+    --card-border: rgba(255, 255, 255, 0.06);
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
     
-    --scrollbar-thumb: #475569;
-    --scrollbar-track: #1e293b;
+    --scrollbar-thumb: #555855;
+    --scrollbar-track: #202220;
   }
 }
 
@@ -79,21 +79,23 @@
 }
 
 [data-theme="dark"] {
-  --bg-gradient-start: #0f172a;
-  --bg-gradient-end: #020617;
-  --container-bg: rgba(15, 23, 42, 0.6);
+  --bg-gradient-start: #161716;
+  --bg-gradient-end: #0d0e0d;
+  --container-bg: rgba(28, 29, 28, 0.7);
   --container-border: rgba(255, 255, 255, 0.08);
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --table-hdr-bg: rgba(30, 41, 59, 0.8);
-  --table-border: rgba(51, 65, 85, 0.5);
-  --row-hover: rgba(30, 41, 59, 0.5);
-  --expanded-bg: rgba(30, 41, 59, 0.3);
-  --card-bg: rgba(30, 41, 59, 0.7);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
-  --scrollbar-thumb: #475569;
-  --scrollbar-track: #1e293b;
+  --text-primary: #f1f3f0;
+  --text-secondary: #b5bcae;
+  --accent-color: #8fa87a;
+  --accent-hover: #a3ba90;
+  --table-hdr-bg: rgba(38, 39, 38, 0.85);
+  --table-border: rgba(120, 125, 120, 0.25);
+  --row-hover: rgba(48, 50, 48, 0.5);
+  --expanded-bg: rgba(38, 39, 38, 0.4);
+  --card-bg: rgba(38, 39, 38, 0.75);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+  --scrollbar-thumb: #555855;
+  --scrollbar-track: #202220;
 }
 
 html, body {
@@ -166,6 +168,76 @@ h1 {
   color: var(--text-secondary);
 }
 
+/* Theme Controls Layout */
+.theme-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.system-theme-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.45;
+  transition: opacity 0.25s ease, color 0.25s ease;
+  padding: 0.25rem 0.4rem;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  border: none;
+}
+
+.system-theme-label:hover {
+  opacity: 0.85;
+  color: var(--text-primary);
+}
+
+/* Hidden Checkbox */
+.hidden-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Checked Switch State */
+.hidden-checkbox:checked + .system-theme-label {
+  opacity: 1;
+  color: #1e293b;
+}
+
+/* Auto Icon */
+.auto-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: var(--text-secondary);
+  transition: fill 0.25s ease;
+}
+
+.hidden-checkbox:checked + .system-theme-label .auto-icon {
+  fill: #1e293b;
+}
+
+/* Dark mode overrides for System Checked State */
+[data-theme="dark"] .hidden-checkbox:checked + .system-theme-label,
+@media (prefers-color-scheme: dark) {
+  .hidden-checkbox:checked + .system-theme-label {
+    color: #f1f3f0;
+  }
+  .hidden-checkbox:checked + .system-theme-label .auto-icon {
+    fill: #f1f3f0;
+  }
+}
+
 /* Dark Mode Switch Button */
 .theme-switch {
   position: relative;
@@ -179,7 +251,13 @@ h1 {
   justify-content: space-between;
   padding: 0 0.4rem;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.theme-switch.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .theme-switch .toggle-dot {
@@ -473,4 +551,19 @@ th.sorted-desc .sort-icon {
 }
 .category-title:first-of-type {
   margin-top: 0;
+}
+
+/* Dark mode overrides for specific elements */
+[data-theme="dark"] h1 {
+  background: linear-gradient(to right, #8fa87a, #b5bcae);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  h1 {
+    background: linear-gradient(to right, #8fa87a, #b5bcae);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
