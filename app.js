@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </th>
             <th scope="col">현재가 (원)</th>
             <th scope="col">시가총액 (억원)</th>
+            <th scope="col">괴리율 (%)</th>
             <th scope="col">2026(E) PER (배)</th>
             <th scope="col">2026(E) PBR (배)</th>
           </tr>
@@ -98,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // We display 2026(E) PER and PBR on the summary row (index 1 of years list ["2025", "2026", "2027", "2028"])
         const summaryPer = stock.PER[1] || "-";
         const summaryPbr = stock.PBR[1] || "-";
+        const disparity = stock.disparity_rate || "-";
 
         mainRow.innerHTML = `
           <td class="col-name">
@@ -109,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </td>
           <td class="col-price">${stock.current_price}</td>
           <td class="col-mcap">${stock.market_cap}</td>
+          <td class="col-disparity ${isNegative(disparity) ? "negative" : ""}">${disparity}</td>
           <td class="col-summary-per ${isNegative(summaryPer) ? "negative" : ""}">${summaryPer}</td>
           <td class="col-summary-pbr ${isNegative(summaryPbr) ? "negative" : ""}">${summaryPbr}</td>
         `;
@@ -145,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         detailRow.innerHTML = `
-          <td colspan="5">
+          <td colspan="6">
             <div class="accordion-wrapper" id="${accordionId}">
               <div class="accordion-inner">
                 <div class="detail-content">
