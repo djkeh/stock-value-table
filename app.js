@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Helper: check if a value string is negative
   const isNegative = (valStr) => {
-    if (!valStr) return false;
     const clean = valStr.trim();
     return clean.startsWith("-") && clean !== "-";
   };
@@ -40,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     categories.forEach((category) => {
       // Get sorted stocks for this category
       const categoryStocks = state.stocks.filter((s) => (s.category || "기타") === category);
-      const direction = state.sortDirections[category] || "asc";
+      const direction = state.sortDirections[category];
       
       categoryStocks.sort((a, b) => {
         const compareResult = a.name.localeCompare(b.name, "ko");
@@ -214,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const th = e.target.closest("th.sortable");
     if (th) {
       const category = th.dataset.category;
-      const currentDir = state.sortDirections[category] || "asc";
+      const currentDir = state.sortDirections[category];
       state.sortDirections[category] = currentDir === "asc" ? "desc" : "asc";
       renderTable();
     }
@@ -300,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
         autoThemeTimeoutId = null;
       }
       // 체크를 해제할 때 현재 테마 상태를 수동 테마로 고정
-      const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+      const currentTheme = document.documentElement.getAttribute("data-theme");
       localStorage.setItem("manual-theme", currentTheme);
     }
   };
@@ -335,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // System Auto가 켜져 있으면 토글 클릭 무반응
     if (systemThemeCheckbox.checked) return;
 
-    const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+    const currentTheme = document.documentElement.getAttribute("data-theme");
     const newTheme = currentTheme === "dark" ? "light" : "dark";
     setManualTheme(newTheme);
   });

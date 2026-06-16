@@ -57,7 +57,7 @@ def test_get_with_retry_retry_and_success(mock_sleep):
         mock_resp_success
     ]
 
-    resp = get_with_retry(session, "http://dummy-url.com", {}, timeout=1, max_retries=3, backoff_factor=0.1)
+    resp = get_with_retry(session, "http://dummy-url.com", {}, timeout=1, max_retries=3)
     assert resp.status_code == 200
     assert session.get.call_count == 3
 
@@ -68,7 +68,7 @@ def test_get_with_retry_failure(mock_sleep):
     session.get.side_effect = requests.exceptions.Timeout("Connection timed out")
 
     with pytest.raises(requests.exceptions.Timeout):
-        get_with_retry(session, "http://dummy-url.com", {}, timeout=1, max_retries=3, backoff_factor=0.1)
+        get_with_retry(session, "http://dummy-url.com", {}, timeout=1, max_retries=3)
     assert session.get.call_count == 3
 
 
@@ -209,17 +209,26 @@ def test_write_github_summary(tmp_path):
 # -------------------------------------------------------------------------
 # 6. Main Flow Integration Test (Mocked)
 # -------------------------------------------------------------------------
-@patch("crawler.load_existing_stocks", return_value={"005930": {"gicode": "005930", "name": "삼성전자", "current_price": "60,000", "PER": ["1","2","3","4"], "PBR": ["1","2","3","4"], "EPS": ["1","2","3","4"], "영업이익": ["1","2","3","4"]}})
+@patch("crawler.load_existing_stocks")
 @patch("crawler.crawl_stock")
 @patch("time.sleep", return_value=None)
 @patch("os.makedirs")
 @patch("builtins.open")
-def test_main_flow(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load, tmp_path):
-    # Setup mock CSV contents
-    # target-gicodes.csv format: 업종, 기업명, 종목코드
-    csv_content = "업종,기업명,종목코드\n반도체,삼성전자,005930\n자동차,현대차,005380\n"
+def test_main_flow(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load):
+    # CSV content with:
+    # 1. Header (skipped)
+    # 2. Samsung (005930) - crawl fails, but exists in cache (recovered)
+    # 3. Hyundai (005380) - crawl succeeds (added)
+    # 4. Kia (000270) - crawl fails, does not exist in cache (skipped)
+    # 5. Malformed/short row - (skipped)
+    csv_content = (
+        "업종,기업명,종목코드\n"
+        "반도체,삼성전자,005930\n"
+        "자동차,현대차,005380\n"
+        "자동차,기아,000270\n"
+        "\n"
+    )
     
-    # Mocking open for target-gicodes.csv and saving to stocks.json
     mock_file_csv = MagicMock()
     mock_file_csv.__enter__.return_value = csv_content.splitlines()
     
@@ -233,9 +242,28 @@ def test_main_flow(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load, 
             
     mock_open.side_effect = open_side_effect
     
-    # Simulate: Samsung successfully crawled, Hyundai fails to crawl (should fallback to existing but Hyundai is not in existing, so ignored/logged)
+    # Cache has Samsung electronics data, but not Hyundai or Kia
+    mock_load.return_value = {
+        "005930": {
+            "gicode": "005930",
+            "name": "삼성전자",
+            "current_price": "60,000",
+            "market_cap": "4,000,000",
+            "years": ["2025","2026","2027","2028"],
+            "PER": ["1","2","3","4"],
+            "PBR": ["1","2","3","4"],
+            "EPS": ["1","2","3","4"],
+            "영업이익": ["1","2","3","4"]
+        }
+    }
+    
+    # crawl_stock outcomes:
+    # - Samsung: crawl fails
+    # - Hyundai: crawl succeeds
+    # - Kia: crawl fails
     mock_crawl.side_effect = [
-        ({"gicode": "005930", "name": "삼성전자", "current_price": "70,000", "market_cap": "4,200,000", "years": ["2025","2026","2027","2028"], "PER": ["1","2","3","4"], "PBR": ["1","2","3","4"], "EPS": ["1","2","3","4"], "영업이익": ["1","2","3","4"]}, None),
+        (None, "Connection error"),
+        ({"gicode": "005380", "name": "현대차", "current_price": "200,000", "market_cap": "50,000,000", "years": ["2025","2026","2027","2028"], "PER": ["1","2","3","4"], "PBR": ["1","2","3","4"], "EPS": ["1","2","3","4"], "영업이익": ["1","2","3","4"]}, None),
         (None, "HTTP 404")
     ]
     
@@ -244,12 +272,21 @@ def test_main_flow(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load, 
             with patch("crawler.write_github_summary") as mock_summary:
                 main()
                 
-                # Check JSON dump contains crawled samsung electronic
+                # Check JSON dump contains 2 stocks:
+                # 1. Recovered Samsung (from cache)
+                # 2. Successfully crawled Hyundai
+                # (Kia should be skipped because crawl failed and it is not in cache)
                 mock_json_dump.assert_called_once()
                 written_data = mock_json_dump.call_args[0][0]
-                assert len(written_data) == 1
-                assert written_data[0]["gicode"] == "005930"
-                assert written_data[0]["category"] == "반도체"
+                assert len(written_data) == 2
+                
+                samsung_data = next(s for s in written_data if s["gicode"] == "005930")
+                assert samsung_data["current_price"] == "60,000"
+                assert samsung_data["category"] == "반도체"
+                
+                hyundai_data = next(s for s in written_data if s["gicode"] == "005380")
+                assert hyundai_data["current_price"] == "200,000"
+                assert hyundai_data["category"] == "자동차"
                 
                 mock_summary.assert_called_once()
 
@@ -295,3 +332,105 @@ def test_crawl_stock_real():
     assert stock_info["years"] == ["2025", "2026", "2027", "2028"]
     
     print(f"\n[Smoke Test Success] Samsung electronics data: {stock_info}")
+
+
+# -------------------------------------------------------------------------
+# 8. Error Handling and Main Entry Point Tests
+# -------------------------------------------------------------------------
+@patch("time.sleep", return_value=None)
+def test_crawl_stock_consensus_json_fail(mock_sleep):
+    session = MagicMock()
+    # Main page OK
+    mock_resp_main = MagicMock()
+    mock_resp_main.status_code = 200
+    mock_resp_main.content = '<html><body><span id="giName">테스트전자</span></body></html>'.encode('utf-8')
+    
+    # Consensus JSON returns 404
+    mock_resp_json = MagicMock()
+    mock_resp_json.status_code = 404
+    
+    def get_side_effect(url, **kwargs):
+        if "SVD_Main.asp" in url:
+            return mock_resp_main
+        else:
+            return mock_resp_json
+            
+    session.get.side_effect = get_side_effect
+    
+    result, err = crawl_stock(session, "005930", fallback_name="삼성전자")
+    assert result is None
+    assert "Error fetching consensus JSON: HTTP 404" in err
+
+
+def test_crawl_stock_exception():
+    session = MagicMock()
+    session.get.side_effect = ValueError("Unexpected exception during crawl")
+    
+    result, err = crawl_stock(session, "005930", fallback_name="삼성전자")
+    assert result is None
+    assert "Unexpected exception during crawl" in err
+
+
+def test_write_github_summary_missing_env():
+    with patch.dict(os.environ, {}, clear=True):
+        write_github_summary(5, [])
+
+
+def test_write_github_summary_all_success(tmp_path):
+    summary_file = tmp_path / "summary_success.md"
+    with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": str(summary_file)}):
+        write_github_summary(5, [])
+        content = summary_file.read_text(encoding="utf-8")
+        assert "모든 종목이 성공적으로 수집되었습니다." in content
+        assert "성공**: 5개" in content
+        assert "실패**: 0개" in content
+
+
+def test_write_github_summary_io_exception(tmp_path):
+    summary_file = tmp_path / "summary_error.md"
+    with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": str(summary_file)}):
+        with patch("builtins.open", side_effect=IOError("Permission denied")):
+            write_github_summary(5, [])
+
+
+def test_load_existing_stocks_parse_exception(tmp_path):
+    f = tmp_path / "corrupted.json"
+    f.write_text("invalid json contents", encoding="utf-8")
+    stocks = load_existing_stocks(filepath=str(f))
+    assert stocks == {}
+
+
+@patch.dict(os.environ, {"GITHUB_REPOSITORY": "test-owner/test-repo"})
+def test_load_existing_stocks_remote_http_fail():
+    with patch("os.path.exists", return_value=False):
+        with patch("requests.get") as mock_get:
+            mock_resp = MagicMock()
+            mock_resp.status_code = 404
+            mock_get.return_value = mock_resp
+            
+            stocks = load_existing_stocks(filepath="non-existent.json")
+            assert stocks == {}
+            
+            mock_get.side_effect = requests.exceptions.ConnectionError("Network down")
+            stocks_err = load_existing_stocks(filepath="non-existent.json")
+            assert stocks_err == {}
+
+
+@patch("crawler.load_existing_stocks", return_value={})
+def test_main_csv_missing(mock_load):
+    with patch("os.path.exists", return_value=False):
+        with patch("builtins.print") as mock_print:
+            main()
+            mock_print.assert_any_call("Error: target-gicodes.csv not found.")
+
+
+# The redundant malformed CSV and cache recovery test has been merged into test_main_flow above.
+
+
+def test_run_as_main():
+    import runpy
+    # Mock os.path.exists to return False so that main() exits immediately
+    # without running the actual crawl loop or making network calls.
+    with patch("os.path.exists", return_value=False):
+        runpy.run_path("crawler.py", run_name="__main__")
+

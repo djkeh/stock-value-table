@@ -6,9 +6,8 @@ import fs from 'fs';
 import path from 'path';
 import { JSDOM } from 'jsdom';
 
-// Read HTML and JS source files once
+// Read HTML source file once
 const htmlHtml = fs.readFileSync(path.resolve(__dirname, './index.html'), 'utf8');
-const scriptJs = fs.readFileSync(path.resolve(__dirname, './app.js'), 'utf8');
 
 describe('Stock Value Table Dashboard UI', () => {
   let dom;
@@ -61,7 +60,7 @@ describe('Stock Value Table Dashboard UI', () => {
             market_cap: "4,200,000",
             years: ["2025", "2026", "2027", "2028"],
             PBR: ["1.2", "1.1", "1.0", "0.9"],
-            PER: ["10.5", "9.2", "8.5", "7.8"],
+            PER: ["10.5", "-9.2", "8.5", "7.8"],
             EPS: ["6,000", "7,500", "8,000", "9,000"],
             영업이익: ["100,000", "120,000", "140,000", "150,000"]
           },
@@ -72,10 +71,21 @@ describe('Stock Value Table Dashboard UI', () => {
             current_price: "200,000",
             market_cap: "420,000",
             years: ["2025", "2026", "2027", "2028"],
-            PBR: ["0.6", "0.5", "0.4", "0.3"],
+            PBR: ["0.6", "-0.5", "0.4", "0.3"],
             PER: ["5.5", "4.8", "4.2", "3.9"],
             EPS: ["35,000", "41,000", "46,000", "50,000"],
             영업이익: ["15,000", "18,000", "20,000", "22,000"]
+          },
+          {
+            gicode: "A999999",
+            name: "부실기업",
+            current_price: "",
+            market_cap: "-",
+            years: ["2025", "2026", "2027", "2028"],
+            PBR: [],
+            PER: [],
+            EPS: [],
+            영업이익: []
           }
         ])
       })
@@ -99,18 +109,16 @@ describe('Stock Value Table Dashboard UI', () => {
     });
     global.localStorage = mockLocalStorage;
     globalThis.localStorage = mockLocalStorage;
-
-    // 5. Execute app.js code via dynamic import to enable V8 coverage
-    vi.resetModules();
-    await import('./app.js');
-
-    // Dispatch DOMContentLoaded manually since JSDOM might have already fired it before import resolved
-    customDocument.dispatchEvent(new customWindow.Event('DOMContentLoaded'));
-
-    // We do not manually dispatch DOMContentLoaded here, JSDOM will fire it once parsed.
   });
 
+  async function loadApp() {
+    vi.resetModules();
+    await import('./app.js');
+    customDocument.dispatchEvent(new customWindow.Event('DOMContentLoaded'));
+  }
+
   afterEach(() => {
+    vi.restoreAllMocks();
     // Clean up timers to prevent memory leaks and flaky overrides
     vi.clearAllTimers();
     vi.useRealTimers();
@@ -121,18 +129,20 @@ describe('Stock Value Table Dashboard UI', () => {
   });
 
   it('renders tables grouped by category with correct headers', async () => {
+    await loadApp();
     // Wait for the async fetch rendering to finish by checking query selector assertion
     await vi.waitFor(() => {
       const h2s = customDocument.querySelectorAll('h2.category-title');
-      expect(h2s.length).toBe(2);
+      expect(h2s.length).toBe(3);
     });
 
     const categoryTitles = Array.from(customDocument.querySelectorAll('h2.category-title')).map(el => el.textContent);
     expect(categoryTitles).toContain('전기전자');
     expect(categoryTitles).toContain('자동차');
+    expect(categoryTitles).toContain('기타');
 
     const tables = customDocument.querySelectorAll('table');
-    expect(tables.length).toBe(2);
+    expect(tables.length).toBe(3);
 
     const firstTable = tables[0];
     expect(firstTable.innerHTML).toContain('삼성전자');
@@ -141,8 +151,9 @@ describe('Stock Value Table Dashboard UI', () => {
   });
 
   it('toggles accordion details on row click and keyboard enter', async () => {
+    await loadApp();
     await vi.waitFor(() => {
-      expect(customDocument.querySelectorAll('.main-row').length).toBe(2);
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
     });
 
     const mainRow = customDocument.querySelector('#main-row-A005930');
@@ -172,6 +183,12 @@ describe('Stock Value Table Dashboard UI', () => {
     mainRow.dispatchEvent(enterEvent);
     expect(detailRow.style.display).toBe('table-row');
     expect(mainRow.getAttribute('aria-expanded')).toBe('true');
+    
+    // Collapse via Keyboard (Space key)
+    const spaceEvent = new customWindow.KeyboardEvent('keydown', { key: ' ', bubbles: true });
+    mainRow.dispatchEvent(spaceEvent);
+    vi.advanceTimersByTime(350);
+    expect(detailRow.style.display).toBe('none');
   });
 
   it('sorts columns when header is clicked', async () => {
@@ -211,8 +228,7 @@ describe('Stock Value Table Dashboard UI', () => {
     customWindow.fetch = mockSortedFetch;
     globalThis.fetch = mockSortedFetch;
 
-    // Reload script via DOMContentLoaded event
-    customDocument.dispatchEvent(new customWindow.Event('DOMContentLoaded'));
+    await loadApp();
 
     await vi.waitFor(() => {
       expect(customDocument.querySelectorAll('.main-row').length).toBe(2);
@@ -231,9 +247,9 @@ describe('Stock Value Table Dashboard UI', () => {
   });
 
   it('updates theme using toggle button and system theme option', async () => {
-    // Initially, fetch loading starts
+    await loadApp();
     await vi.waitFor(() => {
-      expect(customDocument.querySelectorAll('.main-row').length).toBe(2);
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
     });
 
     const checkbox = customDocument.querySelector('#system-theme-checkbox');
@@ -250,6 +266,16 @@ describe('Stock Value Table Dashboard UI', () => {
     expect(toggle.classList.contains('disabled')).toBe(false);
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith('system-theme-enabled', 'false');
 
+    // Re-enable system theme checkbox to cover lines 294-295
+    checkbox.checked = true;
+    checkbox.dispatchEvent(new customWindow.Event('change'));
+    expect(toggle.classList.contains('disabled')).toBe(true);
+    expect(mockLocalStorage.setItem).toHaveBeenCalledWith('system-theme-enabled', 'true');
+
+    // Disable system theme checkbox again for manual toggle test
+    checkbox.checked = false;
+    checkbox.dispatchEvent(new customWindow.Event('change'));
+
     // Click toggle to switch manual theme
     const currentTheme = customDocument.documentElement.getAttribute('data-theme') || 'light';
     const expectedNewTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -258,4 +284,241 @@ describe('Stock Value Table Dashboard UI', () => {
     expect(customDocument.documentElement.getAttribute('data-theme')).toBe(expectedNewTheme);
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith('manual-theme', expectedNewTheme);
   });
+
+  // -------------------------------------------------------------------------
+  // Error States, Keyboard Interactions, and Theme Sync Tests
+  // -------------------------------------------------------------------------
+  it('renders empty message when stocks list is empty', async () => {
+    mockFetch.mockImplementation(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve([])
+      })
+    );
+    await loadApp();
+
+    await vi.waitFor(() => {
+      expect(customDocument.getElementById('tables-container').textContent).toContain('표시할 데이터가 없습니다.');
+    });
+  });
+
+  it('renders error message when fetch fails (response not ok)', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    mockFetch.mockImplementation(() =>
+      Promise.resolve({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error'
+      })
+    );
+    await loadApp();
+
+    await vi.waitFor(() => {
+      expect(customDocument.getElementById('tables-container').textContent).toContain('데이터를 불러오는 데 실패했습니다.');
+    });
+  });
+
+  it('renders error message when fetch throws exception', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    mockFetch.mockImplementation(() => Promise.reject(new Error('Network error')));
+    await loadApp();
+
+    await vi.waitFor(() => {
+      expect(customDocument.getElementById('tables-container').textContent).toContain('데이터를 불러오는 데 실패했습니다.');
+      expect(customDocument.getElementById('tables-container').textContent).toContain('Network error');
+    });
+  });
+
+  it('sorts columns when Enter or Space is pressed on header', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const th = customDocument.querySelector('th.sortable[data-category="전기전자"]');
+    expect(th.classList.contains('sorted-asc')).toBe(true);
+
+    // Focus and dispatch Enter
+    th.focus();
+    const enterEvent = new customWindow.KeyboardEvent('keydown', { key: 'Enter', bubbles: true });
+    th.dispatchEvent(enterEvent);
+    
+    // Query th again since renderTable replaces it
+    const thAfterEnter = customDocument.querySelector('th.sortable[data-category="전기전자"]');
+    expect(thAfterEnter.classList.contains('sorted-desc')).toBe(true);
+
+    // Dispatch Space
+    const spaceEvent = new customWindow.KeyboardEvent('keydown', { key: ' ', bubbles: true });
+    thAfterEnter.dispatchEvent(spaceEvent);
+    
+    const thAfterSpace = customDocument.querySelector('th.sortable[data-category="전기전자"]');
+    expect(thAfterSpace.classList.contains('sorted-asc')).toBe(true);
+
+    // Dispatch irrelevant key (should do nothing)
+    const escapeEvent = new customWindow.KeyboardEvent('keydown', { key: 'Escape', bubbles: true });
+    thAfterSpace.dispatchEvent(escapeEvent);
+    
+    const thAfterEscape = customDocument.querySelector('th.sortable[data-category="전기전자"]');
+    expect(thAfterEscape.classList.contains('sorted-asc')).toBe(true);
+  });
+
+  it('sets light theme automatically during the day', async () => {
+    const date = new Date(2026, 5, 16, 10, 0, 0); // Daytime 10 AM
+    vi.setSystemTime(date);
+    await loadApp();
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('light');
+  });
+
+  it('sets dark theme automatically during the night', async () => {
+    const date = new Date(2026, 5, 16, 22, 0, 0); // Nighttime 10 PM
+    vi.setSystemTime(date);
+    await loadApp();
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+  });
+
+  it('schedules and executes auto theme transition timer', async () => {
+    // Start at daytime 19:59:59 (1 second before night transition)
+    // Delay to 20:00:00 is 1000ms. Transition timer: 1500ms
+    const date = new Date(2026, 5, 16, 19, 59, 59);
+    vi.setSystemTime(date);
+
+    await loadApp();
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('light');
+
+    // Advance time by 2000ms to trigger the transition
+    vi.advanceTimersByTime(2000);
+
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+  });
+
+  it('schedules and executes night-to-day transition timer', async () => {
+    // Start at nighttime 06:59:59 (1 second before morning transition)
+    const date = new Date(2026, 5, 16, 6, 59, 59);
+    vi.setSystemTime(date);
+
+    await loadApp();
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+
+    // Advance time by 2000ms to trigger the transition
+    vi.advanceTimersByTime(2000);
+
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('light');
+  });
+
+  it('updates auto theme when window receives focus or visibility state changes', async () => {
+    // Define visibilityState first
+    Object.defineProperty(customDocument, 'visibilityState', {
+      value: 'visible',
+      writable: true,
+      configurable: true
+    });
+
+    const date1 = new Date(2026, 5, 16, 10, 0, 0); // Daytime
+    vi.setSystemTime(date1);
+    await loadApp();
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('light');
+
+    // Mock time to nighttime (22:00:00) without reloading
+    const date2 = new Date(2026, 5, 16, 22, 0, 0);
+    vi.setSystemTime(date2);
+
+    // Dispatch focus event
+    customWindow.dispatchEvent(new customWindow.Event('focus'));
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+
+    // Reset to daytime and dispatch visibilitychange
+    const date3 = new Date(2026, 5, 17, 10, 0, 0);
+    vi.setSystemTime(date3);
+    
+    customDocument.dispatchEvent(new customWindow.Event('visibilitychange'));
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('light');
+  });
+
+  it('loads manual theme settings on start if system theme is disabled', async () => {
+    mockLocalStorage.setItem('system-theme-enabled', 'false');
+    mockLocalStorage.setItem('manual-theme', 'dark');
+
+    await loadApp();
+
+    const checkbox = customDocument.querySelector('#system-theme-checkbox');
+    const toggle = customDocument.querySelector('#theme-toggle');
+    expect(checkbox.checked).toBe(false);
+    expect(toggle.classList.contains('disabled')).toBe(false);
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+  });
+
+  it('defaults to light theme if system theme is disabled and no manual theme is saved', async () => {
+    mockLocalStorage.setItem('system-theme-enabled', 'false');
+    mockLocalStorage.removeItem('manual-theme');
+
+    await loadApp();
+
+    const checkbox = customDocument.querySelector('#system-theme-checkbox');
+    const toggle = customDocument.querySelector('#theme-toggle');
+    expect(checkbox.checked).toBe(false);
+    expect(toggle.classList.contains('disabled')).toBe(false);
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('light');
+  });
+
+  it('blocks theme toggle click/keypress when system theme is enabled', async () => {
+    await loadApp();
+    
+    const checkbox = customDocument.querySelector('#system-theme-checkbox');
+    const toggle = customDocument.querySelector('#theme-toggle');
+    expect(checkbox.checked).toBe(true);
+
+    const currentTheme = customDocument.documentElement.getAttribute('data-theme');
+    toggle.click();
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe(currentTheme);
+
+    const enterEvent = new customWindow.KeyboardEvent('keydown', { key: 'Enter', bubbles: true });
+    toggle.dispatchEvent(enterEvent);
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe(currentTheme);
+  });
+
+  it('toggles theme using Enter or Space key on theme toggle when system theme is disabled', async () => {
+    mockLocalStorage.setItem('system-theme-enabled', 'false');
+    mockLocalStorage.setItem('manual-theme', 'light');
+
+    await loadApp();
+
+    const toggle = customDocument.querySelector('#theme-toggle');
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('light');
+
+    // Space key
+    const spaceEvent = new customWindow.KeyboardEvent('keydown', { key: ' ', bubbles: true });
+    toggle.dispatchEvent(spaceEvent);
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+
+    // Enter key
+    const enterEvent = new customWindow.KeyboardEvent('keydown', { key: 'Enter', bubbles: true });
+    toggle.dispatchEvent(enterEvent);
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('light');
+
+    // Escape key (should do nothing)
+    const escapeEvent = new customWindow.KeyboardEvent('keydown', { key: 'Escape', bubbles: true });
+    toggle.dispatchEvent(escapeEvent);
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('light');
+  });
+
+  it('clears auto theme timeout in setManualTheme when manually overriding theme', async () => {
+    // Start at daytime so default theme is light
+    const date = new Date(2026, 5, 16, 10, 0, 0);
+    vi.setSystemTime(date);
+
+    await loadApp();
+    
+    const checkbox = customDocument.querySelector('#system-theme-checkbox');
+    const toggle = customDocument.querySelector('#theme-toggle');
+    
+    // Manually change checkbox checked state without firing event
+    checkbox.checked = false;
+    
+    // Click theme toggle - this calls setManualTheme while autoThemeTimeoutId is active
+    toggle.click();
+    
+    // Verify theme changed (from light to dark)
+    expect(customDocument.documentElement.getAttribute('data-theme')).toBe('dark');
+  });
 });
+
