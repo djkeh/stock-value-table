@@ -556,3 +556,74 @@ th.sorted-desc .sort-icon {
     -webkit-text-fill-color: transparent;
   }
 }
+
+/* Disparity Rate Tooltip Styling */
+.tooltip-box {
+  position: absolute;
+  display: none;
+  z-index: 1000;
+  max-width: min(480px, calc(100vw - 32px));
+  width: max-content;
+  padding: 0.85rem 1rem;
+  background: var(--container-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--container-border);
+  border-radius: 0.75rem;
+  box-shadow: var(--card-shadow);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.tooltip-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tooltip-formula {
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: var(--accent-color);
+  border-bottom: 1px solid var(--table-border);
+  padding-bottom: 0.35rem;
+}
+
+.tooltip-meaning {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+/* Tooltip Trigger button inside table header */
+.tooltip-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 0.35rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: color 0.2s ease, transform 0.2s ease;
+  vertical-align: middle;
+}
+
+.tooltip-trigger:hover,
+.tooltip-trigger:focus {
+  color: var(--accent-color);
+  transform: scale(1.15);
+  outline: none;
+}
+
+.tooltip-trigger svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: currentColor;
+}
+

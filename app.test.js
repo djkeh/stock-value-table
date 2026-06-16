@@ -561,5 +561,257 @@ describe('Stock Value Table Dashboard UI', () => {
     const detailTd = detailRow.querySelector('td');
     expect(detailTd.getAttribute('colspan')).toBe('6');
   });
+
+  it('renders tooltip trigger button next to 괴리율 (%)', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const thDisparity = customDocument.querySelector('th.th-disparity');
+    expect(thDisparity).toBeTruthy();
+    expect(thDisparity.textContent).toContain('괴리율 (%)');
+    
+    const trigger = thDisparity.querySelector('.tooltip-trigger');
+    expect(trigger).toBeTruthy();
+    expect(trigger.getAttribute('aria-describedby')).toBe('disparity-tooltip');
+  });
+
+  it('shows and hides tooltip on mouseenter/mouseleave and focus/blur', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const trigger = customDocument.querySelector('.tooltip-trigger');
+    const tooltip = customDocument.getElementById('disparity-tooltip');
+
+    expect(tooltip.style.display).not.toBe('block');
+
+    // mouseenter -> show tooltip
+    trigger.dispatchEvent(new customWindow.Event('mouseenter'));
+    expect(tooltip.style.display).toBe('block');
+    expect(tooltip.classList.contains('visible')).toBe(true);
+    expect(tooltip.getAttribute('aria-hidden')).toBe('false');
+
+    // mouseleave -> schedule hide (timeout 150ms)
+    trigger.dispatchEvent(new customWindow.Event('mouseleave'));
+    expect(tooltip.classList.contains('visible')).toBe(true);
+
+    // Fast-forward 160ms
+    vi.advanceTimersByTime(160);
+    expect(tooltip.classList.contains('visible')).toBe(false);
+    expect(tooltip.getAttribute('aria-hidden')).toBe('true');
+
+    // Wait for the fade-out timeout (another 150ms)
+    vi.advanceTimersByTime(160);
+    expect(tooltip.style.display).toBe('none');
+
+    // focus -> show tooltip
+    trigger.dispatchEvent(new customWindow.Event('focus'));
+    expect(tooltip.style.display).toBe('block');
+    expect(tooltip.classList.contains('visible')).toBe(true);
+
+    // blur -> schedule hide
+    trigger.dispatchEvent(new customWindow.Event('blur'));
+    vi.advanceTimersByTime(320); // pass both timeouts
+    expect(tooltip.style.display).toBe('none');
+  });
+
+  it('keeps tooltip open when hovering on the tooltip itself', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const trigger = customDocument.querySelector('.tooltip-trigger');
+    const tooltip = customDocument.getElementById('disparity-tooltip');
+
+    // mouseenter on trigger
+    trigger.dispatchEvent(new customWindow.Event('mouseenter'));
+    expect(tooltip.classList.contains('visible')).toBe(true);
+
+    // mouseleave on trigger -> starts hide timeout
+    trigger.dispatchEvent(new customWindow.Event('mouseleave'));
+
+    // mouseenter on tooltip itself before timeout fires
+    tooltip.dispatchEvent(new customWindow.Event('mouseenter'));
+
+    // Fast-forward 200ms
+    vi.advanceTimersByTime(200);
+    expect(tooltip.classList.contains('visible')).toBe(true);
+
+    // mouseleave on tooltip -> starts hide timeout again
+    tooltip.dispatchEvent(new customWindow.Event('mouseleave'));
+
+    // Fast-forward 350ms
+    vi.advanceTimersByTime(350);
+    expect(tooltip.style.display).toBe('none');
+  });
+
+  it('hides tooltip immediately when Escape key is pressed', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const trigger = customDocument.querySelector('.tooltip-trigger');
+    const tooltip = customDocument.getElementById('disparity-tooltip');
+
+    // Scenario 1: Escape with no active timeouts
+    trigger.dispatchEvent(new customWindow.Event('mouseenter'));
+    expect(tooltip.classList.contains('visible')).toBe(true);
+
+    let escapeEvent = new customWindow.KeyboardEvent('keydown', { key: 'Escape', bubbles: true });
+    customDocument.dispatchEvent(escapeEvent);
+    expect(tooltip.classList.contains('visible')).toBe(false);
+    vi.advanceTimersByTime(160);
+    expect(tooltip.style.display).toBe('none');
+
+    // Scenario 2: Escape while hideTimeoutId is active
+    trigger.dispatchEvent(new customWindow.Event('mouseenter'));
+    trigger.dispatchEvent(new customWindow.Event('mouseleave')); // hideTimeoutId active
+    escapeEvent = new customWindow.KeyboardEvent('keydown', { key: 'Escape', bubbles: true });
+    customDocument.dispatchEvent(escapeEvent);
+    expect(tooltip.classList.contains('visible')).toBe(false);
+    vi.advanceTimersByTime(160);
+    expect(tooltip.style.display).toBe('none');
+
+    // Scenario 3: Escape while fadeOutTimeoutId is active
+    trigger.dispatchEvent(new customWindow.Event('mouseenter'));
+    trigger.dispatchEvent(new customWindow.Event('mouseleave'));
+    vi.advanceTimersByTime(160); // fadeOutTimeoutId active, visible is false, display is block
+    expect(tooltip.classList.contains('visible')).toBe(false);
+    expect(tooltip.style.display).toBe('block');
+
+    escapeEvent = new customWindow.KeyboardEvent('keydown', { key: 'Escape', bubbles: true });
+    customDocument.dispatchEvent(escapeEvent);
+    vi.advanceTimersByTime(160);
+    expect(tooltip.style.display).toBe('none');
+
+    // Scenario 4: Escape when tooltip is not visible (should do nothing)
+    const mockPreventDefault = vi.fn();
+    const escapeEvent2 = new customWindow.KeyboardEvent('keydown', { key: 'Escape', bubbles: true });
+    Object.defineProperty(escapeEvent2, 'preventDefault', { value: mockPreventDefault });
+    customDocument.dispatchEvent(escapeEvent2);
+    expect(tooltip.style.display).toBe('none');
+  });
+
+  it('handles multiple scheduleHide calls and clears active timeouts properly', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const trigger = customDocument.querySelector('.tooltip-trigger');
+    const tooltip = customDocument.getElementById('disparity-tooltip');
+
+    // Show tooltip
+    trigger.dispatchEvent(new customWindow.Event('mouseenter'));
+
+    // Call scheduleHide twice in a row (e.g. mouseleave then blur)
+    trigger.dispatchEvent(new customWindow.Event('mouseleave'));
+    trigger.dispatchEvent(new customWindow.Event('blur')); // covers line 60 (hideTimeoutId is active)
+
+    // Wait 160ms so it starts fading out (fadeOutTimeoutId is active)
+    vi.advanceTimersByTime(160);
+
+    // Call scheduleHide again without calling showTooltip (covers line 66: fadeOutTimeoutId is active)
+    trigger.dispatchEvent(new customWindow.Event('mouseleave'));
+    vi.advanceTimersByTime(160);
+  });
+
+  it('stops propagation on click event of tooltip trigger', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const trigger = customDocument.querySelector('.tooltip-trigger');
+    const clickEvent = new customWindow.MouseEvent('click', { bubbles: true, cancelable: true });
+    const spy = vi.spyOn(clickEvent, 'stopPropagation');
+
+    trigger.dispatchEvent(clickEvent);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('adjusts tooltip position bounds when overflowing right edge', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const trigger = customDocument.querySelector('.tooltip-trigger');
+    const tooltip = customDocument.getElementById('disparity-tooltip');
+
+    // Mock window innerWidth
+    const originalInnerWidth = customWindow.innerWidth;
+    customWindow.innerWidth = 500;
+
+    // Mock getBoundingClientRect for trigger to be near the right edge
+    vi.spyOn(trigger, 'getBoundingClientRect').mockReturnValue({
+      left: 450,
+      right: 480,
+      top: 100,
+      bottom: 120,
+      width: 30,
+      height: 20
+    });
+
+    // Mock tooltip offsetWidth/Height
+    Object.defineProperties(tooltip, {
+      offsetWidth: { value: 200, configurable: true },
+      offsetHeight: { value: 80, configurable: true }
+    });
+
+    trigger.dispatchEvent(new customWindow.Event('mouseenter'));
+
+    // expected left calculation:
+    // left = 450 + (30 / 2) - (200 / 2) = 450 + 15 - 100 = 365
+    // left + tooltipWidth = 365 + 200 = 565
+    // window.innerWidth - 8 = 500 - 8 = 492
+    // Since 565 > 492, left should be adjusted to: 500 - 200 - 8 = 292px.
+    expect(tooltip.style.left).toBe('292px');
+
+    // Restore innerWidth
+    customWindow.innerWidth = originalInnerWidth;
+  });
+
+  it('cancels fade-out and restores visibility if trigger or tooltip is hovered/focused during fade-out', async () => {
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+
+    const trigger = customDocument.querySelector('.tooltip-trigger');
+    const tooltip = customDocument.getElementById('disparity-tooltip');
+
+    // Show tooltip
+    trigger.dispatchEvent(new customWindow.Event('mouseenter'));
+    expect(tooltip.classList.contains('visible')).toBe(true);
+
+    // Mouse leaves trigger
+    trigger.dispatchEvent(new customWindow.Event('mouseleave'));
+
+    // Advance 160ms so it starts fading out (fadeOutTimeoutId is now active)
+    vi.advanceTimersByTime(160);
+    expect(tooltip.classList.contains('visible')).toBe(false);
+    expect(tooltip.style.display).toBe('block');
+
+    // Mouse enters tooltip during fadeout -> visibility should be restored
+    tooltip.dispatchEvent(new customWindow.Event('mouseenter'));
+    expect(tooltip.classList.contains('visible')).toBe(true);
+    expect(tooltip.style.display).toBe('block');
+
+    // Mouse leaves tooltip again
+    tooltip.dispatchEvent(new customWindow.Event('mouseleave'));
+    vi.advanceTimersByTime(160);
+    expect(tooltip.classList.contains('visible')).toBe(false);
+
+    // Mouse enters trigger again during this fadeout
+    trigger.dispatchEvent(new customWindow.Event('mouseenter'));
+    expect(tooltip.classList.contains('visible')).toBe(true);
+    expect(tooltip.style.display).toBe('block');
+  });
 });
 
