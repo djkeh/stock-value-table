@@ -212,7 +212,7 @@ h1 {
 /* Checked Switch State */
 .hidden-checkbox:checked + .system-theme-label {
   opacity: 1;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 /* Auto Icon */
@@ -224,18 +224,7 @@ h1 {
 }
 
 .hidden-checkbox:checked + .system-theme-label .auto-icon {
-  fill: #1e293b;
-}
-
-/* Dark mode overrides for System Checked State */
-[data-theme="dark"] .hidden-checkbox:checked + .system-theme-label,
-@media (prefers-color-scheme: dark) {
-  .hidden-checkbox:checked + .system-theme-label {
-    color: #f1f3f0;
-  }
-  .hidden-checkbox:checked + .system-theme-label .auto-icon {
-    fill: #f1f3f0;
-  }
+  fill: var(--text-primary);
 }
 
 /* Dark Mode Switch Button */
