@@ -404,3 +404,6 @@ $RECYCLE.BIN/
 
 # Ignore stock crawl outputs generated locally
 data/stocks.json
+
+# Ignore test coverage data
+coverage.json

@@ -18,7 +18,7 @@ describe('Stock Value Table Dashboard UI', () => {
   let mockFetch;
   let originalGlobalSetTimeout;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     // 1. Enable fake timers to block unmanaged background setTimeouts
     vi.useFakeTimers();
 
@@ -100,9 +100,12 @@ describe('Stock Value Table Dashboard UI', () => {
     global.localStorage = mockLocalStorage;
     globalThis.localStorage = mockLocalStorage;
 
-    // 5. Execute app.js code
-    const runScript = new Function('window', 'document', scriptJs);
-    runScript(customWindow, customDocument);
+    // 5. Execute app.js code via dynamic import to enable V8 coverage
+    vi.resetModules();
+    await import('./app.js');
+
+    // Dispatch DOMContentLoaded manually since JSDOM might have already fired it before import resolved
+    customDocument.dispatchEvent(new customWindow.Event('DOMContentLoaded'));
 
     // We do not manually dispatch DOMContentLoaded here, JSDOM will fire it once parsed.
   });

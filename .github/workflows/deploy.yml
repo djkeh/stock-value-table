@@ -24,11 +24,11 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt pytest pytest-mock
+          pip install -r requirements.txt pytest pytest-mock pytest-cov
 
-      - name: Run Python Crawler Tests
+      - name: Run Python Crawler Tests with Coverage
         run: |
-          pytest test_crawler.py -v
+          pytest --cov=crawler test_crawler.py --cov-report=json --cov-report=term:skip-covered
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -40,9 +40,18 @@ jobs:
         run: |
           npm ci || npm install
 
-      - name: Run Frontend Tests
+      - name: Run Frontend Tests with Coverage
         run: |
-          npm run test
+          npm run test:coverage
+
+      - name: Generate Coverage Report to Step Summary
+        run: |
+          echo "### 📊 테스트 커버리지 요약 (Test Coverage Summary)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| 대상 컴포넌트 | 테스트 커버리지 (Coverage) |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+          python -c "import json; d=json.load(open('coverage.json')); print(f'| **Backend Crawler** (crawler.py) | {d[\"totals\"][\"percent_covered_display\"]}% |')" >> $GITHUB_STEP_SUMMARY
+          node -e "const fs=require('fs'); const s=JSON.parse(fs.readFileSync('coverage/coverage-summary.json','utf8')); console.log('| **Frontend UI** (app.js) | ' + s.total.lines.pct + '% |');" >> $GITHUB_STEP_SUMMARY
 
       - name: Checkout gh-pages (for stocks.json)
         uses: actions/checkout@v6

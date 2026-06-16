@@ -13,6 +13,7 @@
 ## Prerequisites
 
 * Python 3.12 이상
+* Node.js 20 이상 (테스트 실행 및 커버리지 측정용)
 * Web Browser (Chrome, Safari, Firefox, Edge 등)
 
 ## Installation
@@ -30,9 +31,18 @@
    ```
 
 3. 필요한 종속성 패키지를 설치합니다.
-   ```bash
-   pip install -r requirements.txt
-   ```
+    ```bash
+    # 크롤러용 기본 의존성 설치
+    pip install -r requirements.txt
+    
+    # 크롤러 테스트 및 커버리지 측정용 추가 의존성 설치
+    pip install pytest pytest-mock pytest-cov
+    ```
+
+4. 프런트엔드 테스트용 패키지를 설치합니다.
+    ```bash
+    npm install
+    ```
 
 ## Usage
 
@@ -48,6 +58,28 @@ python crawler.py
 python3 -m http.server 8000
 ```
 웹 브라우저에서 `http://localhost:8000` 주소로 접속합니다.
+
+### 3. 테스트 및 커버리지 실행
+
+#### Python 크롤러 테스트
+단위 테스트 및 FnGuide 실 서비스 접근 Smoke 테스트를 실행합니다.
+```bash
+# 전체 테스트 실행
+.venv/bin/pytest test_crawler.py -v
+
+# 커버리지 측정 (100% 도달 파일은 제외하고 요약만 터미널에 컴팩트하게 출력)
+.venv/bin/pytest --cov=crawler test_crawler.py --cov-report=json --cov-report=term:skip-covered
+```
+
+#### Frontend UI 테스트
+가상 DOM(JSDOM) 격리 환경 하에 테이블 렌더링, 아코디언 토글, 다국어 정렬, 테마 전환 동작을 검증합니다.
+```bash
+# 전체 테스트 실행
+npm run test
+
+# 커버리지 측정 (터미널에는 최소 요약만 출력, html 리포트는 coverage/ 폴더에 빌드)
+npm run test:coverage
+```
 
 ## Configuration
 
@@ -66,13 +98,17 @@ python3 -m http.server 8000
 stock-value-table/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml          # GitHub Actions 자동 수집 & 배포 파이프라인
+│       └── deploy.yml          # GitHub Actions 자동 수집, 테스트 & 배포 파이프라인
 ├── data/
 │   └── stocks.json             # 크롤러가 생성하는 재무 데이터 파일
 ├── target-gicodes.csv          # 크롤링 대상 종목 목록 설정 파일
 ├── crawler.py                  # FnGuide 크롤러 스크립트 (Python)
+├── test_crawler.py             # 크롤러 단위 테스트 및 Smoke 테스트 (Python)
 ├── requirements.txt            # 파이썬 의존성 패키지 정의 파일
+├── package.json                # Node.js 프로젝트 설정 및 테스트 의존성 파일
+├── vitest.config.js            # Vitest 및 커버리지 보고서 설정 파일
+├── app.js                      # 프런트엔드 데이터 렌더링 및 인터랙션 로직
+├── app.test.js                 # 프런트엔드 UI/DOM 및 정렬/테마 테스트 스크립트
 ├── index.html                  # 메인 웹 문서
-├── index.css                   # 스타일시트 (테마 및 애니메이션)
-└── app.js                      # 프런트엔드 데이터 렌더링 및 인터랙션 로직
+└── index.css                   # 스타일시트 (테마 및 애니메이션)
 ```
