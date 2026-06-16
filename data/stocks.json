@@ -34,7 +34,8 @@
       "4,673,105",
       "4,629,076"
     ],
-    "category": "전기전자"
+    "category": "전기전자",
+    "disparity_rate": "135.0"
   },
   {
     "gicode": "A000660",
@@ -71,7 +72,8 @@
       "3,643,316",
       "3,725,797"
     ],
-    "category": "전기전자"
+    "category": "전기전자",
+    "disparity_rate": "143.1"
   },
   {
     "gicode": "A066570",
@@ -108,7 +110,8 @@
       "43,184",
       "53,095"
     ],
-    "category": "전기전자"
+    "category": "전기전자",
+    "disparity_rate": "33.9"
   },
   {
     "gicode": "A009150",
@@ -145,7 +148,8 @@
       "27,220",
       "37,751"
     ],
-    "category": "전기전자"
+    "category": "전기전자",
+    "disparity_rate": "-74.7"
   },
   {
     "gicode": "A036830",
@@ -182,7 +186,8 @@
       "-",
       "-"
     ],
-    "category": "전기전자"
+    "category": "전기전자",
+    "disparity_rate": "-103.5"
   },
   {
     "gicode": "A000990",
@@ -219,7 +224,8 @@
       "4,511",
       "5,191"
     ],
-    "category": "전기전자"
+    "category": "전기전자",
+    "disparity_rate": "-31.5"
   },
   {
     "gicode": "A042700",
@@ -256,7 +262,8 @@
       "5,719",
       "7,297"
     ],
-    "category": "전기전자"
+    "category": "전기전자",
+    "disparity_rate": "-77.9"
   },
   {
     "gicode": "A005380",
@@ -293,7 +300,8 @@
       "134,916",
       "146,097"
     ],
-    "category": "자동차"
+    "category": "자동차",
+    "disparity_rate": "10.3"
   },
   {
     "gicode": "A000270",
@@ -330,7 +338,8 @@
       "111,561",
       "118,520"
     ],
-    "category": "자동차"
+    "category": "자동차",
+    "disparity_rate": "82.0"
   },
   {
     "gicode": "A012330",
@@ -367,7 +376,8 @@
       "42,611",
       "46,371"
     ],
-    "category": "자동차"
+    "category": "자동차",
+    "disparity_rate": "-20.1"
   },
   {
     "gicode": "A011210",
@@ -404,7 +414,8 @@
       "2,910",
       "3,243"
     ],
-    "category": "자동차"
+    "category": "자동차",
+    "disparity_rate": "45.4"
   },
   {
     "gicode": "A204320",
@@ -441,7 +452,8 @@
       "4,738",
       "5,339"
     ],
-    "category": "자동차"
+    "category": "자동차",
+    "disparity_rate": "61.0"
   },
   {
     "gicode": "A018880",
@@ -478,7 +490,8 @@
       "4,964",
       "5,786"
     ],
-    "category": "자동차"
+    "category": "자동차",
+    "disparity_rate": "-0.7"
   },
   {
     "gicode": "A373220",
@@ -515,7 +528,8 @@
       "39,899",
       "61,098"
     ],
-    "category": "2차전지"
+    "category": "2차전지",
+    "disparity_rate": "-37.9"
   },
   {
     "gicode": "A006400",
@@ -552,7 +566,8 @@
       "14,522",
       "25,420"
     ],
-    "category": "2차전지"
+    "category": "2차전지",
+    "disparity_rate": "-43.0"
   },
   {
     "gicode": "A096770",
@@ -589,7 +604,8 @@
       "30,118",
       "33,559"
     ],
-    "category": "2차전지"
+    "category": "2차전지",
+    "disparity_rate": "87.1"
   },
   {
     "gicode": "A247540",
@@ -626,7 +642,8 @@
       "2,107",
       "3,485"
     ],
-    "category": "2차전지"
+    "category": "2차전지",
+    "disparity_rate": "-80.9"
   },
   {
     "gicode": "A086520",
@@ -663,7 +680,8 @@
       "-",
       "-"
     ],
-    "category": "2차전지"
+    "category": "2차전지",
+    "disparity_rate": "-86.4"
   },
   {
     "gicode": "A003670",
@@ -700,7 +718,8 @@
       "1,616",
       "3,223"
     ],
-    "category": "2차전지"
+    "category": "2차전지",
+    "disparity_rate": "-82.8"
   },
   {
     "gicode": "A005490",
@@ -737,7 +756,8 @@
       "40,193",
       "44,794"
     ],
-    "category": "철강금속"
+    "category": "철강금속",
+    "disparity_rate": "43.1"
   },
   {
     "gicode": "A004020",
@@ -774,7 +794,8 @@
       "7,685",
       "8,641"
     ],
-    "category": "철강금속"
+    "category": "철강금속",
+    "disparity_rate": "76.7"
   },
   {
     "gicode": "A460860",
@@ -811,7 +832,8 @@
       "-",
       "-"
     ],
-    "category": "철강금속"
+    "category": "철강금속",
+    "disparity_rate": "26.0"
   },
   {
     "gicode": "A103140",
@@ -848,7 +870,8 @@
       "3,632",
       "4,004"
     ],
-    "category": "철강금속"
+    "category": "철강금속",
+    "disparity_rate": "89.2"
   },
   {
     "gicode": "A003030",
@@ -885,7 +908,8 @@
       "3,068",
       "4,918"
     ],
-    "category": "철강금속"
+    "category": "철강금속",
+    "disparity_rate": "756.8"
   },
   {
     "gicode": "A058430",
@@ -922,7 +946,8 @@
       "380",
       "390"
     ],
-    "category": "철강금속"
+    "category": "철강금속",
+    "disparity_rate": "14.6"
   },
   {
     "gicode": "A051910",
@@ -959,7 +984,8 @@
       "41,264",
       "60,004"
     ],
-    "category": "석유화학"
+    "category": "석유화학",
+    "disparity_rate": "135.8"
   },
   {
     "gicode": "A011780",
@@ -996,7 +1022,8 @@
       "4,271",
       "4,687"
     ],
-    "category": "석유화학"
+    "category": "석유화학",
+    "disparity_rate": "38.3"
   },
   {
     "gicode": "A006650",
@@ -1033,7 +1060,8 @@
       "2,435",
       "2,622"
     ],
-    "category": "석유화학"
+    "category": "석유화학",
+    "disparity_rate": "185.1"
   },
   {
     "gicode": "A011170",
@@ -1070,7 +1098,8 @@
       "2,720",
       "4,923"
     ],
-    "category": "석유화학"
+    "category": "석유화학",
+    "disparity_rate": "42.3"
   },
   {
     "gicode": "A298020",
@@ -1107,7 +1136,8 @@
       "5,367",
       "5,737"
     ],
-    "category": "석유화학"
+    "category": "석유화학",
+    "disparity_rate": "267.7"
   },
   {
     "gicode": "A005950",
@@ -1144,7 +1174,8 @@
       "-",
       "-"
     ],
-    "category": "석유화학"
+    "category": "석유화학",
+    "disparity_rate": "-82.9"
   },
   {
     "gicode": "A008770",
@@ -1181,7 +1212,8 @@
       "2,108",
       "2,435"
     ],
-    "category": "쇼핑유통"
+    "category": "쇼핑유통",
+    "disparity_rate": "11.8"
   },
   {
     "gicode": "A004170",
@@ -1218,7 +1250,8 @@
       "8,219",
       "8,608"
     ],
-    "category": "쇼핑유통"
+    "category": "쇼핑유통",
+    "disparity_rate": "29.3"
   },
   {
     "gicode": "A023530",
@@ -1255,7 +1288,8 @@
       "8,504",
       "9,019"
     ],
-    "category": "쇼핑유통"
+    "category": "쇼핑유통",
+    "disparity_rate": "71.1"
   },
   {
     "gicode": "A139480",
@@ -1292,7 +1326,8 @@
       "6,686",
       "7,247"
     ],
-    "category": "쇼핑유통"
+    "category": "쇼핑유통",
+    "disparity_rate": "191.1"
   },
   {
     "gicode": "A282330",
@@ -1329,7 +1364,8 @@
       "3,146",
       "3,393"
     ],
-    "category": "쇼핑유통"
+    "category": "쇼핑유통",
+    "disparity_rate": "51.1"
   },
   {
     "gicode": "A007070",
@@ -1366,7 +1402,8 @@
       "3,673",
       "3,842"
     ],
-    "category": "쇼핑유통"
+    "category": "쇼핑유통",
+    "disparity_rate": "84.9"
   },
   {
     "gicode": "A105560",
@@ -1403,7 +1440,8 @@
       "93,399",
       "96,389"
     ],
-    "category": "은행"
+    "category": "은행",
+    "disparity_rate": "60.2"
   },
   {
     "gicode": "A055550",
@@ -1440,7 +1478,8 @@
       "80,660",
       "85,224"
     ],
-    "category": "은행"
+    "category": "은행",
+    "disparity_rate": "70.0"
   },
   {
     "gicode": "A086790",
@@ -1477,7 +1516,8 @@
       "63,116",
       "66,296"
     ],
-    "category": "은행"
+    "category": "은행",
+    "disparity_rate": "99.7"
   },
   {
     "gicode": "A316140",
@@ -1514,7 +1554,8 @@
       "47,784",
       "50,945"
     ],
-    "category": "은행"
+    "category": "은행",
+    "disparity_rate": "113.2"
   },
   {
     "gicode": "A138040",
@@ -1551,7 +1592,8 @@
       "34,092",
       "35,486"
     ],
-    "category": "은행"
+    "category": "은행",
+    "disparity_rate": "90.5"
   },
   {
     "gicode": "A175330",
@@ -1588,7 +1630,8 @@
       "10,948",
       "11,537"
     ],
-    "category": "은행"
+    "category": "은행",
+    "disparity_rate": "122.4"
   },
   {
     "gicode": "A001720",
@@ -1625,7 +1668,8 @@
       "-",
       "-"
     ],
-    "category": "증권"
+    "category": "증권",
+    "disparity_rate": "-34.8"
   },
   {
     "gicode": "A003540",
@@ -1662,7 +1706,8 @@
       "3,777",
       "4,020"
     ],
-    "category": "증권"
+    "category": "증권",
+    "disparity_rate": "174.1"
   },
   {
     "gicode": "A005940",
@@ -1699,7 +1744,8 @@
       "19,153",
       "19,448"
     ],
-    "category": "증권"
+    "category": "증권",
+    "disparity_rate": "66.9"
   },
   {
     "gicode": "A006800",
@@ -1736,7 +1782,8 @@
       "26,840",
       "27,870"
     ],
-    "category": "증권"
+    "category": "증권",
+    "disparity_rate": "-3.5"
   },
   {
     "gicode": "A071050",
@@ -1773,7 +1820,8 @@
       "31,232",
       "31,490"
     ],
-    "category": "증권"
+    "category": "증권",
+    "disparity_rate": "124.7"
   },
   {
     "gicode": "A039490",
@@ -1810,7 +1858,8 @@
       "19,734",
       "20,198"
     ],
-    "category": "증권"
+    "category": "증권",
+    "disparity_rate": "109.5"
   },
   {
     "gicode": "A005830",
@@ -1847,7 +1896,8 @@
       "22,959",
       "23,912"
     ],
-    "category": "보험"
+    "category": "보험",
+    "disparity_rate": "139.5"
   },
   {
     "gicode": "A000810",
@@ -1884,7 +1934,8 @@
       "32,874",
       "33,782"
     ],
-    "category": "보험"
+    "category": "보험",
+    "disparity_rate": "15.7"
   },
   {
     "gicode": "A001450",
@@ -1921,7 +1972,8 @@
       "-",
       "-"
     ],
-    "category": "보험"
+    "category": "보험",
+    "disparity_rate": "276.9"
   },
   {
     "gicode": "A032830",
@@ -1958,7 +2010,8 @@
       "52,718",
       "33,462"
     ],
-    "category": "보험"
+    "category": "보험",
+    "disparity_rate": "-60.4"
   },
   {
     "gicode": "A085620",
@@ -1995,7 +2048,8 @@
       "-",
       "-"
     ],
-    "category": "보험"
+    "category": "보험",
+    "disparity_rate": "-49.2"
   },
   {
     "gicode": "A000400",
@@ -2032,7 +2086,8 @@
       "-",
       "-"
     ],
-    "category": "보험"
+    "category": "보험",
+    "disparity_rate": "9.8"
   },
   {
     "gicode": "A010950",
@@ -2069,7 +2124,8 @@
       "23,581",
       "21,852"
     ],
-    "category": "정유.가스"
+    "category": "정유.가스",
+    "disparity_rate": "70.7"
   },
   {
     "gicode": "A078930",
@@ -2106,7 +2162,8 @@
       "33,377",
       "34,558"
     ],
-    "category": "정유.가스"
+    "category": "정유.가스",
+    "disparity_rate": "392.1"
   },
   {
     "gicode": "A018670",
@@ -2143,7 +2200,8 @@
       "5,107",
       "5,079"
     ],
-    "category": "정유.가스"
+    "category": "정유.가스",
+    "disparity_rate": "138.0"
   },
   {
     "gicode": "A036460",
@@ -2180,7 +2238,8 @@
       "21,915",
       "22,083"
     ],
-    "category": "정유.가스"
+    "category": "정유.가스",
+    "disparity_rate": "546.5"
   },
   {
     "gicode": "A267290",
@@ -2217,7 +2276,8 @@
       "-",
       "-"
     ],
-    "category": "정유.가스"
+    "category": "정유.가스",
+    "disparity_rate": "175.7"
   },
   {
     "gicode": "A241560",
@@ -2254,7 +2314,8 @@
       "9,200",
       "10,099"
     ],
-    "category": "기계.풍력"
+    "category": "기계.풍력",
+    "disparity_rate": "54.3"
   },
   {
     "gicode": "A267270",
@@ -2291,7 +2352,8 @@
       "8,508",
       "10,255"
     ],
-    "category": "기계.풍력"
+    "category": "기계.풍력",
+    "disparity_rate": "38.5"
   },
   {
     "gicode": "A044490",
@@ -2328,7 +2390,8 @@
       "-",
       "-"
     ],
-    "category": "기계.풍력"
+    "category": "기계.풍력",
+    "disparity_rate": "-92.7"
   },
   {
     "gicode": "A112610",
@@ -2365,7 +2428,8 @@
       "3,524",
       "3,361"
     ],
-    "category": "기계.풍력"
+    "category": "기계.풍력",
+    "disparity_rate": "82.2"
   },
   {
     "gicode": "A100090",
@@ -2402,7 +2466,8 @@
       "1,105",
       "1,403"
     ],
-    "category": "기계.풍력"
+    "category": "기계.풍력",
+    "disparity_rate": "43.4"
   },
   {
     "gicode": "A052690",
@@ -2439,7 +2504,8 @@
       "992",
       "1,715"
     ],
-    "category": "전력.원전"
+    "category": "전력.원전",
+    "disparity_rate": "-66.8"
   },
   {
     "gicode": "A034020",
@@ -2476,7 +2542,8 @@
       "16,072",
       "21,107"
     ],
-    "category": "전력.원전"
+    "category": "전력.원전",
+    "disparity_rate": "-67.0"
   },
   {
     "gicode": "A051600",
@@ -2513,7 +2580,8 @@
       "2,013",
       "2,078"
     ],
-    "category": "전력.원전"
+    "category": "전력.원전",
+    "disparity_rate": "-14.5"
   },
   {
     "gicode": "A130660",
@@ -2550,7 +2618,8 @@
       "-",
       "-"
     ],
-    "category": "전력.원전"
+    "category": "전력.원전",
+    "disparity_rate": "-85.4"
   },
   {
     "gicode": "A006260",
@@ -2587,7 +2656,8 @@
       "18,902",
       "22,131"
     ],
-    "category": "전력.원전"
+    "category": "전력.원전",
+    "disparity_rate": "69.1"
   },
   {
     "gicode": "A010120",
@@ -2624,7 +2694,8 @@
       "9,188",
       "11,988"
     ],
-    "category": "전력.원전"
+    "category": "전력.원전",
+    "disparity_rate": "-69.0"
   },
   {
     "gicode": "A456040",
@@ -2661,7 +2732,8 @@
       "1,828",
       "1,910"
     ],
-    "category": "태양광"
+    "category": "태양광",
+    "disparity_rate": "102.6"
   },
   {
     "gicode": "A010060",
@@ -2698,7 +2770,8 @@
       "5,389",
       "6,618"
     ],
-    "category": "태양광"
+    "category": "태양광",
+    "disparity_rate": "25.3"
   },
   {
     "gicode": "A009830",
@@ -2735,7 +2808,8 @@
       "12,306",
       "15,132"
     ],
-    "category": "태양광"
+    "category": "태양광",
+    "disparity_rate": "127.5"
   },
   {
     "gicode": "A322000",
@@ -2772,7 +2846,8 @@
       "1,451",
       "1,400"
     ],
-    "category": "태양광"
+    "category": "태양광",
+    "disparity_rate": "-20.9"
   },
   {
     "gicode": "A009540",
@@ -2809,7 +2884,8 @@
       "67,225",
       "77,345"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "159.0"
   },
   {
     "gicode": "A329180",
@@ -2846,7 +2922,8 @@
       "45,251",
       "51,068"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "-31.9"
   },
   {
     "gicode": "A042660",
@@ -2883,7 +2960,8 @@
       "23,266",
       "27,975"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "-26.0"
   },
   {
     "gicode": "A010140",
@@ -2920,7 +2998,8 @@
       "20,312",
       "23,548"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "-6.6"
   },
   {
     "gicode": "A082740",
@@ -2957,7 +3036,8 @@
       "3,678",
       "4,516"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "-8.7"
   },
   {
     "gicode": "A071970",
@@ -2994,7 +3074,8 @@
       "2,029",
       "2,509"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "4.2"
   },
   {
     "gicode": "A443060",
@@ -3031,7 +3112,8 @@
       "5,481",
       "6,340"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "-44.5"
   },
   {
     "gicode": "A017960",
@@ -3068,7 +3150,8 @@
       "1,909",
       "1,947"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "14.9"
   },
   {
     "gicode": "A033500",
@@ -3105,7 +3188,8 @@
       "1,220",
       "1,753"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "192.6"
   },
   {
     "gicode": "A014620",
@@ -3142,7 +3226,8 @@
       "696",
       "852"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "-2.5"
   },
   {
     "gicode": "A023160",
@@ -3179,7 +3264,8 @@
       "738",
       "809"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "-0.7"
   },
   {
     "gicode": "A013030",
@@ -3216,7 +3302,8 @@
       "714",
       "726"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "73.3"
   },
   {
     "gicode": "A439260",
@@ -3253,7 +3340,8 @@
       "3,865",
       "4,216"
     ],
-    "category": "조선"
+    "category": "조선",
+    "disparity_rate": "72.1"
   },
   {
     "gicode": "A000880",
@@ -3290,7 +3378,8 @@
       "67,330",
       "72,515"
     ],
-    "category": "방산"
+    "category": "방산",
+    "disparity_rate": "784.3"
   },
   {
     "gicode": "A047810",
@@ -3327,7 +3416,8 @@
       "6,744",
       "8,136"
     ],
-    "category": "방산"
+    "category": "방산",
+    "disparity_rate": "-43.5"
   },
   {
     "gicode": "A079550",
@@ -3364,7 +3454,8 @@
       "6,165",
       "8,022"
     ],
-    "category": "방산"
+    "category": "방산",
+    "disparity_rate": "-56.8"
   },
   {
     "gicode": "A064350",
@@ -3401,7 +3492,8 @@
       "15,706",
       "18,572"
     ],
-    "category": "방산"
+    "category": "방산",
+    "disparity_rate": "-20.1"
   },
   {
     "gicode": "A012450",
@@ -3438,7 +3530,8 @@
       "54,559",
       "61,464"
     ],
-    "category": "방산"
+    "category": "방산",
+    "disparity_rate": "10.0"
   },
   {
     "gicode": "A272210",
@@ -3475,7 +3568,8 @@
       "4,911",
       "6,374"
     ],
-    "category": "방산"
+    "category": "방산",
+    "disparity_rate": "-66.1"
   },
   {
     "gicode": "A489790",
@@ -3512,7 +3606,8 @@
       "2,826",
       "3,667"
     ],
-    "category": "방산"
+    "category": "방산",
+    "disparity_rate": "-0.6"
   },
   {
     "gicode": "A086280",
@@ -3549,7 +3644,8 @@
       "23,376",
       "24,281"
     ],
-    "category": "해운.운송"
+    "category": "해운.운송",
+    "disparity_rate": "55.3"
   },
   {
     "gicode": "A000120",
@@ -3586,7 +3682,8 @@
       "5,746",
       "6,182"
     ],
-    "category": "해운.운송"
+    "category": "해운.운송",
+    "disparity_rate": "227.7"
   },
   {
     "gicode": "A011200",
@@ -3623,7 +3720,8 @@
       "8,276",
       "8,774"
     ],
-    "category": "해운.운송"
+    "category": "해운.운송",
+    "disparity_rate": "-56.3"
   },
   {
     "gicode": "A028670",
@@ -3660,7 +3758,8 @@
       "6,002",
       "6,323"
     ],
-    "category": "해운.운송"
+    "category": "해운.운송",
+    "disparity_rate": "121.5"
   },
   {
     "gicode": "A005880",
@@ -3697,7 +3796,8 @@
       "2,431",
       "2,461"
     ],
-    "category": "해운.운송"
+    "category": "해운.운송",
+    "disparity_rate": "260.5"
   },
   {
     "gicode": "A003280",
@@ -3734,7 +3834,8 @@
       "-",
       "-"
     ],
-    "category": "해운.운송"
+    "category": "해운.운송",
+    "disparity_rate": "-75.1"
   },
   {
     "gicode": "A001120",
@@ -3771,7 +3872,8 @@
       "4,524",
       "4,652"
     ],
-    "category": "항공.무역"
+    "category": "항공.무역",
+    "disparity_rate": "199.7"
   },
   {
     "gicode": "A047050",
@@ -3808,7 +3910,8 @@
       "15,012",
       "15,839"
     ],
-    "category": "항공.무역"
+    "category": "항공.무역",
+    "disparity_rate": "50.3"
   },
   {
     "gicode": "A180640",
@@ -3845,7 +3948,8 @@
       "-",
       "-"
     ],
-    "category": "항공.무역"
+    "category": "항공.무역",
+    "disparity_rate": "-100.9"
   },
   {
     "gicode": "A003490",
@@ -3882,7 +3986,8 @@
       "20,479",
       "25,387"
     ],
-    "category": "항공.무역"
+    "category": "항공.무역",
+    "disparity_rate": "129.8"
   },
   {
     "gicode": "A000720",
@@ -3919,7 +4024,8 @@
       "11,197",
       "14,020"
     ],
-    "category": "건설"
+    "category": "건설",
+    "disparity_rate": "-20.1"
   },
   {
     "gicode": "A028050",
@@ -3956,7 +4062,8 @@
       "10,205",
       "11,296"
     ],
-    "category": "건설"
+    "category": "건설",
+    "disparity_rate": "10.6"
   },
   {
     "gicode": "A375500",
@@ -3993,7 +4100,8 @@
       "5,707",
       "6,340"
     ],
-    "category": "건설"
+    "category": "건설",
+    "disparity_rate": "107.4"
   },
   {
     "gicode": "A006360",
@@ -4030,7 +4138,8 @@
       "6,020",
       "6,864"
     ],
-    "category": "건설"
+    "category": "건설",
+    "disparity_rate": "165.1"
   },
   {
     "gicode": "A047040",
@@ -4067,7 +4176,8 @@
       "7,087",
       "8,290"
     ],
-    "category": "건설"
+    "category": "건설",
+    "disparity_rate": "-11.9"
   },
   {
     "gicode": "A010780",
@@ -4104,7 +4214,8 @@
       "2,172",
       "3,688"
     ],
-    "category": "건설"
+    "category": "건설",
+    "disparity_rate": "372.6"
   },
   {
     "gicode": "A300720",
@@ -4141,7 +4252,8 @@
       "1,469",
       "1,560"
     ],
-    "category": "건자재"
+    "category": "건자재",
+    "disparity_rate": "44.3"
   },
   {
     "gicode": "A183190",
@@ -4178,7 +4290,8 @@
       "970",
       "-"
     ],
-    "category": "건자재"
+    "category": "건자재",
+    "disparity_rate": "158.9"
   },
   {
     "gicode": "A038500",
@@ -4215,7 +4328,8 @@
       "-",
       "-"
     ],
-    "category": "건자재"
+    "category": "건자재",
+    "disparity_rate": "-37.4"
   },
   {
     "gicode": "A004980",
@@ -4252,7 +4366,8 @@
       "-",
       "-"
     ],
-    "category": "건자재"
+    "category": "건자재",
+    "disparity_rate": "108.5"
   },
   {
     "gicode": "A023410",
@@ -4289,7 +4404,8 @@
       "-",
       "-"
     ],
-    "category": "건자재"
+    "category": "건자재",
+    "disparity_rate": "18.4"
   },
   {
     "gicode": "A003300",
@@ -4326,7 +4442,8 @@
       "-",
       "-"
     ],
-    "category": "건자재"
+    "category": "건자재",
+    "disparity_rate": "133.6"
   },
   {
     "gicode": "A009240",
@@ -4363,7 +4480,8 @@
       "421",
       "560"
     ],
-    "category": "가구.목재.페인트"
+    "category": "가구.목재.페인트",
+    "disparity_rate": "-31.9"
   },
   {
     "gicode": "A108670",
@@ -4400,7 +4518,8 @@
       "1,072",
       "1,299"
     ],
-    "category": "가구.목재.페인트"
+    "category": "가구.목재.페인트",
+    "disparity_rate": "317.4"
   },
   {
     "gicode": "A008250",
@@ -4437,7 +4556,8 @@
       "-",
       "-"
     ],
-    "category": "가구.목재.페인트"
+    "category": "가구.목재.페인트",
+    "disparity_rate": "-222.2"
   },
   {
     "gicode": "A018310",
@@ -4474,7 +4594,8 @@
       "-",
       "-"
     ],
-    "category": "가구.목재.페인트"
+    "category": "가구.목재.페인트",
+    "disparity_rate": "-71.9"
   },
   {
     "gicode": "A344820",
@@ -4511,7 +4632,8 @@
       "-",
       "-"
     ],
-    "category": "가구.목재.페인트"
+    "category": "가구.목재.페인트",
+    "disparity_rate": "-299.9"
   },
   {
     "gicode": "A002380",
@@ -4548,7 +4670,8 @@
       "4,345",
       "5,038"
     ],
-    "category": "가구.목재.페인트"
+    "category": "가구.목재.페인트",
+    "disparity_rate": "5.1"
   },
   {
     "gicode": "A161890",
@@ -4585,7 +4708,8 @@
       "3,512",
       "3,940"
     ],
-    "category": "화장품"
+    "category": "화장품",
+    "disparity_rate": "91.9"
   },
   {
     "gicode": "A192820",
@@ -4622,7 +4746,8 @@
       "2,738",
       "3,116"
     ],
-    "category": "화장품"
+    "category": "화장품",
+    "disparity_rate": "62.7"
   },
   {
     "gicode": "A078520",
@@ -4659,7 +4784,8 @@
       "-",
       "-"
     ],
-    "category": "화장품"
+    "category": "화장품",
+    "disparity_rate": "3.9"
   },
   {
     "gicode": "A090430",
@@ -4696,7 +4822,8 @@
       "5,290",
       "5,901"
     ],
-    "category": "화장품"
+    "category": "화장품",
+    "disparity_rate": "-9.9"
   },
   {
     "gicode": "A002790",
@@ -4733,7 +4860,8 @@
       "-",
       "-"
     ],
-    "category": "화장품"
+    "category": "화장품",
+    "disparity_rate": "95.3"
   },
   {
     "gicode": "A051900",
@@ -4770,7 +4898,8 @@
       "4,002",
       "4,335"
     ],
-    "category": "화장품"
+    "category": "화장품",
+    "disparity_rate": "17.4"
   },
   {
     "gicode": "A033270",
@@ -4807,7 +4936,8 @@
       "-",
       "-"
     ],
-    "category": "제약.바이오"
+    "category": "제약.바이오",
+    "disparity_rate": "67.2"
   },
   {
     "gicode": "A185750",
@@ -4844,7 +4974,8 @@
       "920",
       "1,010"
     ],
-    "category": "제약.바이오"
+    "category": "제약.바이오",
+    "disparity_rate": "2.1"
   },
   {
     "gicode": "A145020",
@@ -4881,7 +5012,8 @@
       "2,768",
       "3,488"
     ],
-    "category": "제약.바이오"
+    "category": "제약.바이오",
+    "disparity_rate": "14.3"
   },
   {
     "gicode": "A068270",
@@ -4918,7 +5050,8 @@
       "20,975",
       "24,591"
     ],
-    "category": "제약.바이오"
+    "category": "제약.바이오",
+    "disparity_rate": "-36.6"
   },
   {
     "gicode": "A207940",
@@ -4955,7 +5088,8 @@
       "28,932",
       "32,179"
     ],
-    "category": "제약.바이오"
+    "category": "제약.바이오",
+    "disparity_rate": "-47.8"
   },
   {
     "gicode": "A259960",
@@ -4992,7 +5126,8 @@
       "15,955",
       "16,952"
     ],
-    "category": "게임"
+    "category": "게임",
+    "disparity_rate": "55.4"
   },
   {
     "gicode": "A036570",
@@ -5029,7 +5164,8 @@
       "5,912",
       "5,945"
     ],
-    "category": "게임"
+    "category": "게임",
+    "disparity_rate": "5.5"
   },
   {
     "gicode": "A293490",
@@ -5066,7 +5202,8 @@
       "243",
       "77"
     ],
-    "category": "게임"
+    "category": "게임",
+    "disparity_rate": "-90.6"
   },
   {
     "gicode": "A035420",
@@ -5103,7 +5240,8 @@
       "27,910",
       "31,621"
     ],
-    "category": "인터넷.로봇"
+    "category": "인터넷.로봇",
+    "disparity_rate": "-18.7"
   },
   {
     "gicode": "A035720",
@@ -5140,7 +5278,8 @@
       "11,134",
       "12,624"
     ],
-    "category": "인터넷.로봇"
+    "category": "인터넷.로봇",
+    "disparity_rate": "-29.9"
   },
   {
     "gicode": "A454910",
@@ -5177,7 +5316,8 @@
       "400",
       "1,070"
     ],
-    "category": "인터넷.로봇"
+    "category": "인터넷.로봇",
+    "disparity_rate": "-85.0"
   },
   {
     "gicode": "A277810",
@@ -5214,7 +5354,8 @@
       "120",
       "370"
     ],
-    "category": "인터넷.로봇"
+    "category": "인터넷.로봇",
+    "disparity_rate": "-97.1"
   },
   {
     "gicode": "A108490",
@@ -5251,7 +5392,8 @@
       "247",
       "466"
     ],
-    "category": "인터넷.로봇"
+    "category": "인터넷.로봇",
+    "disparity_rate": "-90.4"
   },
   {
     "gicode": "A034730",
@@ -5288,7 +5430,8 @@
       "92,865",
       "122,587"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "161.7"
   },
   {
     "gicode": "A402340",
@@ -5325,7 +5468,8 @@
       "477,023",
       "520,489"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "179.1"
   },
   {
     "gicode": "A001040",
@@ -5362,7 +5506,8 @@
       "30,337",
       "30,852"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "506.0"
   },
   {
     "gicode": "A004800",
@@ -5399,7 +5544,8 @@
       "5,030",
       "5,770"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "80.1"
   },
   {
     "gicode": "A267250",
@@ -5436,7 +5582,8 @@
       "100,392",
       "101,097"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "377.5"
   },
   {
     "gicode": "A028260",
@@ -5473,7 +5620,8 @@
       "41,092",
       "45,033"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "-43.9"
   },
   {
     "gicode": "A004990",
@@ -5510,7 +5658,8 @@
       "4,840",
       "8,137"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "199.1"
   },
   {
     "gicode": "A006840",
@@ -5547,7 +5696,8 @@
       "-",
       "-"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "-1743.3"
   },
   {
     "gicode": "A003380",
@@ -5584,7 +5734,8 @@
       "-",
       "-"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "626.2"
   },
   {
     "gicode": "A001800",
@@ -5621,7 +5772,8 @@
       "-",
       "-"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "260.4"
   },
   {
     "gicode": "A000140",
@@ -5658,7 +5810,8 @@
       "-",
       "-"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "832.3"
   },
   {
     "gicode": "A024720",
@@ -5695,7 +5848,8 @@
       "-",
       "-"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "-41.5"
   },
   {
     "gicode": "A044820",
@@ -5732,7 +5886,8 @@
       "-",
       "-"
     ],
-    "category": "지주사 1"
+    "category": "지주사 1",
+    "disparity_rate": "55.4"
   },
   {
     "gicode": "A383220",
@@ -5769,7 +5924,8 @@
       "5,590",
       "5,978"
     ],
-    "category": "의류"
+    "category": "의류",
+    "disparity_rate": "91.0"
   },
   {
     "gicode": "A020000",
@@ -5806,7 +5962,8 @@
       "1,145",
       "1,283"
     ],
-    "category": "의류"
+    "category": "의류",
+    "disparity_rate": "158.6"
   },
   {
     "gicode": "A105630",
@@ -5843,7 +6000,8 @@
       "1,107",
       "1,129"
     ],
-    "category": "의류"
+    "category": "의류",
+    "disparity_rate": "215.4"
   },
   {
     "gicode": "A111770",
@@ -5880,7 +6038,8 @@
       "6,974",
       "7,447"
     ],
-    "category": "의류"
+    "category": "의류",
+    "disparity_rate": "104.0"
   },
   {
     "gicode": "A009970",
@@ -5917,7 +6076,8 @@
       "-",
       "-"
     ],
-    "category": "의류"
+    "category": "의류",
+    "disparity_rate": "198.2"
   },
   {
     "gicode": "A081660",
@@ -5954,7 +6114,8 @@
       "5,924",
       "6,265"
     ],
-    "category": "의류"
+    "category": "의류",
+    "disparity_rate": "169.7"
   },
   {
     "gicode": "A004370",
@@ -5991,7 +6152,8 @@
       "2,304",
       "2,446"
     ],
-    "category": "음식료"
+    "category": "음식료",
+    "disparity_rate": "6.5"
   },
   {
     "gicode": "A003230",
@@ -6028,7 +6190,8 @@
       "8,711",
       "10,297"
     ],
-    "category": "음식료"
+    "category": "음식료",
+    "disparity_rate": "20.0"
   },
   {
     "gicode": "A097950",
@@ -6065,7 +6228,8 @@
       "14,676",
       "15,872"
     ],
-    "category": "음식료"
+    "category": "음식료",
+    "disparity_rate": "430.6"
   },
   {
     "gicode": "A006040",
@@ -6102,7 +6266,8 @@
       "5,848",
       "6,013"
     ],
-    "category": "음식료"
+    "category": "음식료",
+    "disparity_rate": "296.0"
   },
   {
     "gicode": "A003960",
@@ -6139,7 +6304,8 @@
       "-",
       "-"
     ],
-    "category": "음식료"
+    "category": "음식료",
+    "disparity_rate": "289.2"
   },
   {
     "gicode": "A007160",
@@ -6176,7 +6342,8 @@
       "-",
       "-"
     ],
-    "category": "음식료"
+    "category": "음식료",
+    "disparity_rate": "49.5"
   },
   {
     "gicode": "A035900",
@@ -6213,7 +6380,8 @@
       "1,989",
       "2,011"
     ],
-    "category": "엔터"
+    "category": "엔터",
+    "disparity_rate": "1.2"
   },
   {
     "gicode": "A352820",
@@ -6250,7 +6418,8 @@
       "4,996",
       "5,598"
     ],
-    "category": "엔터"
+    "category": "엔터",
+    "disparity_rate": "-40.6"
   },
   {
     "gicode": "A041510",
@@ -6287,7 +6456,8 @@
       "2,235",
       "2,430"
     ],
-    "category": "엔터"
+    "category": "엔터",
+    "disparity_rate": "30.7"
   },
   {
     "gicode": "A122870",
@@ -6324,7 +6494,8 @@
       "751",
       "855"
     ],
-    "category": "엔터"
+    "category": "엔터",
+    "disparity_rate": "1.7"
   },
   {
     "gicode": "A182360",
@@ -6361,7 +6532,8 @@
       "-",
       "-"
     ],
-    "category": "엔터"
+    "category": "엔터",
+    "disparity_rate": "-169.3"
   },
   {
     "gicode": "A376300",
@@ -6398,6 +6570,7 @@
       "548",
       "589"
     ],
-    "category": "엔터"
+    "category": "엔터",
+    "disparity_rate": "3.2"
   }
 ]
