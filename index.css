@@ -438,3 +438,39 @@ th.sorted-desc .sort-icon {
     grid-template-columns: 1fr;
   }
 }
+
+/* Tables Container Layout */
+.tables-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+/* Category Title Styling */
+.category-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  font-family: var(--font-sans);
+  position: relative;
+  padding-left: 0.85rem;
+  transition: color 0.3s ease;
+}
+.category-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 1.2rem;
+  background: var(--accent-color);
+  border-radius: 2px;
+}
+.category-title:first-of-type {
+  margin-top: 0;
+}

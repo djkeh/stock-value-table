@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const state = {
     stocks: [],
-    sortDirection: "asc" // 'asc' or 'desc'
+    sortDirections: {} // { "전기전자": "asc", "자동차": "asc", ... }
   };
 
-  const tbody = document.getElementById("stocks-tbody");
-  const thName = document.getElementById("th-name");
-  const sortIcon = document.getElementById("sort-icon-name");
+  const tablesContainer = document.getElementById("tables-container");
   const themeToggle = document.getElementById("theme-toggle");
 
   // Helper: check if a value string is negative
@@ -16,165 +14,219 @@ document.addEventListener("DOMContentLoaded", () => {
     return clean.startsWith("-") && clean !== "-";
   };
 
-  // Render Table
+  // Render Dashboard
   const renderTable = () => {
     if (state.stocks.length === 0) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 3rem;">
-            표시할 데이터가 없습니다.
-          </td>
-        </tr>
+      tablesContainer.innerHTML = `
+        <div style="text-align: center; color: var(--text-secondary); padding: 3rem; background: var(--container-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--container-border); border-radius: 1rem;">
+          표시할 데이터가 없습니다.
+        </div>
       `;
       return;
     }
 
-    tbody.innerHTML = "";
+    // Extract categories in order of appearance (preserving CSV/JSON order)
+    const categories = [];
+    state.stocks.forEach((stock) => {
+      const cat = stock.category || "기타";
+      if (!categories.includes(cat)) {
+        categories.push(cat);
+      }
+    });
 
-    state.stocks.forEach((stock, index) => {
-      const mainRowId = `main-row-${index}`;
-      const detailRowId = `detail-row-${index}`;
-      const accordionId = `accordion-${index}`;
+    // Clear container
+    tablesContainer.innerHTML = "";
 
-      // Create main row
-      const mainRow = document.createElement("tr");
-      mainRow.className = "main-row";
-      mainRow.id = mainRowId;
-      mainRow.setAttribute("tabindex", "0");
-      mainRow.setAttribute("role", "button");
-      mainRow.setAttribute("aria-expanded", "false");
-      mainRow.setAttribute("aria-controls", detailRowId);
+    categories.forEach((category) => {
+      // Get sorted stocks for this category
+      const categoryStocks = state.stocks.filter((s) => (s.category || "기타") === category);
+      const direction = state.sortDirections[category] || "asc";
+      
+      categoryStocks.sort((a, b) => {
+        const compareResult = a.name.localeCompare(b.name, "ko");
+        return direction === "asc" ? compareResult : -compareResult;
+      });
 
-      // We display 2026(E) PER and PBR on the summary row (index 1 of years list ["2025", "2026", "2027", "2028"])
-      const summaryPer = stock.PER[1] || "-";
-      const summaryPbr = stock.PBR[1] || "-";
+      // Create Category Header (h2)
+      const titleEl = document.createElement("h2");
+      titleEl.className = "category-title";
+      titleEl.textContent = category;
+      tablesContainer.appendChild(titleEl);
 
-      mainRow.innerHTML = `
-        <td class="col-name">
-          <svg class="chevron-icon" viewBox="0 0 24 24">
-            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-          </svg>
-          <span>${stock.name}</span>
-          <span class="col-gicode">${stock.gicode}</span>
-        </td>
-        <td class="col-price">${stock.current_price}</td>
-        <td class="col-mcap">${stock.market_cap}</td>
-        <td class="col-summary-per ${isNegative(summaryPer) ? "negative" : ""}">${summaryPer}</td>
-        <td class="col-summary-pbr ${isNegative(summaryPbr) ? "negative" : ""}">${summaryPbr}</td>
+      // Create Table Card
+      const cardEl = document.createElement("div");
+      cardEl.className = "table-card";
+
+      const wrapperEl = document.createElement("div");
+      wrapperEl.className = "table-wrapper";
+
+      const tableEl = document.createElement("table");
+      
+      // Table Header (using '기업명' instead of '종목명')
+      const thClass = `sortable ${direction === "asc" ? "sorted-asc" : "sorted-desc"}`;
+      const sortIconText = direction === "asc" ? "▼" : "▲";
+      
+      tableEl.innerHTML = `
+        <thead>
+          <tr>
+            <th scope="col" class="${thClass}" data-category="${category}" title="기업명을 기준으로 정렬합니다" tabindex="0">
+              기업명 <span class="sort-icon">${sortIconText}</span>
+            </th>
+            <th scope="col">현재가 (원)</th>
+            <th scope="col">시가총액 (억원)</th>
+            <th scope="col">2026(E) PER (배)</th>
+            <th scope="col">2026(E) PBR (배)</th>
+          </tr>
+        </thead>
       `;
 
-      // Create detail row
-      const detailRow = document.createElement("tr");
-      detailRow.className = "detail-row";
-      detailRow.id = detailRowId;
-      detailRow.style.display = "none"; // Hide initially
+      const tbodyEl = document.createElement("tbody");
 
-      // Generate HTML for metric cards (PER, PBR, EPS, 영업이익)
-      const renderMetricCard = (title, dataList) => {
-        let gridHeaders = "";
-        let gridValues = "";
+      categoryStocks.forEach((stock) => {
+        const mainRowId = `main-row-${stock.gicode}`;
+        const detailRowId = `detail-row-${stock.gicode}`;
+        const accordionId = `accordion-${stock.gicode}`;
 
-        stock.years.forEach((year, idx) => {
-          const val = dataList[idx] || "-";
-          const isEst = year === "2026" || year === "2027" || year === "2028";
-          const displayYear = isEst ? `${year}(E)` : year;
-          
-          gridHeaders += `<div class="grid-header">${displayYear}</div>`;
-          gridValues += `<div class="grid-value ${isNegative(val) ? "negative" : ""}">${val}</div>`;
-        });
+        // Create main row
+        const mainRow = document.createElement("tr");
+        mainRow.className = "main-row";
+        mainRow.id = mainRowId;
+        mainRow.setAttribute("tabindex", "0");
+        mainRow.setAttribute("role", "button");
+        mainRow.setAttribute("aria-expanded", "false");
+        mainRow.setAttribute("aria-controls", detailRowId);
 
-        return `
-          <div class="metric-card">
-            <div class="metric-title">${title}</div>
-            <div class="metric-grid">
-              ${gridHeaders}
-              ${gridValues}
-            </div>
-          </div>
+        // We display 2026(E) PER and PBR on the summary row (index 1 of years list ["2025", "2026", "2027", "2028"])
+        const summaryPer = stock.PER[1] || "-";
+        const summaryPbr = stock.PBR[1] || "-";
+
+        mainRow.innerHTML = `
+          <td class="col-name">
+            <svg class="chevron-icon" viewBox="0 0 24 24">
+              <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+            </svg>
+            <span>${stock.name}</span>
+            <span class="col-gicode">${stock.gicode}</span>
+          </td>
+          <td class="col-price">${stock.current_price}</td>
+          <td class="col-mcap">${stock.market_cap}</td>
+          <td class="col-summary-per ${isNegative(summaryPer) ? "negative" : ""}">${summaryPer}</td>
+          <td class="col-summary-pbr ${isNegative(summaryPbr) ? "negative" : ""}">${summaryPbr}</td>
         `;
-      };
 
-      detailRow.innerHTML = `
-        <td colspan="5">
-          <div class="accordion-wrapper" id="${accordionId}">
-            <div class="accordion-inner">
-              <div class="detail-content">
-                ${renderMetricCard("영업이익 (억원)", stock.영업이익)}
-                ${renderMetricCard("EPS (원)", stock.EPS)}
-                ${renderMetricCard("PER (배)", stock.PER)}
-                ${renderMetricCard("PBR (배)", stock.PBR)}
+        // Create detail row
+        const detailRow = document.createElement("tr");
+        detailRow.className = "detail-row";
+        detailRow.id = detailRowId;
+        detailRow.style.display = "none"; // Hide initially
+
+        // Generate HTML for metric cards (PER, PBR, EPS, 영업이익)
+        const renderMetricCard = (title, dataList) => {
+          let gridHeaders = "";
+          let gridValues = "";
+
+          stock.years.forEach((year, idx) => {
+            const val = dataList[idx] || "-";
+            const isEst = year === "2026" || year === "2027" || year === "2028";
+            const displayYear = isEst ? `${year}(E)` : year;
+            
+            gridHeaders += `<div class="grid-header">${displayYear}</div>`;
+            gridValues += `<div class="grid-value ${isNegative(val) ? "negative" : ""}">${val}</div>`;
+          });
+
+          return `
+            <div class="metric-card">
+              <div class="metric-title">${title}</div>
+              <div class="metric-grid">
+                ${gridHeaders}
+                ${gridValues}
               </div>
             </div>
-          </div>
-        </td>
-      `;
+          `;
+        };
 
-      tbody.appendChild(mainRow);
-      tbody.appendChild(detailRow);
+        detailRow.innerHTML = `
+          <td colspan="5">
+            <div class="accordion-wrapper" id="${accordionId}">
+              <div class="accordion-inner">
+                <div class="detail-content">
+                  ${renderMetricCard("영업이익 (억원)", stock.영업이익)}
+                  ${renderMetricCard("EPS (원)", stock.EPS)}
+                  ${renderMetricCard("PER (배)", stock.PER)}
+                  ${renderMetricCard("PBR (배)", stock.PBR)}
+                </div>
+              </div>
+            </div>
+          </td>
+        `;
 
-      // Event listener for expanding/collapsing
-      const toggleAccordion = () => {
-        const isActive = mainRow.classList.contains("active");
-        const accordion = document.getElementById(accordionId);
+        tbodyEl.appendChild(mainRow);
+        tbodyEl.appendChild(detailRow);
 
-        if (isActive) {
-          // Collapse
-          mainRow.classList.remove("active");
-          mainRow.setAttribute("aria-expanded", "false");
-          accordion.classList.remove("expanded");
-          
-          // Wait for CSS grid transition to complete before hiding container
-          setTimeout(() => {
-            if (!mainRow.classList.contains("active")) {
-              detailRow.style.display = "none";
-            }
-          }, 300); // matches CSS transition time
-        } else {
-          // Expand
-          detailRow.style.display = "table-row";
-          mainRow.classList.add("active");
-          mainRow.setAttribute("aria-expanded", "true");
-          
-          // Force layout reflow so transition runs properly
-          void accordion.offsetHeight;
-          
-          accordion.classList.add("expanded");
-        }
-      };
+        // Event listener for expanding/collapsing
+        const toggleAccordion = () => {
+          const isActive = mainRow.classList.contains("active");
+          const accordion = document.getElementById(accordionId);
 
-      mainRow.addEventListener("click", toggleAccordion);
-      mainRow.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          toggleAccordion();
-        }
+          if (isActive) {
+            // Collapse
+            mainRow.classList.remove("active");
+            mainRow.setAttribute("aria-expanded", "false");
+            accordion.classList.remove("expanded");
+            
+            // Wait for CSS grid transition to complete before hiding container
+            setTimeout(() => {
+              if (!mainRow.classList.contains("active")) {
+                detailRow.style.display = "none";
+              }
+            }, 300); // matches CSS transition time
+          } else {
+            // Expand
+            detailRow.style.display = "table-row";
+            mainRow.classList.add("active");
+            mainRow.setAttribute("aria-expanded", "true");
+            
+            // Force layout reflow so transition runs properly
+            void accordion.offsetHeight;
+            
+            accordion.classList.add("expanded");
+          }
+        };
+
+        mainRow.addEventListener("click", toggleAccordion);
+        mainRow.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggleAccordion();
+          }
+        });
       });
+
+      tableEl.appendChild(tbodyEl);
+      wrapperEl.appendChild(tableEl);
+      cardEl.appendChild(wrapperEl);
+      tablesContainer.appendChild(cardEl);
     });
   };
 
-  // Sorting logic (Stock Name only)
-  const sortStocks = () => {
-    state.stocks.sort((a, b) => {
-      // localeCompare with 'ko' correctly handles Korean alphabetical ordering
-      const compareResult = a.name.localeCompare(b.name, "ko");
-      return state.sortDirection === "asc" ? compareResult : -compareResult;
-    });
-
-    renderTable();
-  };
-
-  thName.addEventListener("click", () => {
-    // Toggle sort direction
-    if (state.sortDirection === "asc") {
-      state.sortDirection = "desc";
-      thName.className = "sortable sorted-desc";
-      sortIcon.textContent = "▲";
-    } else {
-      state.sortDirection = "asc";
-      thName.className = "sortable sorted-asc";
-      sortIcon.textContent = "▼";
+  // Event delegation for table sorting (click on sortable header)
+  tablesContainer.addEventListener("click", (e) => {
+    const th = e.target.closest("th.sortable");
+    if (th) {
+      const category = th.dataset.category;
+      const currentDir = state.sortDirections[category] || "asc";
+      state.sortDirections[category] = currentDir === "asc" ? "desc" : "asc";
+      renderTable();
     }
-    sortStocks();
+  });
+
+  // Support Keyboard interaction (Enter/Space) on the sortable header
+  tablesContainer.addEventListener("keydown", (e) => {
+    const th = e.target.closest("th.sortable");
+    if (th && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      th.click();
+    }
   });
 
   // Theme Toggler logic
@@ -206,18 +258,22 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then((data) => {
       state.stocks = data;
-      // Sort initially
-      sortStocks();
+      // Initialize sort directions for all unique categories
+      data.forEach((stock) => {
+        const cat = stock.category || "기타";
+        if (!state.sortDirections[cat]) {
+          state.sortDirections[cat] = "asc"; // Default sort direction
+        }
+      });
+      renderTable();
     })
     .catch((error) => {
       console.error("Failed to load stocks data:", error);
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="5" style="text-align: center; color: #ef4444; padding: 3rem; font-weight: 600;">
-            데이터를 불러오는 데 실패했습니다.<br>
-            <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-secondary);">${error.message}</span>
-          </td>
-        </tr>
+      tablesContainer.innerHTML = `
+        <div style="text-align: center; color: #ef4444; padding: 3rem; font-weight: 600; background: var(--container-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--container-border); border-radius: 1rem;">
+          데이터를 불러오는 데 실패했습니다.<br>
+          <span style="font-size: 0.85rem; font-weight: 400; color: var(--text-secondary);">${error.message}</span>
+        </div>
       `;
     });
 });
