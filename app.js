@@ -220,9 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
           </td>
           <td class="col-price">${stock.current_price}</td>
           <td class="col-mcap">${stock.market_cap}</td>
-          <td class="col-disparity ${isNegative(disparity) ? "negative" : ""}">${disparity}</td>
-          <td class="col-summary-per ${isNegative(summaryPer) ? "negative" : ""}">${summaryPer}</td>
-          <td class="col-summary-pbr ${isNegative(summaryPbr) ? "negative" : ""}">${summaryPbr}</td>
+          <td class="col-disparity">${disparity}</td>
+          <td class="col-summary-per ${isNegative(summaryPer) ? "negative-color" : ""}">${summaryPer}</td>
+          <td class="col-summary-pbr ${isNegative(summaryPbr) ? "negative-color" : ""}">${summaryPbr}</td>
         `;
 
         // Create detail row
@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const displayYear = isEst ? `${year}(E)` : year;
             
             gridHeaders += `<div class="grid-header">${displayYear}</div>`;
-            gridValues += `<div class="grid-value ${isNegative(val) ? "negative" : ""}">${val}</div>`;
+            gridValues += `<div class="grid-value ${isNegative(val) ? "negative-color" : ""}">${val}</div>`;
           });
 
           return `

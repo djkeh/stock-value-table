@@ -525,7 +525,7 @@ describe('Stock Value Table Dashboard UI', () => {
     expect(customDocument.documentElement.getAttribute('data-theme')).toBe('dark');
   });
 
-  it('renders disparity_rate column in summary table and handles negative highlighting', async () => {
+  it('renders disparity_rate column in summary table and does not apply negative highlighting to disparity, but applies to PER/PBR', async () => {
     await loadApp();
     await vi.waitFor(() => {
       expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
@@ -535,25 +535,32 @@ describe('Stock Value Table Dashboard UI', () => {
     // The columns: 기업명, 현재가 (원), 시가총액 (억원), 괴리율 (%), 2026(E) PER (배), 2026(E) PBR (배)
     expect(headers[3]).toBe('괴리율 (%)');
 
-    // Check Samsung Electronics row (positive disparity rate: "135.0")
+    // Check Samsung Electronics row (positive disparity rate: "135.0", negative PER: "-9.2")
     const samsungRow = customDocument.querySelector('#main-row-A005930');
     const samsungCells = samsungRow.querySelectorAll('td');
     expect(samsungCells[3].textContent).toBe('135.0');
     expect(samsungCells[3].classList.contains('col-disparity')).toBe(true);
+    expect(samsungCells[3].classList.contains('negative-color')).toBe(false);
     expect(samsungCells[3].classList.contains('negative')).toBe(false);
+    expect(samsungCells[4].textContent).toBe('-9.2');
+    expect(samsungCells[4].classList.contains('negative-color')).toBe(true);
 
-    // Check Hyundai row (negative disparity rate: "-10.5")
+    // Check Hyundai row (negative disparity rate: "-10.5", negative PBR: "-0.5")
     const hyundaiRow = customDocument.querySelector('#main-row-A005380');
     const hyundaiCells = hyundaiRow.querySelectorAll('td');
     expect(hyundaiCells[3].textContent).toBe('-10.5');
     expect(hyundaiCells[3].classList.contains('col-disparity')).toBe(true);
-    expect(hyundaiCells[3].classList.contains('negative')).toBe(true);
+    expect(hyundaiCells[3].classList.contains('negative-color')).toBe(false);
+    expect(hyundaiCells[3].classList.contains('negative')).toBe(false);
+    expect(hyundaiCells[5].textContent).toBe('-0.5');
+    expect(hyundaiCells[5].classList.contains('negative-color')).toBe(true);
 
     // Check 부실기업 row (missing disparity rate: "-")
     const busilRow = customDocument.querySelector('#main-row-A999999');
     const busilCells = busilRow.querySelectorAll('td');
     expect(busilCells[3].textContent).toBe('-');
     expect(busilCells[3].classList.contains('col-disparity')).toBe(true);
+    expect(busilCells[3].classList.contains('negative-color')).toBe(false);
     expect(busilCells[3].classList.contains('negative')).toBe(false);
 
     // Check detail row colspan is 6
