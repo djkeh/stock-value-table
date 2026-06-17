@@ -532,8 +532,8 @@ describe('Stock Value Table Dashboard UI', () => {
     });
 
     const headers = Array.from(customDocument.querySelectorAll('thead th')).map(el => el.textContent.trim());
-    // The columns: 기업명, 현재가 (원), 시가총액 (억원), 괴리율 (%), 2026(E) PER (배), 2026(E) PBR (배)
-    expect(headers[3]).toBe('괴리율 (%)');
+    // The columns: 기업명, 현재가, 시가총액, 괴리율, 2026(E) PER, 2026(E) PBR
+    expect(headers[3]).toBe('괴리율');
 
     // Check Samsung Electronics row (positive disparity rate: "135.0", negative PER: "-9.2")
     const samsungRow = customDocument.querySelector('#main-row-A005930');
@@ -695,7 +695,7 @@ describe('Stock Value Table Dashboard UI', () => {
     expect(nanCells[5].textContent).toBe('-');
   });
 
-  it('renders tooltip trigger button next to 괴리율 (%)', async () => {
+  it('renders tooltip trigger button next to 괴리율', async () => {
     await loadApp();
     await vi.waitFor(() => {
       expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
@@ -703,7 +703,7 @@ describe('Stock Value Table Dashboard UI', () => {
 
     const thDisparity = customDocument.querySelector('th.th-disparity');
     expect(thDisparity).toBeTruthy();
-    expect(thDisparity.textContent).toContain('괴리율 (%)');
+    expect(thDisparity.textContent).toContain('괴리율');
     
     const trigger = thDisparity.querySelector('.tooltip-trigger');
     expect(trigger).toBeTruthy();
