@@ -115,6 +115,73 @@ document.addEventListener("DOMContentLoaded", () => {
     return clean.startsWith("-") && clean !== "-";
   };
 
+  // Helper: format price with KRW unit for summary table
+  const formatSummaryPrice = (priceStr) => {
+    if (!priceStr) return "-";
+    const clean = priceStr.trim();
+    if (clean === "" || clean === "-") return "-";
+    return `${clean}원`;
+  };
+
+  // Helper: format market cap in easy-to-read Korean for summary table
+  const formatSummaryMarketCap = (mcapStr) => {
+    if (!mcapStr) return "-";
+    const clean = mcapStr.trim();
+    if (clean === "" || clean === "-") return "-";
+    const num = parseInt(clean.replace(/,/g, ""), 10);
+    if (isNaN(num)) return "-";
+    
+    const numStr = num.toString();
+    const len = numStr.length;
+    
+    if (len <= 4) {
+      return `${num}억`;
+    }
+    
+    const top4 = numStr.substring(0, 4);
+    const padded = top4.padEnd(len, "0");
+    const X = parseInt(padded, 10);
+    
+    const cho = Math.floor(X / 10000);
+    const eok = X % 10000;
+    
+    if (eok === 0) {
+      return `${cho}조`;
+    } else {
+      return `${cho}조 ${eok}억`;
+    }
+  };
+
+  // Helper: format disparity rate with percentage and evaluation for summary table
+  const formatSummaryDisparity = (disparityStr) => {
+    if (!disparityStr) return "-";
+    const clean = disparityStr.trim();
+    if (clean === "" || clean === "-") return "-";
+    const num = parseFloat(clean);
+    if (isNaN(num)) return "-";
+    
+    const rounded = Math.round(Math.abs(num)) * Math.sign(num);
+    if (rounded === 0) {
+      return "0%";
+    } else if (rounded > 0) {
+      return `${rounded}% (고평가)`;
+    } else {
+      return `${rounded}% (저평가)`;
+    }
+  };
+
+  // Helper: format PER/PBR ratio with times unit for summary table
+  const formatSummaryRatio = (ratioStr) => {
+    if (!ratioStr) return "-";
+    const clean = ratioStr.trim();
+    if (clean === "" || clean === "-") return "-";
+    const num = parseFloat(clean);
+    if (isNaN(num)) return "-";
+    
+    const rounded = Math.round(Math.abs(num)) * Math.sign(num);
+    return `${rounded}배`;
+  };
+
   // Render Dashboard
   const renderTable = () => {
     if (state.stocks.length === 0) {
@@ -206,9 +273,15 @@ document.addEventListener("DOMContentLoaded", () => {
         mainRow.setAttribute("aria-controls", detailRowId);
 
         // We display 2026(E) PER and PBR on the summary row (index 1 of years list ["2025", "2026", "2027", "2028"])
-        const summaryPer = stock.PER[1] || "-";
-        const summaryPbr = stock.PBR[1] || "-";
-        const disparity = stock.disparity_rate || "-";
+        const summaryPer = stock.PER[1];
+        const summaryPbr = stock.PBR[1];
+        const disparity = stock.disparity_rate;
+
+        const formattedPrice = formatSummaryPrice(stock.current_price);
+        const formattedMcap = formatSummaryMarketCap(stock.market_cap);
+        const formattedDisparity = formatSummaryDisparity(disparity);
+        const formattedPer = formatSummaryRatio(summaryPer);
+        const formattedPbr = formatSummaryRatio(summaryPbr);
 
         mainRow.innerHTML = `
           <td class="col-name">
@@ -218,11 +291,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <span>${stock.name}</span>
             <span class="col-gicode">${stock.gicode}</span>
           </td>
-          <td class="col-price">${stock.current_price}</td>
-          <td class="col-mcap">${stock.market_cap}</td>
-          <td class="col-disparity ${isNegative(disparity) ? "negative" : ""}">${disparity}</td>
-          <td class="col-summary-per ${isNegative(summaryPer) ? "negative" : ""}">${summaryPer}</td>
-          <td class="col-summary-pbr ${isNegative(summaryPbr) ? "negative" : ""}">${summaryPbr}</td>
+          <td class="col-price">${formattedPrice}</td>
+          <td class="col-mcap">${formattedMcap}</td>
+          <td class="col-disparity">${formattedDisparity}</td>
+          <td class="col-summary-per ${isNegative(summaryPer || "-") ? "negative-color" : ""}">${formattedPer}</td>
+          <td class="col-summary-pbr ${isNegative(summaryPbr || "-") ? "negative-color" : ""}">${formattedPbr}</td>
         `;
 
         // Create detail row
@@ -242,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const displayYear = isEst ? `${year}(E)` : year;
             
             gridHeaders += `<div class="grid-header">${displayYear}</div>`;
-            gridValues += `<div class="grid-value ${isNegative(val) ? "negative" : ""}">${val}</div>`;
+            gridValues += `<div class="grid-value ${isNegative(val) ? "negative-color" : ""}">${val}</div>`;
           });
 
           return `

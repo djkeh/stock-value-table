@@ -390,7 +390,6 @@ th.sorted-desc .sort-icon {
 
 .col-summary-per, .col-summary-pbr {
   font-family: var(--font-mono);
-  font-weight: 600;
 }
 
 /* Detail Rows / Accordion Animation */
@@ -472,7 +471,7 @@ th.sorted-desc .sort-icon {
 }
 
 /* Highlight dynamic text color for negatives or special metrics */
-.grid-value.negative {
+.negative-color {
   color: #ef4444;
 }
 
