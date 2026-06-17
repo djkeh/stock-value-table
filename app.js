@@ -240,18 +240,18 @@ document.addEventListener("DOMContentLoaded", () => {
             <th scope="col" class="${thClass}" data-category="${category}" title="기업명을 기준으로 정렬합니다" tabindex="0">
               기업명 <span class="sort-icon">${sortIconText}</span>
             </th>
-            <th scope="col">현재가 (원)</th>
-            <th scope="col">시가총액 (억원)</th>
+            <th scope="col">현재가</th>
+            <th scope="col">시가총액</th>
             <th scope="col" class="th-disparity">
-              괴리율 (%)
+              괴리율
               <button type="button" class="tooltip-trigger" aria-label="괴리율 계산 공식 및 의미 설명" aria-describedby="disparity-tooltip">
                 <svg viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
                 </svg>
               </button>
             </th>
-            <th scope="col">2026(E) PER (배)</th>
-            <th scope="col">2026(E) PBR (배)</th>
+            <th scope="col">2026(E) PER</th>
+            <th scope="col">2026(E) PBR</th>
           </tr>
         </thead>
       `;
