@@ -538,26 +538,32 @@ describe('Stock Value Table Dashboard UI', () => {
     // Check Samsung Electronics row (positive disparity rate: "135.0", negative PER: "-9.2")
     const samsungRow = customDocument.querySelector('#main-row-A005930');
     const samsungCells = samsungRow.querySelectorAll('td');
-    expect(samsungCells[3].textContent).toBe('135.0');
+    expect(samsungCells[1].textContent).toBe('70,000원');
+    expect(samsungCells[2].textContent).toBe('420조');
+    expect(samsungCells[3].textContent).toBe('135% (고평가)');
     expect(samsungCells[3].classList.contains('col-disparity')).toBe(true);
     expect(samsungCells[3].classList.contains('negative-color')).toBe(false);
     expect(samsungCells[3].classList.contains('negative')).toBe(false);
-    expect(samsungCells[4].textContent).toBe('-9.2');
+    expect(samsungCells[4].textContent).toBe('-9배');
     expect(samsungCells[4].classList.contains('negative-color')).toBe(true);
 
     // Check Hyundai row (negative disparity rate: "-10.5", negative PBR: "-0.5")
     const hyundaiRow = customDocument.querySelector('#main-row-A005380');
     const hyundaiCells = hyundaiRow.querySelectorAll('td');
-    expect(hyundaiCells[3].textContent).toBe('-10.5');
+    expect(hyundaiCells[1].textContent).toBe('200,000원');
+    expect(hyundaiCells[2].textContent).toBe('42조');
+    expect(hyundaiCells[3].textContent).toBe('-11% (저평가)');
     expect(hyundaiCells[3].classList.contains('col-disparity')).toBe(true);
     expect(hyundaiCells[3].classList.contains('negative-color')).toBe(false);
     expect(hyundaiCells[3].classList.contains('negative')).toBe(false);
-    expect(hyundaiCells[5].textContent).toBe('-0.5');
+    expect(hyundaiCells[5].textContent).toBe('-1배');
     expect(hyundaiCells[5].classList.contains('negative-color')).toBe(true);
 
     // Check 부실기업 row (missing disparity rate: "-")
     const busilRow = customDocument.querySelector('#main-row-A999999');
     const busilCells = busilRow.querySelectorAll('td');
+    expect(busilCells[1].textContent).toBe('-');
+    expect(busilCells[2].textContent).toBe('-');
     expect(busilCells[3].textContent).toBe('-');
     expect(busilCells[3].classList.contains('col-disparity')).toBe(true);
     expect(busilCells[3].classList.contains('negative-color')).toBe(false);
@@ -567,6 +573,126 @@ describe('Stock Value Table Dashboard UI', () => {
     const detailRow = customDocument.querySelector('#detail-row-A005930');
     const detailTd = detailRow.querySelector('td');
     expect(detailTd.getAttribute('colspan')).toBe('6');
+  });
+
+  it('formats summary table values correctly with units and handles various edge cases', async () => {
+    // Inject custom mock state with formatting edge cases
+    mockFetch.mockImplementationOnce(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve([
+          {
+            gicode: "A111111",
+            name: "엣지케이스기업",
+            category: "기타",
+            current_price: "5,000",
+            market_cap: "1,493,127",
+            disparity_rate: "0.0",
+            years: ["2025", "2026", "2027", "2028"],
+            PBR: ["1.0", "1.0", "1.0", "1.0"],
+            PER: ["10.0", "10.0", "10.0", "10.0"],
+            EPS: ["500", "500", "500", "500"],
+            영업이익: ["500", "500", "500", "500"]
+          },
+          {
+            gicode: "A222222",
+            name: "소형기업",
+            category: "기타",
+            current_price: "1,200",
+            market_cap: "311",
+            disparity_rate: "25.4",
+            years: ["2025", "2026", "2027", "2028"],
+            PBR: ["0.5", "0.5", "0.5", "0.5"],
+            PER: ["5.0", "5.0", "5.0", "5.0"],
+            EPS: ["100", "100", "100", "100"],
+            영업이익: ["100", "100", "100", "100"]
+          },
+          {
+            gicode: "A333333",
+            name: "방어코드테스트기업",
+            category: "기타",
+            current_price: undefined,
+            market_cap: undefined,
+            disparity_rate: undefined,
+            years: ["2025", "2026", "2027", "2028"],
+            PBR: [undefined, undefined, undefined, undefined],
+            PER: [undefined, undefined, undefined, undefined],
+            EPS: [],
+            영업이익: []
+          },
+          {
+            gicode: "A444444",
+            name: "비수치테스트기업",
+            category: "기타",
+            current_price: "-",
+            market_cap: "-",
+            disparity_rate: "-",
+            years: ["2025", "2026", "2027", "2028"],
+            PBR: ["-", "-", "-", "-"],
+            PER: ["-", "-", "-", "-"],
+            EPS: [],
+            영업이익: []
+          },
+          {
+            gicode: "A555555",
+            name: "NaN테스트기업",
+            category: "기타",
+            current_price: "1,000",
+            market_cap: "NaN_value",
+            disparity_rate: "NaN_rate",
+            years: ["2025", "2026", "2027", "2028"],
+            PBR: ["1.0", "NaN_ratio", "1.0", "1.0"],
+            PER: ["10.0", "NaN_ratio", "10.0", "10.0"],
+            EPS: [],
+            영업이익: []
+          }
+        ])
+      })
+    );
+
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(5);
+    });
+
+    const edgeRow = customDocument.querySelector('#main-row-A111111');
+    const edgeCells = edgeRow.querySelectorAll('td');
+    // Mcap "1,493,127" (1493127) -> 149조 3000억
+    expect(edgeCells[2].textContent).toBe('149조 3000억');
+    // Disparity "0.0" -> 0% (no tag)
+    expect(edgeCells[3].textContent).toBe('0%');
+
+    const smallRow = customDocument.querySelector('#main-row-A222222');
+    const smallCells = smallRow.querySelectorAll('td');
+    // Mcap "311" (311) -> 311억
+    expect(smallCells[2].textContent).toBe('311억');
+    // Disparity "25.4" -> 25% (고평가)
+    expect(smallCells[3].textContent).toBe('25% (고평가)');
+    // PBR "0.5" -> 1배
+    expect(smallCells[5].textContent).toBe('1배');
+
+    const guardRow = customDocument.querySelector('#main-row-A333333');
+    const guardCells = guardRow.querySelectorAll('td');
+    expect(guardCells[1].textContent).toBe('-');
+    expect(guardCells[2].textContent).toBe('-');
+    expect(guardCells[3].textContent).toBe('-');
+    expect(guardCells[4].textContent).toBe('-');
+    expect(guardCells[5].textContent).toBe('-');
+
+    const dashRow = customDocument.querySelector('#main-row-A444444');
+    const dashCells = dashRow.querySelectorAll('td');
+    expect(dashCells[1].textContent).toBe('-');
+    expect(dashCells[2].textContent).toBe('-');
+    expect(dashCells[3].textContent).toBe('-');
+    expect(dashCells[4].textContent).toBe('-');
+    expect(dashCells[5].textContent).toBe('-');
+
+    const nanRow = customDocument.querySelector('#main-row-A555555');
+    const nanCells = nanRow.querySelectorAll('td');
+    expect(nanCells[2].textContent).toBe('-');
+    expect(nanCells[3].textContent).toBe('-');
+    expect(nanCells[4].textContent).toBe('-');
+    expect(nanCells[5].textContent).toBe('-');
   });
 
   it('renders tooltip trigger button next to 괴리율 (%)', async () => {
