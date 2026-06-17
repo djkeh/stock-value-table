@@ -54,7 +54,7 @@ graph TD
 * **Category Tables**: Group stocks by `category`. Render separate tables with `h2.category-title` headers. Keep the CSV/JSON order of categories.
 * **Sort Logic**: Toggle asc/desc sort on `th.sortable` using `localeCompare("ko")` on company names. Support keyboard input (Enter/Space) with `tabindex="0"`.
 * **PER/PBR metrics**: Main row summary column displays index 1 (2026 estimation) of the 4-year financial data.
-* **Negative Indicator**: Use `isNegative()` helper. Apply `.negative-color` CSS class (red text) if value starts with `-` (excluding solitary dashes) for PER, PBR, and detail metrics. Do NOT apply highlighting to `disparity_rate`.
+* **Negative Indicator**: Use `isNegative()` helper. Apply `.negative-color` CSS class (red text) if value starts with `-` (excluding solitary dashes) for PER, PBR, and detail metrics. Do NOT apply highlighting to `disparity_rate`. (disparity_rate uses high disparity as undervaluation: positive is '저평가', negative is '고평가').
 * **Accordion Animation**: Toggle `detail-row` on main row click or Enter/Space. Keep `display: none` and remove it 300ms after collapsing to match CSS grid transition. Control `aria-expanded` and `aria-controls`.
 
 ### Theme & Time Sync

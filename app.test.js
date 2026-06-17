@@ -540,7 +540,7 @@ describe('Stock Value Table Dashboard UI', () => {
     const samsungCells = samsungRow.querySelectorAll('td');
     expect(samsungCells[1].textContent).toBe('70,000원');
     expect(samsungCells[2].textContent).toBe('420조');
-    expect(samsungCells[3].textContent).toBe('135% (고평가)');
+    expect(samsungCells[3].textContent).toBe('135% (저평가)');
     expect(samsungCells[3].classList.contains('col-disparity')).toBe(true);
     expect(samsungCells[3].classList.contains('negative-color')).toBe(false);
     expect(samsungCells[3].classList.contains('negative')).toBe(false);
@@ -552,7 +552,7 @@ describe('Stock Value Table Dashboard UI', () => {
     const hyundaiCells = hyundaiRow.querySelectorAll('td');
     expect(hyundaiCells[1].textContent).toBe('200,000원');
     expect(hyundaiCells[2].textContent).toBe('42조');
-    expect(hyundaiCells[3].textContent).toBe('-11% (저평가)');
+    expect(hyundaiCells[3].textContent).toBe('-11% (고평가)');
     expect(hyundaiCells[3].classList.contains('col-disparity')).toBe(true);
     expect(hyundaiCells[3].classList.contains('negative-color')).toBe(false);
     expect(hyundaiCells[3].classList.contains('negative')).toBe(false);
@@ -666,8 +666,8 @@ describe('Stock Value Table Dashboard UI', () => {
     const smallCells = smallRow.querySelectorAll('td');
     // Mcap "311" (311) -> 311억
     expect(smallCells[2].textContent).toBe('311억');
-    // Disparity "25.4" -> 25% (고평가)
-    expect(smallCells[3].textContent).toBe('25% (고평가)');
+    // Disparity "25.4" -> 25% (저평가)
+    expect(smallCells[3].textContent).toBe('25% (저평가)');
     // PBR "0.5" -> 1배
     expect(smallCells[5].textContent).toBe('1배');
 

@@ -164,9 +164,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (rounded === 0) {
       return "0%";
     } else if (rounded > 0) {
-      return `${rounded}% (고평가)`;
-    } else {
       return `${rounded}% (저평가)`;
+    } else {
+      return `${rounded}% (고평가)`;
     }
   };
 
