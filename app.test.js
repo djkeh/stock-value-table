@@ -542,6 +542,7 @@ describe('Stock Value Table Dashboard UI', () => {
     expect(samsungCells[2].textContent).toBe('420조');
     expect(samsungCells[3].textContent).toBe('135% (저평가)');
     expect(samsungCells[3].classList.contains('col-disparity')).toBe(true);
+    expect(samsungCells[3].classList.contains('undervalued-color')).toBe(true);
     expect(samsungCells[3].classList.contains('negative-color')).toBe(false);
     expect(samsungCells[3].classList.contains('negative')).toBe(false);
     expect(samsungCells[4].textContent).toBe('-9배');
@@ -554,6 +555,7 @@ describe('Stock Value Table Dashboard UI', () => {
     expect(hyundaiCells[2].textContent).toBe('42조');
     expect(hyundaiCells[3].textContent).toBe('-11% (고평가)');
     expect(hyundaiCells[3].classList.contains('col-disparity')).toBe(true);
+    expect(hyundaiCells[3].classList.contains('undervalued-color')).toBe(false);
     expect(hyundaiCells[3].classList.contains('negative-color')).toBe(false);
     expect(hyundaiCells[3].classList.contains('negative')).toBe(false);
     expect(hyundaiCells[5].textContent).toBe('-1배');
@@ -566,6 +568,7 @@ describe('Stock Value Table Dashboard UI', () => {
     expect(busilCells[2].textContent).toBe('-');
     expect(busilCells[3].textContent).toBe('-');
     expect(busilCells[3].classList.contains('col-disparity')).toBe(true);
+    expect(busilCells[3].classList.contains('undervalued-color')).toBe(false);
     expect(busilCells[3].classList.contains('negative-color')).toBe(false);
     expect(busilCells[3].classList.contains('negative')).toBe(false);
 
