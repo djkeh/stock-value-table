@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/venv,macos,python,windows,visualstudiocode,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=venv,macos,python,windows,visualstudiocode,node
 
+.uroboros/
+
 ### macOS ###
 # General
 .DS_Store
