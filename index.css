@@ -475,6 +475,15 @@ th.sorted-desc .sort-icon {
   color: #ef4444;
 }
 
+.undervalued-color {
+  color: #d97706;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .undervalued-color {
+  color: #fbbf24;
+}
+
 /* Responsive breakpoints */
 @media (max-width: 768px) {
   .app-container {

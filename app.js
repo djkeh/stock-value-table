@@ -115,6 +115,17 @@ document.addEventListener("DOMContentLoaded", () => {
     return clean.startsWith("-") && clean !== "-";
   };
 
+  // Helper: check if a disparity rate string indicates undervaluation (positive value)
+  const isUndervalued = (valStr) => {
+    if (!valStr) return false;
+    const clean = valStr.trim();
+    if (clean === "" || clean === "-") return false;
+    const num = parseFloat(clean);
+    if (isNaN(num)) return false;
+    const rounded = Math.round(Math.abs(num)) * Math.sign(num);
+    return rounded > 0;
+  };
+
   // Helper: format price with KRW unit for summary table
   const formatSummaryPrice = (priceStr) => {
     if (!priceStr) return "-";
@@ -293,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </td>
           <td class="col-price">${formattedPrice}</td>
           <td class="col-mcap">${formattedMcap}</td>
-          <td class="col-disparity">${formattedDisparity}</td>
+          <td class="col-disparity ${isUndervalued(disparity) ? "undervalued-color" : ""}">${formattedDisparity}</td>
           <td class="col-summary-per ${isNegative(summaryPer || "-") ? "negative-color" : ""}">${formattedPer}</td>
           <td class="col-summary-pbr ${isNegative(summaryPbr || "-") ? "negative-color" : ""}">${formattedPbr}</td>
         `;
