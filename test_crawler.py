@@ -83,8 +83,9 @@ def test_crawl_stock_success():
         <body>
             <span id="giName">테스트전자</span>
             <table class="us_table_ty1">
+                <tr></tr>
                 <tr>
-                    <td>종가/ 전일대비/ 수익률</td>
+                    <td>종가/ 전일대비/수익률</td>
                     <td>70,000 / +500 / +0.72%</td>
                 </tr>
                 <tr>
@@ -137,6 +138,10 @@ def test_crawl_stock_success():
     assert result["PBR"] == ["1.2", "1.1", "1.0", "0.9"]
     assert result["EPS"] == ["6000", "7500", "8000", "9000"]
     assert result["영업이익"] == ["10,000", "12,000", "14,000", "15,000"]
+    
+    # Assert main URL was called with wcomp.fnguide.com and cmp_cd
+    first_call_url = session.get.call_args_list[0][0][0]
+    assert "wcomp.fnguide.com/CompanyInfo/Snapshot?cmp_cd=005930" in first_call_url
 
 
 def test_crawl_stock_fetch_main_fail():
@@ -352,7 +357,7 @@ def test_crawl_stock_consensus_json_fail(mock_sleep):
     mock_resp_json.status_code = 404
     
     def get_side_effect(url, **kwargs):
-        if "SVD_Main.asp" in url:
+        if "Snapshot" in url or "SVD_Main.asp" in url:
             return mock_resp_main
         else:
             return mock_resp_json

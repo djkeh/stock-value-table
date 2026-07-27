@@ -50,7 +50,7 @@ def get_with_retry(session, url, headers, timeout=5, max_retries=3, backoff_fact
 def crawl_stock(session, gicode, fallback_name=""):
     try:
         # 1. Fetch and Parse Main Page
-        main_url = f"https://comp.fnguide.com/SVO2/ASP/SVD_Main.asp?pGB=1&gicode={gicode}"
+        main_url = f"https://wcomp.fnguide.com/CompanyInfo/Snapshot?cmp_cd={gicode}"
         resp_main = get_with_retry(session, main_url, headers=headers, timeout=5)
         if resp_main.status_code != 200:
             print(f"[{gicode}] Error fetching main page: {resp_main.status_code}")
@@ -80,7 +80,7 @@ def crawl_stock(session, gicode, fallback_name=""):
                             market_cap = cells[i+1].strip()
                 
                 # Extract 현재가 (종가 from Row 0)
-                if cells[0] == "종가/ 전일대비/ 수익률":
+                if cells[0].startswith("종가/ 전일대비"):
                     val = cells[1]
                     current_price = val.split('/')[0].strip()
  
