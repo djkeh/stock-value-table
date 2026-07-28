@@ -2,8 +2,8 @@
   {
     "gicode": "A005930",
     "name": "삼성전자",
-    "current_price": "249,500",
-    "market_cap": "14,586,465",
+    "current_price": "254,000",
+    "market_cap": "14,849,548",
     "years": [
       "2025",
       "2026",
@@ -35,13 +35,13 @@
       "4,691,808"
     ],
     "category": "전기전자",
-    "disparity_rate": "221.7"
+    "disparity_rate": "216.0"
   },
   {
     "gicode": "A000660",
     "name": "SK하이닉스",
-    "current_price": "1,759,000",
-    "market_cap": "12,536,435",
+    "current_price": "1,816,000",
+    "market_cap": "12,942,675",
     "years": [
       "2025",
       "2026",
@@ -73,13 +73,13 @@
       "3,831,020"
     ],
     "category": "전기전자",
-    "disparity_rate": "205.6"
+    "disparity_rate": "196.0"
   },
   {
     "gicode": "A066570",
     "name": "LG전자",
-    "current_price": "169,200",
-    "market_cap": "275,601",
+    "current_price": "172,300",
+    "market_cap": "280,650",
     "years": [
       "2025",
       "2026",
@@ -111,13 +111,13 @@
       "53,069"
     ],
     "category": "전기전자",
-    "disparity_rate": "92.6"
+    "disparity_rate": "89.1"
   },
   {
     "gicode": "A009150",
     "name": "삼성전기",
-    "current_price": "1,326,000",
-    "market_cap": "990,438",
+    "current_price": "1,325,000",
+    "market_cap": "989,691",
     "years": [
       "2025",
       "2026",
@@ -154,8 +154,8 @@
   {
     "gicode": "A036830",
     "name": "솔브레인홀딩스",
-    "current_price": "30,950",
-    "market_cap": "6,346",
+    "current_price": "31,650",
+    "market_cap": "6,490",
     "years": [
       "2025",
       "2026",
@@ -187,13 +187,13 @@
       "-"
     ],
     "category": "전기전자",
-    "disparity_rate": "-105.4"
+    "disparity_rate": "-105.2"
   },
   {
     "gicode": "A000990",
     "name": "DB하이텍",
-    "current_price": "100,000",
-    "market_cap": "43,505",
+    "current_price": "98,700",
+    "market_cap": "42,939",
     "years": [
       "2025",
       "2026",
@@ -225,13 +225,13 @@
       "5,191"
     ],
     "category": "전기전자",
-    "disparity_rate": "19.3"
+    "disparity_rate": "20.9"
   },
   {
     "gicode": "A042700",
     "name": "한미반도체",
-    "current_price": "200,000",
-    "market_cap": "190,624",
+    "current_price": "204,500",
+    "market_cap": "194,913",
     "years": [
       "2025",
       "2026",
@@ -263,13 +263,13 @@
       "7,297"
     ],
     "category": "전기전자",
-    "disparity_rate": "-61.7"
+    "disparity_rate": "-62.6"
   },
   {
     "gicode": "A005380",
     "name": "현대차",
-    "current_price": "401,000",
-    "market_cap": "821,079",
+    "current_price": "403,000",
+    "market_cap": "825,174",
     "years": [
       "2025",
       "2026",
@@ -301,13 +301,13 @@
       "145,644"
     ],
     "category": "자동차",
-    "disparity_rate": "77.4"
+    "disparity_rate": "76.5"
   },
   {
     "gicode": "A000270",
     "name": "기아",
-    "current_price": "130,500",
-    "market_cap": "509,489",
+    "current_price": "130,400",
+    "market_cap": "509,099",
     "years": [
       "2025",
       "2026",
@@ -339,13 +339,13 @@
       "118,520"
     ],
     "category": "자동차",
-    "disparity_rate": "132.6"
+    "disparity_rate": "132.8"
   },
   {
     "gicode": "A012330",
     "name": "현대모비스",
-    "current_price": "482,000",
-    "market_cap": "437,331",
+    "current_price": "463,500",
+    "market_cap": "420,546",
     "years": [
       "2025",
       "2026",
@@ -377,13 +377,13 @@
       "46,482"
     ],
     "category": "자동차",
-    "disparity_rate": "6.3"
+    "disparity_rate": "10.5"
   },
   {
     "gicode": "A011210",
     "name": "현대위아",
-    "current_price": "56,600",
-    "market_cap": "15,392",
+    "current_price": "56,000",
+    "market_cap": "15,229",
     "years": [
       "2025",
       "2026",
@@ -415,13 +415,13 @@
       "3,243"
     ],
     "category": "자동차",
-    "disparity_rate": "110.7"
+    "disparity_rate": "112.9"
   },
   {
     "gicode": "A204320",
     "name": "HL만도",
-    "current_price": "44,600",
-    "market_cap": "20,943",
+    "current_price": "44,900",
+    "market_cap": "21,084",
     "years": [
       "2025",
       "2026",
@@ -453,13 +453,13 @@
       "5,339"
     ],
     "category": "자동차",
-    "disparity_rate": "154.9"
+    "disparity_rate": "153.2"
   },
   {
     "gicode": "A018880",
     "name": "한온시스템",
-    "current_price": "3,535",
-    "market_cap": "36,278",
+    "current_price": "3,595",
+    "market_cap": "36,894",
     "years": [
       "2025",
       "2026",
@@ -491,13 +491,13 @@
       "5,786"
     ],
     "category": "자동차",
-    "disparity_rate": "59.5"
+    "disparity_rate": "56.8"
   },
   {
     "gicode": "A373220",
     "name": "LG에너지솔루션",
-    "current_price": "329,500",
-    "market_cap": "771,030",
+    "current_price": "333,000",
+    "market_cap": "779,220",
     "years": [
       "2025",
       "2026",
@@ -529,13 +529,13 @@
       "59,834"
     ],
     "category": "2차전지",
-    "disparity_rate": "-22.4"
+    "disparity_rate": "-23.2"
   },
   {
     "gicode": "A006400",
     "name": "삼성SDI",
-    "current_price": "428,000",
-    "market_cap": "344,906",
+    "current_price": "431,000",
+    "market_cap": "347,324",
     "years": [
       "2025",
       "2026",
@@ -567,13 +567,13 @@
       "25,012"
     ],
     "category": "2차전지",
-    "disparity_rate": "-27.5"
+    "disparity_rate": "-28.0"
   },
   {
     "gicode": "A096770",
     "name": "SK이노베이션",
-    "current_price": "130,100",
-    "market_cap": "219,938",
+    "current_price": "116,700",
+    "market_cap": "197,285",
     "years": [
       "2025",
       "2026",
@@ -605,13 +605,13 @@
       "33,813"
     ],
     "category": "2차전지",
-    "disparity_rate": "53.7"
+    "disparity_rate": "71.4"
   },
   {
     "gicode": "A247540",
     "name": "에코프로비엠",
-    "current_price": "108,300",
-    "market_cap": "105,950",
+    "current_price": "110,500",
+    "market_cap": "108,103",
     "years": [
       "2025",
       "2026",
@@ -643,13 +643,13 @@
       "3,461"
     ],
     "category": "2차전지",
-    "disparity_rate": "-67.3"
+    "disparity_rate": "-68.0"
   },
   {
     "gicode": "A086520",
     "name": "에코프로",
-    "current_price": "78,100",
-    "market_cap": "106,041",
+    "current_price": "80,600",
+    "market_cap": "109,436",
     "years": [
       "2025",
       "2026",
@@ -681,13 +681,13 @@
       "-"
     ],
     "category": "2차전지",
-    "disparity_rate": "-79.8"
+    "disparity_rate": "-80.5"
   },
   {
     "gicode": "A003670",
     "name": "포스코퓨처엠",
-    "current_price": "141,600",
-    "market_cap": "125,948",
+    "current_price": "143,600",
+    "market_cap": "127,727",
     "years": [
       "2025",
       "2026",
@@ -719,13 +719,13 @@
       "2,896"
     ],
     "category": "2차전지",
-    "disparity_rate": "-77.0"
+    "disparity_rate": "-77.3"
   },
   {
     "gicode": "A005490",
     "name": "POSCO홀딩스",
-    "current_price": "313,000",
-    "market_cap": "248,026",
+    "current_price": "316,000",
+    "market_cap": "250,403",
     "years": [
       "2025",
       "2026",
@@ -757,7 +757,7 @@
       "44,861"
     ],
     "category": "철강금속",
-    "disparity_rate": "80.9"
+    "disparity_rate": "79.2"
   },
   {
     "gicode": "A004020",
@@ -800,8 +800,8 @@
   {
     "gicode": "A460860",
     "name": "동국제강",
-    "current_price": "9,410",
-    "market_cap": "4,668",
+    "current_price": "9,190",
+    "market_cap": "4,559",
     "years": [
       "2025",
       "2026",
@@ -833,13 +833,13 @@
       "-"
     ],
     "category": "철강금속",
-    "disparity_rate": "27.2"
+    "disparity_rate": "30.3"
   },
   {
     "gicode": "A103140",
     "name": "풍산",
-    "current_price": "68,300",
-    "market_cap": "19,141",
+    "current_price": "64,000",
+    "market_cap": "17,936",
     "years": [
       "2025",
       "2026",
@@ -871,13 +871,13 @@
       "3,994"
     ],
     "category": "철강금속",
-    "disparity_rate": "108.7"
+    "disparity_rate": "122.7"
   },
   {
     "gicode": "A003030",
     "name": "세아제강지주",
-    "current_price": "110,700",
-    "market_cap": "4,585",
+    "current_price": "107,900",
+    "market_cap": "4,469",
     "years": [
       "2025",
       "2026",
@@ -909,13 +909,13 @@
       "4,827"
     ],
     "category": "철강금속",
-    "disparity_rate": "952.8"
+    "disparity_rate": "980.1"
   },
   {
     "gicode": "A058430",
     "name": "포스코스틸리온",
-    "current_price": "4,350",
-    "market_cap": "2,610",
+    "current_price": "4,400",
+    "market_cap": "2,640",
     "years": [
       "2025",
       "2026",
@@ -947,13 +947,13 @@
       "390"
     ],
     "category": "철강금속",
-    "disparity_rate": "49.4"
+    "disparity_rate": "47.7"
   },
   {
     "gicode": "A051910",
     "name": "LG화학",
-    "current_price": "259,000",
-    "market_cap": "182,834",
+    "current_price": "260,000",
+    "market_cap": "183,540",
     "years": [
       "2025",
       "2026",
@@ -985,13 +985,13 @@
       "58,628"
     ],
     "category": "석유화학",
-    "disparity_rate": "220.7"
+    "disparity_rate": "219.4"
   },
   {
     "gicode": "A011780",
     "name": "금호석유화학",
-    "current_price": "124,400",
-    "market_cap": "31,296",
+    "current_price": "121,500",
+    "market_cap": "30,566",
     "years": [
       "2025",
       "2026",
@@ -1023,13 +1023,13 @@
       "4,684"
     ],
     "category": "석유화학",
-    "disparity_rate": "49.7"
+    "disparity_rate": "53.2"
   },
   {
     "gicode": "A006650",
     "name": "대한유화",
-    "current_price": "99,700",
-    "market_cap": "6,481",
+    "current_price": "97,000",
+    "market_cap": "6,305",
     "years": [
       "2025",
       "2026",
@@ -1061,13 +1061,13 @@
       "2,694"
     ],
     "category": "석유화학",
-    "disparity_rate": "315.7"
+    "disparity_rate": "327.3"
   },
   {
     "gicode": "A011170",
     "name": "롯데케미칼",
-    "current_price": "61,100",
-    "market_cap": "26,136",
+    "current_price": "60,700",
+    "market_cap": "25,965",
     "years": [
       "2025",
       "2026",
@@ -1099,13 +1099,13 @@
       "4,923"
     ],
     "category": "석유화학",
-    "disparity_rate": "88.4"
+    "disparity_rate": "89.6"
   },
   {
     "gicode": "A298020",
     "name": "효성티앤씨",
-    "current_price": "321,000",
-    "market_cap": "13,892",
+    "current_price": "324,500",
+    "market_cap": "14,043",
     "years": [
       "2025",
       "2026",
@@ -1137,13 +1137,13 @@
       "5,629"
     ],
     "category": "석유화학",
-    "disparity_rate": "305.2"
+    "disparity_rate": "300.8"
   },
   {
     "gicode": "A005950",
     "name": "이수화학",
-    "current_price": "14,180",
-    "market_cap": "3,729",
+    "current_price": "13,620",
+    "market_cap": "3,581",
     "years": [
       "2025",
       "2026",
@@ -1175,13 +1175,13 @@
       "-"
     ],
     "category": "석유화학",
-    "disparity_rate": "-81.5"
+    "disparity_rate": "-80.7"
   },
   {
     "gicode": "A008770",
     "name": "호텔신라",
-    "current_price": "47,100",
-    "market_cap": "18,486",
+    "current_price": "47,600",
+    "market_cap": "18,682",
     "years": [
       "2025",
       "2026",
@@ -1213,13 +1213,13 @@
       "2,599"
     ],
     "category": "쇼핑유통",
-    "disparity_rate": "40.6"
+    "disparity_rate": "39.1"
   },
   {
     "gicode": "A004170",
     "name": "신세계",
-    "current_price": "504,000",
-    "market_cap": "47,604",
+    "current_price": "517,000",
+    "market_cap": "48,832",
     "years": [
       "2025",
       "2026",
@@ -1251,13 +1251,13 @@
       "8,809"
     ],
     "category": "쇼핑유통",
-    "disparity_rate": "85.0"
+    "disparity_rate": "80.4"
   },
   {
     "gicode": "A023530",
     "name": "롯데쇼핑",
-    "current_price": "125,900",
-    "market_cap": "35,616",
+    "current_price": "129,200",
+    "market_cap": "36,549",
     "years": [
       "2025",
       "2026",
@@ -1289,13 +1289,13 @@
       "9,057"
     ],
     "category": "쇼핑유통",
-    "disparity_rate": "154.3"
+    "disparity_rate": "147.8"
   },
   {
     "gicode": "A139480",
     "name": "이마트",
-    "current_price": "82,300",
-    "market_cap": "22,711",
+    "current_price": "82,700",
+    "market_cap": "22,822",
     "years": [
       "2025",
       "2026",
@@ -1327,13 +1327,13 @@
       "7,247"
     ],
     "category": "쇼핑유통",
-    "disparity_rate": "219.1"
+    "disparity_rate": "217.5"
   },
   {
     "gicode": "A282330",
     "name": "BGF리테일",
-    "current_price": "123,400",
-    "market_cap": "21,328",
+    "current_price": "125,500",
+    "market_cap": "21,691",
     "years": [
       "2025",
       "2026",
@@ -1365,13 +1365,13 @@
       "3,406"
     ],
     "category": "쇼핑유통",
-    "disparity_rate": "59.7"
+    "disparity_rate": "57.0"
   },
   {
     "gicode": "A007070",
     "name": "GS리테일",
-    "current_price": "25,750",
-    "market_cap": "21,529",
+    "current_price": "25,500",
+    "market_cap": "21,320",
     "years": [
       "2025",
       "2026",
@@ -1403,13 +1403,13 @@
       "3,838"
     ],
     "category": "쇼핑유통",
-    "disparity_rate": "78.3"
+    "disparity_rate": "80.0"
   },
   {
     "gicode": "A105560",
     "name": "KB금융",
-    "current_price": "171,500",
-    "market_cap": "608,289",
+    "current_price": "172,600",
+    "market_cap": "612,191",
     "years": [
       "2025",
       "2026",
@@ -1441,13 +1441,13 @@
       "96,517"
     ],
     "category": "은행",
-    "disparity_rate": "58.7"
+    "disparity_rate": "57.7"
   },
   {
     "gicode": "A055550",
     "name": "신한지주",
-    "current_price": "104,400",
-    "market_cap": "495,539",
+    "current_price": "105,000",
+    "market_cap": "498,387",
     "years": [
       "2025",
       "2026",
@@ -1479,13 +1479,13 @@
       "85,224"
     ],
     "category": "은행",
-    "disparity_rate": "72.0"
+    "disparity_rate": "71.0"
   },
   {
     "gicode": "A086790",
     "name": "하나금융지주",
-    "current_price": "132,400",
-    "market_cap": "363,263",
+    "current_price": "130,600",
+    "market_cap": "358,324",
     "years": [
       "2025",
       "2026",
@@ -1517,13 +1517,13 @@
       "66,296"
     ],
     "category": "은행",
-    "disparity_rate": "82.5"
+    "disparity_rate": "85.0"
   },
   {
     "gicode": "A316140",
     "name": "우리금융지주",
-    "current_price": "30,850",
-    "market_cap": "224,616",
+    "current_price": "33,100",
+    "market_cap": "240,998",
     "years": [
       "2025",
       "2026",
@@ -1555,13 +1555,13 @@
       "50,945"
     ],
     "category": "은행",
-    "disparity_rate": "126.8"
+    "disparity_rate": "111.4"
   },
   {
     "gicode": "A138040",
     "name": "메리츠금융지주",
-    "current_price": "123,300",
-    "market_cap": "206,339",
+    "current_price": "125,600",
+    "market_cap": "210,188",
     "years": [
       "2025",
       "2026",
@@ -1593,13 +1593,13 @@
       "35,486"
     ],
     "category": "은행",
-    "disparity_rate": "72.0"
+    "disparity_rate": "68.8"
   },
   {
     "gicode": "A175330",
     "name": "JB금융지주",
-    "current_price": "26,900",
-    "market_cap": "50,174",
+    "current_price": "28,750",
+    "market_cap": "53,625",
     "years": [
       "2025",
       "2026",
@@ -1631,13 +1631,13 @@
       "11,537"
     ],
     "category": "은행",
-    "disparity_rate": "129.9"
+    "disparity_rate": "115.1"
   },
   {
     "gicode": "A001720",
     "name": "신영증권",
-    "current_price": "142,600",
-    "market_cap": "23,443",
+    "current_price": "146,400",
+    "market_cap": "24,068",
     "years": [
       "2025",
       "2026",
@@ -1669,13 +1669,13 @@
       "-"
     ],
     "category": "증권",
-    "disparity_rate": "-16.5"
+    "disparity_rate": "-18.6"
   },
   {
     "gicode": "A003540",
     "name": "대신증권",
-    "current_price": "25,750",
-    "market_cap": "12,274",
+    "current_price": "26,000",
+    "market_cap": "12,393",
     "years": [
       "2025",
       "2026",
@@ -1707,13 +1707,13 @@
       "4,020"
     ],
     "category": "증권",
-    "disparity_rate": "227.5"
+    "disparity_rate": "224.4"
   },
   {
     "gicode": "A005940",
     "name": "NH투자증권",
-    "current_price": "29,050",
-    "market_cap": "107,254",
+    "current_price": "29,250",
+    "market_cap": "107,993",
     "years": [
       "2025",
       "2026",
@@ -1745,13 +1745,13 @@
       "19,433"
     ],
     "category": "증권",
-    "disparity_rate": "81.2"
+    "disparity_rate": "79.9"
   },
   {
     "gicode": "A006800",
     "name": "미래에셋증권",
-    "current_price": "36,900",
-    "market_cap": "206,480",
+    "current_price": "37,050",
+    "market_cap": "207,320",
     "years": [
       "2025",
       "2026",
@@ -1783,13 +1783,13 @@
       "27,870"
     ],
     "category": "증권",
-    "disparity_rate": "35.0"
+    "disparity_rate": "34.4"
   },
   {
     "gicode": "A071050",
     "name": "한국금융지주",
-    "current_price": "213,000",
-    "market_cap": "118,696",
+    "current_price": "212,500",
+    "market_cap": "118,418",
     "years": [
       "2025",
       "2026",
@@ -1821,13 +1821,13 @@
       "31,490"
     ],
     "category": "증권",
-    "disparity_rate": "165.3"
+    "disparity_rate": "165.9"
   },
   {
     "gicode": "A039490",
     "name": "키움증권",
-    "current_price": "298,500",
-    "market_cap": "78,292",
+    "current_price": "300,000",
+    "market_cap": "78,685",
     "years": [
       "2025",
       "2026",
@@ -1859,13 +1859,13 @@
       "20,198"
     ],
     "category": "증권",
-    "disparity_rate": "158.0"
+    "disparity_rate": "156.7"
   },
   {
     "gicode": "A005830",
     "name": "DB손해보험",
-    "current_price": "167,900",
-    "market_cap": "109,975",
+    "current_price": "163,400",
+    "market_cap": "107,028",
     "years": [
       "2025",
       "2026",
@@ -1897,13 +1897,13 @@
       "23,912"
     ],
     "category": "보험",
-    "disparity_rate": "117.4"
+    "disparity_rate": "123.4"
   },
   {
     "gicode": "A000810",
     "name": "삼성화재",
-    "current_price": "644,000",
-    "market_cap": "287,530",
+    "current_price": "645,000",
+    "market_cap": "287,976",
     "years": [
       "2025",
       "2026",
@@ -1935,13 +1935,13 @@
       "33,817"
     ],
     "category": "보험",
-    "disparity_rate": "17.6"
+    "disparity_rate": "17.4"
   },
   {
     "gicode": "A001450",
     "name": "현대해상",
-    "current_price": "40,350",
-    "market_cap": "34,398",
+    "current_price": "39,750",
+    "market_cap": "33,886",
     "years": [
       "2025",
       "2026",
@@ -1973,13 +1973,13 @@
       "-"
     ],
     "category": "보험",
-    "disparity_rate": "266.6"
+    "disparity_rate": "272.1"
   },
   {
     "gicode": "A032830",
     "name": "삼성생명",
-    "current_price": "318,000",
-    "market_cap": "636,000",
+    "current_price": "311,500",
+    "market_cap": "623,000",
     "years": [
       "2025",
       "2026",
@@ -2011,13 +2011,13 @@
       "33,462"
     ],
     "category": "보험",
-    "disparity_rate": "-47.4"
+    "disparity_rate": "-46.3"
   },
   {
     "gicode": "A085620",
     "name": "미래에셋생명",
-    "current_price": "15,900",
-    "market_cap": "21,494",
+    "current_price": "16,400",
+    "market_cap": "22,170",
     "years": [
       "2025",
       "2026",
@@ -2049,13 +2049,13 @@
       "-"
     ],
     "category": "보험",
-    "disparity_rate": "-9.5"
+    "disparity_rate": "-12.3"
   },
   {
     "gicode": "A000400",
     "name": "롯데손해보험",
-    "current_price": "2,290",
-    "market_cap": "7,107",
+    "current_price": "2,125",
+    "market_cap": "6,595",
     "years": [
       "2025",
       "2026",
@@ -2087,13 +2087,13 @@
       "-"
     ],
     "category": "보험",
-    "disparity_rate": "-9.0"
+    "disparity_rate": "-1.9"
   },
   {
     "gicode": "A010950",
     "name": "S-Oil",
-    "current_price": "151,200",
-    "market_cap": "170,225",
+    "current_price": "136,400",
+    "market_cap": "153,563",
     "years": [
       "2025",
       "2026",
@@ -2125,13 +2125,13 @@
       "21,852"
     ],
     "category": "정유.가스",
-    "disparity_rate": "28.4"
+    "disparity_rate": "42.3"
   },
   {
     "gicode": "A078930",
     "name": "GS",
-    "current_price": "95,300",
-    "market_cap": "88,529",
+    "current_price": "91,600",
+    "market_cap": "85,092",
     "years": [
       "2025",
       "2026",
@@ -2163,13 +2163,13 @@
       "34,558"
     ],
     "category": "정유.가스",
-    "disparity_rate": "290.4"
+    "disparity_rate": "306.1"
   },
   {
     "gicode": "A018670",
     "name": "SK가스",
-    "current_price": "255,500",
-    "market_cap": "23,652",
+    "current_price": "242,500",
+    "market_cap": "22,449",
     "years": [
       "2025",
       "2026",
@@ -2201,13 +2201,13 @@
       "5,079"
     ],
     "category": "정유.가스",
-    "disparity_rate": "114.7"
+    "disparity_rate": "126.2"
   },
   {
     "gicode": "A036460",
     "name": "한국가스공사",
-    "current_price": "34,950",
-    "market_cap": "32,263",
+    "current_price": "35,100",
+    "market_cap": "32,402",
     "years": [
       "2025",
       "2026",
@@ -2239,13 +2239,13 @@
       "22,083"
     ],
     "category": "정유.가스",
-    "disparity_rate": "584.5"
+    "disparity_rate": "581.5"
   },
   {
     "gicode": "A267290",
     "name": "경동도시가스",
-    "current_price": "20,300",
-    "market_cap": "1,197",
+    "current_price": "20,250",
+    "market_cap": "1,194",
     "years": [
       "2025",
       "2026",
@@ -2277,13 +2277,13 @@
       "-"
     ],
     "category": "정유.가스",
-    "disparity_rate": "175.7"
+    "disparity_rate": "176.4"
   },
   {
     "gicode": "A241560",
     "name": "두산밥캣",
-    "current_price": "62,400",
-    "market_cap": "59,814",
+    "current_price": "64,200",
+    "market_cap": "61,540",
     "years": [
       "2025",
       "2026",
@@ -2315,13 +2315,13 @@
       "10,099"
     ],
     "category": "기계.풍력",
-    "disparity_rate": "68.8"
+    "disparity_rate": "64.1"
   },
   {
     "gicode": "A267270",
     "name": "HD건설기계",
-    "current_price": "132,700",
-    "market_cap": "63,592",
+    "current_price": "134,600",
+    "market_cap": "64,503",
     "years": [
       "2025",
       "2026",
@@ -2353,13 +2353,13 @@
       "10,255"
     ],
     "category": "기계.풍력",
-    "disparity_rate": "61.3"
+    "disparity_rate": "59.0"
   },
   {
     "gicode": "A044490",
     "name": "태웅",
-    "current_price": "27,200",
-    "market_cap": "5,442",
+    "current_price": "26,050",
+    "market_cap": "5,212",
     "years": [
       "2025",
       "2026",
@@ -2391,13 +2391,13 @@
       "-"
     ],
     "category": "기계.풍력",
-    "disparity_rate": "-90.8"
+    "disparity_rate": "-90.4"
   },
   {
     "gicode": "A112610",
     "name": "씨에스윈드",
-    "current_price": "43,200",
-    "market_cap": "18,218",
+    "current_price": "40,050",
+    "market_cap": "16,890",
     "years": [
       "2025",
       "2026",
@@ -2429,13 +2429,13 @@
       "3,361"
     ],
     "category": "기계.풍력",
-    "disparity_rate": "84.5"
+    "disparity_rate": "99.0"
   },
   {
     "gicode": "A100090",
     "name": "SK오션플랜트",
-    "current_price": "18,350",
-    "market_cap": "11,465",
+    "current_price": "14,830",
+    "market_cap": "9,266",
     "years": [
       "2025",
       "2026",
@@ -2467,13 +2467,13 @@
       "1,403"
     ],
     "category": "기계.풍력",
-    "disparity_rate": "22.4"
+    "disparity_rate": "51.4"
   },
   {
     "gicode": "A052690",
     "name": "한전기술",
-    "current_price": "99,100",
-    "market_cap": "37,876",
+    "current_price": "97,100",
+    "market_cap": "37,112",
     "years": [
       "2025",
       "2026",
@@ -2505,13 +2505,13 @@
       "1,733"
     ],
     "category": "전력.원전",
-    "disparity_rate": "-54.2"
+    "disparity_rate": "-53.3"
   },
   {
     "gicode": "A034020",
     "name": "두산에너빌리티",
-    "current_price": "72,100",
-    "market_cap": "461,845",
+    "current_price": "70,900",
+    "market_cap": "454,158",
     "years": [
       "2025",
       "2026",
@@ -2543,13 +2543,13 @@
       "21,107"
     ],
     "category": "전력.원전",
-    "disparity_rate": "-54.3"
+    "disparity_rate": "-53.5"
   },
   {
     "gicode": "A051600",
     "name": "한전KPS",
-    "current_price": "47,100",
-    "market_cap": "21,195",
+    "current_price": "46,550",
+    "market_cap": "20,948",
     "years": [
       "2025",
       "2026",
@@ -2581,13 +2581,13 @@
       "2,078"
     ],
     "category": "전력.원전",
-    "disparity_rate": "-2.0"
+    "disparity_rate": "-0.8"
   },
   {
     "gicode": "A130660",
     "name": "한전산업",
-    "current_price": "11,090",
-    "market_cap": "3,615",
+    "current_price": "11,100",
+    "market_cap": "3,619",
     "years": [
       "2025",
       "2026",
@@ -2619,13 +2619,13 @@
       "-"
     ],
     "category": "전력.원전",
-    "disparity_rate": "-81.7"
+    "disparity_rate": "-81.8"
   },
   {
     "gicode": "A006260",
     "name": "LS",
-    "current_price": "307,000",
-    "market_cap": "95,784",
+    "current_price": "305,000",
+    "market_cap": "95,160",
     "years": [
       "2025",
       "2026",
@@ -2657,13 +2657,13 @@
       "22,076"
     ],
     "category": "전력.원전",
-    "disparity_rate": "130.5"
+    "disparity_rate": "132.0"
   },
   {
     "gicode": "A010120",
     "name": "LS ELECTRIC",
-    "current_price": "202,000",
-    "market_cap": "303,000",
+    "current_price": "200,000",
+    "market_cap": "300,000",
     "years": [
       "2025",
       "2026",
@@ -2695,13 +2695,13 @@
       "12,105"
     ],
     "category": "전력.원전",
-    "disparity_rate": "-60.0"
+    "disparity_rate": "-59.7"
   },
   {
     "gicode": "A456040",
     "name": "OCI",
-    "current_price": "76,700",
-    "market_cap": "6,867",
+    "current_price": "72,200",
+    "market_cap": "6,464",
     "years": [
       "2025",
       "2026",
@@ -2733,13 +2733,13 @@
       "2,070"
     ],
     "category": "태양광",
-    "disparity_rate": "201.4"
+    "disparity_rate": "220.2"
   },
   {
     "gicode": "A010060",
     "name": "OCI홀딩스",
-    "current_price": "250,000",
-    "market_cap": "46,676",
+    "current_price": "206,000",
+    "market_cap": "38,461",
     "years": [
       "2025",
       "2026",
@@ -2771,13 +2771,13 @@
       "6,618"
     ],
     "category": "태양광",
-    "disparity_rate": "41.8"
+    "disparity_rate": "72.1"
   },
   {
     "gicode": "A009830",
     "name": "한화솔루션",
-    "current_price": "30,000",
-    "market_cap": "51,568",
+    "current_price": "26,200",
+    "market_cap": "45,036",
     "years": [
       "2025",
       "2026",
@@ -2809,13 +2809,13 @@
       "15,132"
     ],
     "category": "태양광",
-    "disparity_rate": "193.4"
+    "disparity_rate": "236.0"
   },
   {
     "gicode": "A322000",
     "name": "HD현대에너지솔루션",
-    "current_price": "164,000",
-    "market_cap": "18,368",
+    "current_price": "134,800",
+    "market_cap": "15,098",
     "years": [
       "2025",
       "2026",
@@ -2847,13 +2847,13 @@
       "-"
     ],
     "category": "태양광",
-    "disparity_rate": "-17.2"
+    "disparity_rate": "0.7"
   },
   {
     "gicode": "A009540",
     "name": "HD한국조선해양",
-    "current_price": "372,000",
-    "market_cap": "263,276",
+    "current_price": "378,500",
+    "market_cap": "267,876",
     "years": [
       "2025",
       "2026",
@@ -2885,13 +2885,13 @@
       "77,385"
     ],
     "category": "조선",
-    "disparity_rate": "193.9"
+    "disparity_rate": "188.9"
   },
   {
     "gicode": "A329180",
     "name": "HD현대중공업",
-    "current_price": "485,500",
-    "market_cap": "509,587",
+    "current_price": "486,500",
+    "market_cap": "510,636",
     "years": [
       "2025",
       "2026",
@@ -2923,13 +2923,13 @@
       "51,330"
     ],
     "category": "조선",
-    "disparity_rate": "0.7"
+    "disparity_rate": "0.5"
   },
   {
     "gicode": "A042660",
     "name": "한화오션",
-    "current_price": "87,900",
-    "market_cap": "269,337",
+    "current_price": "88,800",
+    "market_cap": "272,095",
     "years": [
       "2025",
       "2026",
@@ -2961,13 +2961,13 @@
       "27,929"
     ],
     "category": "조선",
-    "disparity_rate": "3.7"
+    "disparity_rate": "2.6"
   },
   {
     "gicode": "A010140",
     "name": "삼성중공업",
-    "current_price": "22,900",
-    "market_cap": "201,520",
+    "current_price": "22,650",
+    "market_cap": "199,320",
     "years": [
       "2025",
       "2026",
@@ -2999,13 +2999,13 @@
       "23,628"
     ],
     "category": "조선",
-    "disparity_rate": "17.2"
+    "disparity_rate": "18.5"
   },
   {
     "gicode": "A082740",
     "name": "한화엔진",
-    "current_price": "49,050",
-    "market_cap": "40,931",
+    "current_price": "47,500",
+    "market_cap": "39,637",
     "years": [
       "2025",
       "2026",
@@ -3037,13 +3037,13 @@
       "4,513"
     ],
     "category": "조선",
-    "disparity_rate": "10.3"
+    "disparity_rate": "13.9"
   },
   {
     "gicode": "A071970",
     "name": "HD현대마린엔진",
-    "current_price": "67,600",
-    "market_cap": "22,931",
+    "current_price": "65,600",
+    "market_cap": "22,253",
     "years": [
       "2025",
       "2026",
@@ -3075,13 +3075,13 @@
       "2,509"
     ],
     "category": "조선",
-    "disparity_rate": "9.4"
+    "disparity_rate": "12.7"
   },
   {
     "gicode": "A443060",
     "name": "HD현대마린솔루션",
-    "current_price": "209,500",
-    "market_cap": "93,926",
+    "current_price": "206,000",
+    "market_cap": "92,357",
     "years": [
       "2025",
       "2026",
@@ -3113,13 +3113,13 @@
       "6,651"
     ],
     "category": "조선",
-    "disparity_rate": "-29.2"
+    "disparity_rate": "-28.0"
   },
   {
     "gicode": "A017960",
     "name": "한국카본",
-    "current_price": "23,700",
-    "market_cap": "12,247",
+    "current_price": "22,700",
+    "market_cap": "11,731",
     "years": [
       "2025",
       "2026",
@@ -3151,13 +3151,13 @@
       "1,947"
     ],
     "category": "조선",
-    "disparity_rate": "59.0"
+    "disparity_rate": "66.0"
   },
   {
     "gicode": "A033500",
     "name": "동성화인텍",
-    "current_price": "17,160",
-    "market_cap": "5,146",
+    "current_price": "16,730",
+    "market_cap": "5,017",
     "years": [
       "2025",
       "2026",
@@ -3189,13 +3189,13 @@
       "1,753"
     ],
     "category": "조선",
-    "disparity_rate": "240.7"
+    "disparity_rate": "249.4"
   },
   {
     "gicode": "A014620",
     "name": "성광벤드",
-    "current_price": "28,200",
-    "market_cap": "7,489",
+    "current_price": "27,800",
+    "market_cap": "7,383",
     "years": [
       "2025",
       "2026",
@@ -3227,13 +3227,13 @@
       "785"
     ],
     "category": "조선",
-    "disparity_rate": "4.8"
+    "disparity_rate": "6.3"
   },
   {
     "gicode": "A023160",
     "name": "태광",
-    "current_price": "24,050",
-    "market_cap": "6,221",
+    "current_price": "22,800",
+    "market_cap": "5,898",
     "years": [
       "2025",
       "2026",
@@ -3265,13 +3265,13 @@
       "778"
     ],
     "category": "조선",
-    "disparity_rate": "25.1"
+    "disparity_rate": "31.9"
   },
   {
     "gicode": "A013030",
     "name": "하이록코리아",
-    "current_price": "32,650",
-    "market_cap": "3,842",
+    "current_price": "31,650",
+    "market_cap": "3,725",
     "years": [
       "2025",
       "2026",
@@ -3303,13 +3303,13 @@
       "726"
     ],
     "category": "조선",
-    "disparity_rate": "89.0"
+    "disparity_rate": "94.9"
   },
   {
     "gicode": "A439260",
     "name": "대한조선",
-    "current_price": "48,900",
-    "market_cap": "18,625",
+    "current_price": "50,200",
+    "market_cap": "19,121",
     "years": [
       "2025",
       "2026",
@@ -3341,13 +3341,13 @@
       "4,189"
     ],
     "category": "조선",
-    "disparity_rate": "124.9"
+    "disparity_rate": "119.1"
   },
   {
     "gicode": "A000880",
     "name": "한화",
-    "current_price": "96,000",
-    "market_cap": "67,688",
+    "current_price": "93,800",
+    "market_cap": "66,136",
     "years": [
       "2025",
       "2026",
@@ -3379,13 +3379,13 @@
       "72,515"
     ],
     "category": "방산",
-    "disparity_rate": "971.3"
+    "disparity_rate": "996.5"
   },
   {
     "gicode": "A047810",
     "name": "한국항공우주",
-    "current_price": "158,100",
-    "market_cap": "154,108",
+    "current_price": "146,200",
+    "market_cap": "142,509",
     "years": [
       "2025",
       "2026",
@@ -3417,13 +3417,13 @@
       "8,149"
     ],
     "category": "방산",
-    "disparity_rate": "-47.1"
+    "disparity_rate": "-42.8"
   },
   {
     "gicode": "A079550",
     "name": "LIG디펜스앤에어로스페이스",
-    "current_price": "762,000",
-    "market_cap": "167,640",
+    "current_price": "696,000",
+    "market_cap": "153,120",
     "years": [
       "2025",
       "2026",
@@ -3455,13 +3455,13 @@
       "8,076"
     ],
     "category": "방산",
-    "disparity_rate": "-51.8"
+    "disparity_rate": "-47.3"
   },
   {
     "gicode": "A064350",
     "name": "현대로템",
-    "current_price": "158,400",
-    "market_cap": "172,881",
+    "current_price": "132,500",
+    "market_cap": "144,614",
     "years": [
       "2025",
       "2026",
@@ -3493,13 +3493,13 @@
       "18,642"
     ],
     "category": "방산",
-    "disparity_rate": "7.8"
+    "disparity_rate": "28.9"
   },
   {
     "gicode": "A012450",
     "name": "한화에어로스페이스",
-    "current_price": "979,000",
-    "market_cap": "504,806",
+    "current_price": "899,000",
+    "market_cap": "463,555",
     "years": [
       "2025",
       "2026",
@@ -3531,13 +3531,13 @@
       "61,777"
     ],
     "category": "방산",
-    "disparity_rate": "22.4"
+    "disparity_rate": "33.3"
   },
   {
     "gicode": "A272210",
     "name": "한화시스템",
-    "current_price": "68,200",
-    "market_cap": "128,843",
+    "current_price": "63,000",
+    "market_cap": "119,019",
     "years": [
       "2025",
       "2026",
@@ -3569,13 +3569,13 @@
       "6,363"
     ],
     "category": "방산",
-    "disparity_rate": "-50.6"
+    "disparity_rate": "-46.5"
   },
   {
     "gicode": "A489790",
     "name": "한화비전",
-    "current_price": "42,550",
-    "market_cap": "21,483",
+    "current_price": "41,750",
+    "market_cap": "21,079",
     "years": [
       "2025",
       "2026",
@@ -3607,13 +3607,13 @@
       "3,667"
     ],
     "category": "방산",
-    "disparity_rate": "70.7"
+    "disparity_rate": "74.0"
   },
   {
     "gicode": "A086280",
     "name": "현대글로비스",
-    "current_price": "207,000",
-    "market_cap": "155,250",
+    "current_price": "204,500",
+    "market_cap": "153,375",
     "years": [
       "2025",
       "2026",
@@ -3645,13 +3645,13 @@
       "24,465"
     ],
     "category": "해운.운송",
-    "disparity_rate": "57.6"
+    "disparity_rate": "59.5"
   },
   {
     "gicode": "A000120",
     "name": "CJ대한통운",
-    "current_price": "77,300",
-    "market_cap": "17,634",
+    "current_price": "75,000",
+    "market_cap": "17,109",
     "years": [
       "2025",
       "2026",
@@ -3683,13 +3683,13 @@
       "6,182"
     ],
     "category": "해운.운송",
-    "disparity_rate": "250.6"
+    "disparity_rate": "261.3"
   },
   {
     "gicode": "A011200",
     "name": "HMM",
-    "current_price": "21,650",
-    "market_cap": "204,211",
+    "current_price": "20,650",
+    "market_cap": "194,779",
     "years": [
       "2025",
       "2026",
@@ -3721,13 +3721,13 @@
       "8,902"
     ],
     "category": "해운.운송",
-    "disparity_rate": "-56.4"
+    "disparity_rate": "-54.3"
   },
   {
     "gicode": "A028670",
     "name": "팬오션",
-    "current_price": "5,280",
-    "market_cap": "28,225",
+    "current_price": "5,240",
+    "market_cap": "28,011",
     "years": [
       "2025",
       "2026",
@@ -3759,13 +3759,13 @@
       "6,302"
     ],
     "category": "해운.운송",
-    "disparity_rate": "123.3"
+    "disparity_rate": "125.0"
   },
   {
     "gicode": "A005880",
     "name": "대한해운",
-    "current_price": "1,867",
-    "market_cap": "6,026",
+    "current_price": "1,806",
+    "market_cap": "5,829",
     "years": [
       "2025",
       "2026",
@@ -3797,13 +3797,13 @@
       "2,461"
     ],
     "category": "해운.운송",
-    "disparity_rate": "308.4"
+    "disparity_rate": "322.2"
   },
   {
     "gicode": "A003280",
     "name": "흥아해운",
-    "current_price": "1,900",
-    "market_cap": "4,568",
+    "current_price": "1,700",
+    "market_cap": "4,087",
     "years": [
       "2025",
       "2026",
@@ -3835,13 +3835,13 @@
       "-"
     ],
     "category": "해운.운송",
-    "disparity_rate": "-75.3"
+    "disparity_rate": "-72.4"
   },
   {
     "gicode": "A001120",
     "name": "LX인터내셔널",
-    "current_price": "39,300",
-    "market_cap": "15,233",
+    "current_price": "37,700",
+    "market_cap": "14,613",
     "years": [
       "2025",
       "2026",
@@ -3873,13 +3873,13 @@
       "4,652"
     ],
     "category": "항공.무역",
-    "disparity_rate": "205.4"
+    "disparity_rate": "218.3"
   },
   {
     "gicode": "A047050",
     "name": "포스코인터내셔널",
-    "current_price": "56,300",
-    "market_cap": "99,045",
+    "current_price": "52,700",
+    "market_cap": "92,711",
     "years": [
       "2025",
       "2026",
@@ -3911,13 +3911,13 @@
       "15,749"
     ],
     "category": "항공.무역",
-    "disparity_rate": "59.0"
+    "disparity_rate": "69.9"
   },
   {
     "gicode": "A180640",
     "name": "한진칼",
-    "current_price": "105,000",
-    "market_cap": "70,100",
+    "current_price": "110,700",
+    "market_cap": "73,906",
     "years": [
       "2025",
       "2026",
@@ -3949,13 +3949,13 @@
       "-"
     ],
     "category": "항공.무역",
-    "disparity_rate": "-101.1"
+    "disparity_rate": "-101.0"
   },
   {
     "gicode": "A003490",
     "name": "대한항공",
-    "current_price": "25,450",
-    "market_cap": "93,712",
+    "current_price": "26,450",
+    "market_cap": "97,394",
     "years": [
       "2025",
       "2026",
@@ -3987,13 +3987,13 @@
       "24,999"
     ],
     "category": "항공.무역",
-    "disparity_rate": "166.8"
+    "disparity_rate": "156.7"
   },
   {
     "gicode": "A000720",
     "name": "현대건설",
-    "current_price": "106,200",
-    "market_cap": "118,260",
+    "current_price": "103,600",
+    "market_cap": "115,365",
     "years": [
       "2025",
       "2026",
@@ -4025,13 +4025,13 @@
       "13,951"
     ],
     "category": "건설",
-    "disparity_rate": "18.0"
+    "disparity_rate": "20.9"
   },
   {
     "gicode": "A028050",
     "name": "삼성E&A",
-    "current_price": "47,600",
-    "market_cap": "93,296",
+    "current_price": "47,650",
+    "market_cap": "93,394",
     "years": [
       "2025",
       "2026",
@@ -4063,13 +4063,13 @@
       "11,313"
     ],
     "category": "건설",
-    "disparity_rate": "21.3"
+    "disparity_rate": "21.1"
   },
   {
     "gicode": "A375500",
     "name": "DL이앤씨",
-    "current_price": "63,200",
-    "market_cap": "24,454",
+    "current_price": "63,900",
+    "market_cap": "24,725",
     "years": [
       "2025",
       "2026",
@@ -4101,13 +4101,13 @@
       "6,136"
     ],
     "category": "건설",
-    "disparity_rate": "150.9"
+    "disparity_rate": "148.2"
   },
   {
     "gicode": "A006360",
     "name": "GS건설",
-    "current_price": "30,250",
-    "market_cap": "25,888",
+    "current_price": "29,100",
+    "market_cap": "24,904",
     "years": [
       "2025",
       "2026",
@@ -4139,13 +4139,13 @@
       "6,870"
     ],
     "category": "건설",
-    "disparity_rate": "165.4"
+    "disparity_rate": "175.9"
   },
   {
     "gicode": "A047040",
     "name": "대우건설",
-    "current_price": "15,300",
-    "market_cap": "62,869",
+    "current_price": "15,180",
+    "market_cap": "62,376",
     "years": [
       "2025",
       "2026",
@@ -4177,13 +4177,13 @@
       "8,279"
     ],
     "category": "건설",
-    "disparity_rate": "31.7"
+    "disparity_rate": "32.7"
   },
   {
     "gicode": "A010780",
     "name": "아이에스동서",
-    "current_price": "18,810",
-    "market_cap": "5,678",
+    "current_price": "18,900",
+    "market_cap": "5,705",
     "years": [
       "2025",
       "2026",
@@ -4215,13 +4215,13 @@
       "3,561"
     ],
     "category": "건설",
-    "disparity_rate": "527.2"
+    "disparity_rate": "524.2"
   },
   {
     "gicode": "A300720",
     "name": "한일시멘트",
-    "current_price": "14,130",
-    "market_cap": "10,392",
+    "current_price": "14,180",
+    "market_cap": "10,429",
     "years": [
       "2025",
       "2026",
@@ -4253,13 +4253,13 @@
       "1,630"
     ],
     "category": "건자재",
-    "disparity_rate": "56.9"
+    "disparity_rate": "56.3"
   },
   {
     "gicode": "A183190",
     "name": "아세아시멘트",
-    "current_price": "9,100",
-    "market_cap": "3,274",
+    "current_price": "9,260",
+    "market_cap": "3,332",
     "years": [
       "2025",
       "2026",
@@ -4291,13 +4291,13 @@
       "980"
     ],
     "category": "건자재",
-    "disparity_rate": "199.3"
+    "disparity_rate": "194.1"
   },
   {
     "gicode": "A038500",
     "name": "삼표시멘트",
-    "current_price": "7,400",
-    "market_cap": "7,986",
+    "current_price": "7,420",
+    "market_cap": "8,007",
     "years": [
       "2025",
       "2026",
@@ -4329,13 +4329,13 @@
       "-"
     ],
     "category": "건자재",
-    "disparity_rate": "-4.1"
+    "disparity_rate": "-4.3"
   },
   {
     "gicode": "A004980",
     "name": "성신양회",
-    "current_price": "7,870",
-    "market_cap": "1,929",
+    "current_price": "7,890",
+    "market_cap": "1,934",
     "years": [
       "2025",
       "2026",
@@ -4367,13 +4367,13 @@
       "-"
     ],
     "category": "건자재",
-    "disparity_rate": "126.5"
+    "disparity_rate": "126.0"
   },
   {
     "gicode": "A023410",
     "name": "유진기업",
-    "current_price": "3,265",
-    "market_cap": "2,524",
+    "current_price": "3,305",
+    "market_cap": "2,555",
     "years": [
       "2025",
       "2026",
@@ -4405,13 +4405,13 @@
       "-"
     ],
     "category": "건자재",
-    "disparity_rate": "28.4"
+    "disparity_rate": "26.8"
   },
   {
     "gicode": "A003300",
     "name": "한일홀딩스",
-    "current_price": "17,520",
-    "market_cap": "5,402",
+    "current_price": "17,840",
+    "market_cap": "5,500",
     "years": [
       "2025",
       "2026",
@@ -4443,13 +4443,13 @@
       "-"
     ],
     "category": "건자재",
-    "disparity_rate": "128.1"
+    "disparity_rate": "124.0"
   },
   {
     "gicode": "A009240",
     "name": "한샘",
-    "current_price": "38,000",
-    "market_cap": "8,943",
+    "current_price": "38,700",
+    "market_cap": "9,108",
     "years": [
       "2025",
       "2026",
@@ -4481,13 +4481,13 @@
       "560"
     ],
     "category": "가구.목재.페인트",
-    "disparity_rate": "-37.4"
+    "disparity_rate": "-38.5"
   },
   {
     "gicode": "A108670",
     "name": "LX하우시스",
-    "current_price": "33,000",
-    "market_cap": "2,959",
+    "current_price": "33,200",
+    "market_cap": "2,977",
     "years": [
       "2025",
       "2026",
@@ -4519,13 +4519,13 @@
       "1,299"
     ],
     "category": "가구.목재.페인트",
-    "disparity_rate": "339.0"
+    "disparity_rate": "336.3"
   },
   {
     "gicode": "A008250",
     "name": "이건산업",
-    "current_price": "2,810",
-    "market_cap": "308",
+    "current_price": "2,915",
+    "market_cap": "319",
     "years": [
       "2025",
       "2026",
@@ -4557,13 +4557,13 @@
       "-"
     ],
     "category": "가구.목재.페인트",
-    "disparity_rate": "-223.4"
+    "disparity_rate": "-219.1"
   },
   {
     "gicode": "A018310",
     "name": "삼목에스폼",
-    "current_price": "14,330",
-    "market_cap": "2,107",
+    "current_price": "14,390",
+    "market_cap": "2,115",
     "years": [
       "2025",
       "2026",
@@ -4595,13 +4595,13 @@
       "-"
     ],
     "category": "가구.목재.페인트",
-    "disparity_rate": "-69.6"
+    "disparity_rate": "-69.7"
   },
   {
     "gicode": "A344820",
     "name": "KCC글라스",
-    "current_price": "22,500",
-    "market_cap": "3,593",
+    "current_price": "22,750",
+    "market_cap": "3,633",
     "years": [
       "2025",
       "2026",
@@ -4633,13 +4633,13 @@
       "-"
     ],
     "category": "가구.목재.페인트",
-    "disparity_rate": "-309.3"
+    "disparity_rate": "-307.0"
   },
   {
     "gicode": "A002380",
     "name": "KCC",
-    "current_price": "421,500",
-    "market_cap": "36,219",
+    "current_price": "417,000",
+    "market_cap": "35,832",
     "years": [
       "2025",
       "2026",
@@ -4671,13 +4671,13 @@
       "5,200"
     ],
     "category": "가구.목재.페인트",
-    "disparity_rate": "43.6"
+    "disparity_rate": "45.1"
   },
   {
     "gicode": "A161890",
     "name": "한국콜마",
-    "current_price": "100,200",
-    "market_cap": "23,652",
+    "current_price": "102,500",
+    "market_cap": "24,195",
     "years": [
       "2025",
       "2026",
@@ -4709,13 +4709,13 @@
       "3,948"
     ],
     "category": "화장품",
-    "disparity_rate": "66.9"
+    "disparity_rate": "63.2"
   },
   {
     "gicode": "A192820",
     "name": "코스맥스",
-    "current_price": "178,400",
-    "market_cap": "20,248",
+    "current_price": "192,500",
+    "market_cap": "21,848",
     "years": [
       "2025",
       "2026",
@@ -4747,13 +4747,13 @@
       "3,131"
     ],
     "category": "화장품",
-    "disparity_rate": "54.6"
+    "disparity_rate": "43.3"
   },
   {
     "gicode": "A078520",
     "name": "에이블씨엔씨",
-    "current_price": "10,180",
-    "market_cap": "2,648",
+    "current_price": "10,680",
+    "market_cap": "2,778",
     "years": [
       "2025",
       "2026",
@@ -4785,13 +4785,13 @@
       "-"
     ],
     "category": "화장품",
-    "disparity_rate": "-32.0"
+    "disparity_rate": "-35.2"
   },
   {
     "gicode": "A090430",
     "name": "아모레퍼시픽",
-    "current_price": "118,000",
-    "market_cap": "69,021",
+    "current_price": "123,500",
+    "market_cap": "72,239",
     "years": [
       "2025",
       "2026",
@@ -4823,13 +4823,13 @@
       "5,842"
     ],
     "category": "화장품",
-    "disparity_rate": "-15.4"
+    "disparity_rate": "-19.1"
   },
   {
     "gicode": "A002790",
     "name": "아모레퍼시픽홀딩스",
-    "current_price": "24,200",
-    "market_cap": "18,503",
+    "current_price": "24,900",
+    "market_cap": "19,038",
     "years": [
       "2025",
       "2026",
@@ -4861,13 +4861,13 @@
       "-"
     ],
     "category": "화장품",
-    "disparity_rate": "98.9"
+    "disparity_rate": "93.3"
   },
   {
     "gicode": "A051900",
     "name": "LG생활건강",
-    "current_price": "248,500",
-    "market_cap": "37,214",
+    "current_price": "256,000",
+    "market_cap": "38,337",
     "years": [
       "2025",
       "2026",
@@ -4899,13 +4899,13 @@
       "4,335"
     ],
     "category": "화장품",
-    "disparity_rate": "16.5"
+    "disparity_rate": "13.1"
   },
   {
     "gicode": "A033270",
     "name": "유나이티드제약",
-    "current_price": "17,490",
-    "market_cap": "2,783",
+    "current_price": "17,510",
+    "market_cap": "2,786",
     "years": [
       "2025",
       "2026",
@@ -4937,7 +4937,7 @@
       "-"
     ],
     "category": "제약.바이오",
-    "disparity_rate": "78.2"
+    "disparity_rate": "78.0"
   },
   {
     "gicode": "A185750",
@@ -4980,8 +4980,8 @@
   {
     "gicode": "A145020",
     "name": "휴젤",
-    "current_price": "234,500",
-    "market_cap": "28,853",
+    "current_price": "243,000",
+    "market_cap": "29,899",
     "years": [
       "2025",
       "2026",
@@ -5013,13 +5013,13 @@
       "3,529"
     ],
     "category": "제약.바이오",
-    "disparity_rate": "22.3"
+    "disparity_rate": "18.0"
   },
   {
     "gicode": "A068270",
     "name": "셀트리온",
-    "current_price": "177,600",
-    "market_cap": "413,015",
+    "current_price": "178,700",
+    "market_cap": "415,573",
     "years": [
       "2025",
       "2026",
@@ -5051,13 +5051,13 @@
       "24,495"
     ],
     "category": "제약.바이오",
-    "disparity_rate": "-40.7"
+    "disparity_rate": "-41.1"
   },
   {
     "gicode": "A207940",
     "name": "삼성바이오로직스",
-    "current_price": "1,518,000",
-    "market_cap": "702,697",
+    "current_price": "1,545,000",
+    "market_cap": "715,195",
     "years": [
       "2025",
       "2026",
@@ -5089,13 +5089,13 @@
       "32,179"
     ],
     "category": "제약.바이오",
-    "disparity_rate": "-54.2"
+    "disparity_rate": "-55.0"
   },
   {
     "gicode": "A259960",
     "name": "크래프톤",
-    "current_price": "242,500",
-    "market_cap": "111,884",
+    "current_price": "248,000",
+    "market_cap": "114,422",
     "years": [
       "2025",
       "2026",
@@ -5127,13 +5127,13 @@
       "16,952"
     ],
     "category": "게임",
-    "disparity_rate": "51.5"
+    "disparity_rate": "48.2"
   },
   {
     "gicode": "A036570",
     "name": "NC",
-    "current_price": "228,000",
-    "market_cap": "49,120",
+    "current_price": "232,500",
+    "market_cap": "50,090",
     "years": [
       "2025",
       "2026",
@@ -5165,13 +5165,13 @@
       "6,000"
     ],
     "category": "게임",
-    "disparity_rate": "22.1"
+    "disparity_rate": "19.8"
   },
   {
     "gicode": "A293490",
     "name": "카카오게임즈",
-    "current_price": "7,650",
-    "market_cap": "8,204",
+    "current_price": "7,910",
+    "market_cap": "8,483",
     "years": [
       "2025",
       "2026",
@@ -5203,13 +5203,13 @@
       "77"
     ],
     "category": "게임",
-    "disparity_rate": "-90.6"
+    "disparity_rate": "-90.9"
   },
   {
     "gicode": "A035420",
     "name": "NAVER",
-    "current_price": "207,500",
-    "market_cap": "325,659",
+    "current_price": "225,000",
+    "market_cap": "353,125",
     "years": [
       "2025",
       "2026",
@@ -5241,13 +5241,13 @@
       "31,621"
     ],
     "category": "인터넷.로봇",
-    "disparity_rate": "-2.9"
+    "disparity_rate": "-10.5"
   },
   {
     "gicode": "A035720",
     "name": "카카오",
-    "current_price": "36,200",
-    "market_cap": "160,359",
+    "current_price": "37,050",
+    "market_cap": "164,124",
     "years": [
       "2025",
       "2026",
@@ -5279,13 +5279,13 @@
       "12,624"
     ],
     "category": "인터넷.로봇",
-    "disparity_rate": "-21.3"
+    "disparity_rate": "-23.1"
   },
   {
     "gicode": "A454910",
     "name": "두산로보틱스",
-    "current_price": "64,700",
-    "market_cap": "41,939",
+    "current_price": "66,200",
+    "market_cap": "42,911",
     "years": [
       "2025",
       "2026",
@@ -5317,13 +5317,13 @@
       "1,070"
     ],
     "category": "인터넷.로봇",
-    "disparity_rate": "-74.5"
+    "disparity_rate": "-75.1"
   },
   {
     "gicode": "A277810",
     "name": "레인보우로보틱스",
-    "current_price": "418,500",
-    "market_cap": "81,188",
+    "current_price": "446,000",
+    "market_cap": "86,523",
     "years": [
       "2025",
       "2026",
@@ -5355,13 +5355,13 @@
       "370"
     ],
     "category": "인터넷.로봇",
-    "disparity_rate": "-95.4"
+    "disparity_rate": "-95.7"
   },
   {
     "gicode": "A108490",
     "name": "로보티즈",
-    "current_price": "191,400",
-    "market_cap": "28,061",
+    "current_price": "201,000",
+    "market_cap": "29,469",
     "years": [
       "2025",
       "2026",
@@ -5393,13 +5393,13 @@
       "466"
     ],
     "category": "인터넷.로봇",
-    "disparity_rate": "-83.4"
+    "disparity_rate": "-84.2"
   },
   {
     "gicode": "A034730",
     "name": "SK",
-    "current_price": "630,000",
-    "market_cap": "456,767",
+    "current_price": "623,000",
+    "market_cap": "451,692",
     "years": [
       "2025",
       "2026",
@@ -5431,13 +5431,13 @@
       "146,575"
     ],
     "category": "지주사 1",
-    "disparity_rate": "220.9"
+    "disparity_rate": "224.5"
   },
   {
     "gicode": "A402340",
     "name": "SK스퀘어",
-    "current_price": "1,109,000",
-    "market_cap": "1,463,419",
+    "current_price": "1,096,000",
+    "market_cap": "1,446,264",
     "years": [
       "2025",
       "2026",
@@ -5469,13 +5469,13 @@
       "541,598"
     ],
     "category": "지주사 1",
-    "disparity_rate": "270.1"
+    "disparity_rate": "274.5"
   },
   {
     "gicode": "A001040",
     "name": "CJ",
-    "current_price": "132,200",
-    "market_cap": "38,572",
+    "current_price": "133,900",
+    "market_cap": "39,068",
     "years": [
       "2025",
       "2026",
@@ -5507,13 +5507,13 @@
       "30,852"
     ],
     "category": "지주사 1",
-    "disparity_rate": "699.9"
+    "disparity_rate": "689.7"
   },
   {
     "gicode": "A004800",
     "name": "효성",
-    "current_price": "156,800",
-    "market_cap": "26,249",
+    "current_price": "152,100",
+    "market_cap": "25,462",
     "years": [
       "2025",
       "2026",
@@ -5545,13 +5545,13 @@
       "5,770"
     ],
     "category": "지주사 1",
-    "disparity_rate": "119.8"
+    "disparity_rate": "126.6"
   },
   {
     "gicode": "A267250",
     "name": "HD현대",
-    "current_price": "222,500",
-    "market_cap": "175,760",
+    "current_price": "210,500",
+    "market_cap": "166,280",
     "years": [
       "2025",
       "2026",
@@ -5583,13 +5583,13 @@
       "104,543"
     ],
     "category": "지주사 1",
-    "disparity_rate": "494.8"
+    "disparity_rate": "528.7"
   },
   {
     "gicode": "A028260",
     "name": "삼성물산",
-    "current_price": "342,000",
-    "market_cap": "554,613",
+    "current_price": "339,500",
+    "market_cap": "550,559",
     "years": [
       "2025",
       "2026",
@@ -5621,7 +5621,7 @@
       "45,145"
     ],
     "category": "지주사 1",
-    "disparity_rate": "-18.6"
+    "disparity_rate": "-18.0"
   },
   {
     "gicode": "A004990",
@@ -5664,8 +5664,8 @@
   {
     "gicode": "A006840",
     "name": "AK홀딩스",
-    "current_price": "6,430",
-    "market_cap": "852",
+    "current_price": "6,500",
+    "market_cap": "861",
     "years": [
       "2025",
       "2026",
@@ -5697,13 +5697,13 @@
       "-"
     ],
     "category": "지주사 1",
-    "disparity_rate": "-1835.9"
+    "disparity_rate": "-1817.8"
   },
   {
     "gicode": "A003380",
     "name": "하림지주",
-    "current_price": "9,840",
-    "market_cap": "11,021",
+    "current_price": "9,700",
+    "market_cap": "10,865",
     "years": [
       "2025",
       "2026",
@@ -5735,13 +5735,13 @@
       "-"
     ],
     "category": "지주사 1",
-    "disparity_rate": "705.2"
+    "disparity_rate": "716.8"
   },
   {
     "gicode": "A001800",
     "name": "오리온홀딩스",
-    "current_price": "25,750",
-    "market_cap": "15,490",
+    "current_price": "25,950",
+    "market_cap": "15,611",
     "years": [
       "2025",
       "2026",
@@ -5773,13 +5773,13 @@
       "-"
     ],
     "category": "지주사 1",
-    "disparity_rate": "289.2"
+    "disparity_rate": "286.1"
   },
   {
     "gicode": "A000140",
     "name": "하이트진로홀딩스",
-    "current_price": "8,280",
-    "market_cap": "1,922",
+    "current_price": "8,350",
+    "market_cap": "1,938",
     "years": [
       "2025",
       "2026",
@@ -5811,13 +5811,13 @@
       "-"
     ],
     "category": "지주사 1",
-    "disparity_rate": "853.7"
+    "disparity_rate": "845.8"
   },
   {
     "gicode": "A024720",
     "name": "콜마홀딩스",
-    "current_price": "8,660",
-    "market_cap": "2,970",
+    "current_price": "8,830",
+    "market_cap": "3,028",
     "years": [
       "2025",
       "2026",
@@ -5849,13 +5849,13 @@
       "-"
     ],
     "category": "지주사 1",
-    "disparity_rate": "-43.8"
+    "disparity_rate": "-44.8"
   },
   {
     "gicode": "A044820",
     "name": "코스맥스비티아이",
-    "current_price": "19,550",
-    "market_cap": "1,878",
+    "current_price": "20,450",
+    "market_cap": "1,964",
     "years": [
       "2025",
       "2026",
@@ -5887,13 +5887,13 @@
       "-"
     ],
     "category": "지주사 1",
-    "disparity_rate": "43.8"
+    "disparity_rate": "37.5"
   },
   {
     "gicode": "A383220",
     "name": "F&F",
-    "current_price": "76,100",
-    "market_cap": "29,152",
+    "current_price": "77,800",
+    "market_cap": "29,803",
     "years": [
       "2025",
       "2026",
@@ -5925,13 +5925,13 @@
       "5,984"
     ],
     "category": "의류",
-    "disparity_rate": "105.3"
+    "disparity_rate": "100.8"
   },
   {
     "gicode": "A020000",
     "name": "한섬",
-    "current_price": "20,600",
-    "market_cap": "4,424",
+    "current_price": "20,750",
+    "market_cap": "4,456",
     "years": [
       "2025",
       "2026",
@@ -5963,13 +5963,13 @@
       "1,297"
     ],
     "category": "의류",
-    "disparity_rate": "193.2"
+    "disparity_rate": "191.1"
   },
   {
     "gicode": "A105630",
     "name": "한세실업",
-    "current_price": "9,270",
-    "market_cap": "3,708",
+    "current_price": "9,330",
+    "market_cap": "3,732",
     "years": [
       "2025",
       "2026",
@@ -6001,13 +6001,13 @@
       "1,116"
     ],
     "category": "의류",
-    "disparity_rate": "201.0"
+    "disparity_rate": "199.0"
   },
   {
     "gicode": "A111770",
     "name": "영원무역",
-    "current_price": "87,700",
-    "market_cap": "38,861",
+    "current_price": "86,800",
+    "market_cap": "38,462",
     "years": [
       "2025",
       "2026",
@@ -6039,7 +6039,7 @@
       "7,447"
     ],
     "category": "의류",
-    "disparity_rate": "91.6"
+    "disparity_rate": "93.6"
   },
   {
     "gicode": "A009970",
@@ -6082,8 +6082,8 @@
   {
     "gicode": "A081660",
     "name": "미스토홀딩스",
-    "current_price": "44,450",
-    "market_cap": "23,599",
+    "current_price": "44,300",
+    "market_cap": "23,520",
     "years": [
       "2025",
       "2026",
@@ -6115,13 +6115,13 @@
       "6,199"
     ],
     "category": "의류",
-    "disparity_rate": "162.7"
+    "disparity_rate": "163.6"
   },
   {
     "gicode": "A004370",
     "name": "농심",
-    "current_price": "367,500",
-    "market_cap": "22,354",
+    "current_price": "376,500",
+    "market_cap": "22,901",
     "years": [
       "2025",
       "2026",
@@ -6153,13 +6153,13 @@
       "2,446"
     ],
     "category": "음식료",
-    "disparity_rate": "9.4"
+    "disparity_rate": "6.8"
   },
   {
     "gicode": "A003230",
     "name": "삼양식품",
-    "current_price": "1,151,000",
-    "market_cap": "86,705",
+    "current_price": "1,220,000",
+    "market_cap": "91,903",
     "years": [
       "2025",
       "2026",
@@ -6191,13 +6191,13 @@
       "10,297"
     ],
     "category": "음식료",
-    "disparity_rate": "18.8"
+    "disparity_rate": "12.0"
   },
   {
     "gicode": "A097950",
     "name": "CJ제일제당",
-    "current_price": "194,100",
-    "market_cap": "29,220",
+    "current_price": "194,600",
+    "market_cap": "29,295",
     "years": [
       "2025",
       "2026",
@@ -6229,7 +6229,7 @@
       "15,872"
     ],
     "category": "음식료",
-    "disparity_rate": "443.2"
+    "disparity_rate": "441.8"
   },
   {
     "gicode": "A006040",
@@ -6272,8 +6272,8 @@
   {
     "gicode": "A003960",
     "name": "사조대림",
-    "current_price": "30,000",
-    "market_cap": "2,749",
+    "current_price": "30,250",
+    "market_cap": "2,772",
     "years": [
       "2025",
       "2026",
@@ -6305,13 +6305,13 @@
       "-"
     ],
     "category": "음식료",
-    "disparity_rate": "244.5"
+    "disparity_rate": "241.6"
   },
   {
     "gicode": "A007160",
     "name": "사조산업",
-    "current_price": "47,000",
-    "market_cap": "2,350",
+    "current_price": "48,000",
+    "market_cap": "2,400",
     "years": [
       "2025",
       "2026",
@@ -6343,13 +6343,13 @@
       "-"
     ],
     "category": "음식료",
-    "disparity_rate": "41.3"
+    "disparity_rate": "38.3"
   },
   {
     "gicode": "A035900",
     "name": "JYP Ent.",
-    "current_price": "44,850",
-    "market_cap": "15,936",
+    "current_price": "47,000",
+    "market_cap": "16,700",
     "years": [
       "2025",
       "2026",
@@ -6381,13 +6381,13 @@
       "2,011"
     ],
     "category": "엔터",
-    "disparity_rate": "26.2"
+    "disparity_rate": "20.4"
   },
   {
     "gicode": "A352820",
     "name": "하이브",
-    "current_price": "212,000",
-    "market_cap": "91,386",
+    "current_price": "225,000",
+    "market_cap": "96,990",
     "years": [
       "2025",
       "2026",
@@ -6419,13 +6419,13 @@
       "5,598"
     ],
     "category": "엔터",
-    "disparity_rate": "-38.7"
+    "disparity_rate": "-42.3"
   },
   {
     "gicode": "A041510",
     "name": "에스엠",
-    "current_price": "69,800",
-    "market_cap": "15,980",
+    "current_price": "74,400",
+    "market_cap": "17,034",
     "years": [
       "2025",
       "2026",
@@ -6457,13 +6457,13 @@
       "2,430"
     ],
     "category": "엔터",
-    "disparity_rate": "52.1"
+    "disparity_rate": "42.7"
   },
   {
     "gicode": "A122870",
     "name": "와이지엔터테인먼트",
-    "current_price": "39,800",
-    "market_cap": "7,439",
+    "current_price": "41,550",
+    "market_cap": "7,766",
     "years": [
       "2025",
       "2026",
@@ -6495,13 +6495,13 @@
       "855"
     ],
     "category": "엔터",
-    "disparity_rate": "14.9"
+    "disparity_rate": "10.1"
   },
   {
     "gicode": "A182360",
     "name": "큐브엔터",
-    "current_price": "5,300",
-    "market_cap": "824",
+    "current_price": "5,590",
+    "market_cap": "869",
     "years": [
       "2025",
       "2026",
@@ -6533,13 +6533,13 @@
       "-"
     ],
     "category": "엔터",
-    "disparity_rate": "-188.6"
+    "disparity_rate": "-184.0"
   },
   {
     "gicode": "A376300",
     "name": "디어유",
-    "current_price": "20,050",
-    "market_cap": "4,760",
+    "current_price": "20,700",
+    "market_cap": "4,914",
     "years": [
       "2025",
       "2026",
@@ -6571,6 +6571,6 @@
       "589"
     ],
     "category": "엔터",
-    "disparity_rate": "23.7"
+    "disparity_rate": "19.9"
   }
 ]
