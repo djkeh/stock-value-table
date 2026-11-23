@@ -29,8 +29,16 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Crawler
+        id: crawl
         run: |
+          set +e
           python crawler.py
+          EXIT_CODE=$?
+          set -e
+          echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+          if [ "$EXIT_CODE" -ne 0 ] && [ "$EXIT_CODE" -ne 2 ]; then
+            exit "$EXIT_CODE"
+          fi
 
       - name: Prepare Build Directory
         run: |
@@ -44,3 +52,9 @@ jobs:
           folder: build
           branch: gh-pages
           clean: true
+
+      - name: Fail Workflow on Partial Crawl Failure
+        if: steps.crawl.outputs.exit_code == '2'
+        run: |
+          echo "::error::일부 종목 크롤링에 실패했습니다. 캐시로 복구해 배포했으나 확인이 필요합니다. Job Summary를 확인하세요."
+          exit 1

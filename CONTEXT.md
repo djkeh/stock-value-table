@@ -13,14 +13,14 @@
 * **PER (Price-to-Earnings Ratio):** 주가수익비율. 주가를 주당순이익(EPS)으로 나눈 값으로, 낮을수록 저평가된 것으로 판단합니다.
 * **PBR (Price-to-Book Ratio):** 주가순자산비율. 주가를 주당순자산(BPS)으로 나눈 값으로, 낮을수록 자산 대비 주가가 저평가된 것으로 판단합니다.
 * **EPS (Earnings Per Share):** 주당순이익. 지배주주순이익을 수정평균주식수로 나눈 값입니다.
-* **FnGuide 내부 JSON API:** FnGuide 웹사이트가 내부적으로 사용하는 데이터 경로로, 동적 렌더링을 우회하고 구조화된 데이터를 안정적이고 빠르게 크롤링하기 위해 직접 호출하여 사용합니다.
+* **FnGuide 컨센서스 내장 JSON (`perforTrend`):** FnGuide 신규 도메인(`wcomp.fnguide.com`)의 컨센서스 페이지 HTML 내 `consensus.init(...)` 스크립트에 포함된 구조화된 JSON 데이터(`header`, `data`)입니다.
 
 ## 시스템 아키텍처 및 결정 사항 (Key Decisions)
 
 ### FnGuide 데이터 수집 방식
 
-* **결정:** `SVD_Consensus.asp` 페이지의 동적 HTML 테이블을 직접 크롤링하는 대신, 해당 페이지에서 호출하는 FnGuide 내부 JSON API 경로 (`https://comp.fnguide.com/SVO2/json/data/01_06/01_{gicode}_A_D.json`)를 직접 호출하여 파싱합니다.
-* **트레이드오프:** 중간 경로(`01_06`) 및 파일명 규칙을 하드코딩하여 구현의 단순성과 가독성을 최우선으로 확보하되, FnGuide의 사이트 개편으로 경로가 만료될 경우 수동으로 코드를 업데이트하는 리스크를 감수합니다.
+* **결정:** 시세/시가총액은 `https://wcomp.fnguide.com/CompanyInfo/Snapshot?cmp_cd={gicode}`에서 파싱하고, 컨센서스 재무 지표는 `https://wcomp.fnguide.com/CompanyInfo/Consensus?cmp_cd={gicode}` 응답 HTML에 내장된 `perforTrend` JSON을 추출하여 파싱합니다. 수집 대상 연도는 `perforTrend.header`의 마지막 4개년을 동적으로 선택합니다.
+* **트레이드오프:** 구 `comp.fnguide.com/SVO2/json/data/01_06/...` 경로가 폐지(404 에러 페이지 리다이렉트)됨에 따라 신규 `wcomp.fnguide.com` 페이지 내장 JSON을 직접 추출합니다. 향후 페이지 스크립트 구조가 변경되더라도 `perforTrend` 미검출·`/Error/` 리다이렉트 감지 및 연속 5회 실패 조기 중단으로 즉시 장애를 알립니다.
 
 ### 대상 종목 목록 관리 방식
 

@@ -100,32 +100,65 @@ def test_crawl_stock_success():
     mock_resp_main.status_code = 200
     mock_resp_main.content = html_content.encode('utf-8')
 
-    # Mock Consensus JSON Response
-    json_data = {
-        "comp": [
+    # Mock Consensus Page Response (wcomp.fnguide.com/CompanyInfo/Consensus)
+    perfor_trend = {
+        "header": [
+            {"YYMM": "2023/12", "EP_CHK": " ", "CD": "VAL1"},
+            {"YYMM": "2024/12", "EP_CHK": " ", "CD": "VAL2"},
+            {"YYMM": "2025/12", "EP_CHK": " ", "CD": "VAL3"},
+            {"YYMM": "2026/12", "EP_CHK": "E", "CD": "VAL4"},
+            {"YYMM": "2027/12", "EP_CHK": "E", "CD": "VAL5"},
+            {"YYMM": "2028/12", "EP_CHK": "E", "CD": "VAL6"},
+        ],
+        "data": [
             {
-                "ACCOUNT_NM": "PER",
-                "D_4": " 10.5 ", "D_5": " 9.2 ", "D_6": " 8.5 ", "D_7": " 7.8 "
+                "NAME": "영업이익", "LVL": 1,
+                "VAL1": "5000", "VAL2": "8000",
+                "VAL3": "10000.5", "VAL4": "12000", "VAL5": "14000", "VAL6": "15000"
             },
             {
-                "ACCOUNT_NM": "PBR",
-                "D_4": " 1.2 ", "D_5": " 1.1 ", "D_6": " 1.0 ", "D_7": " 0.9 "
+                "NAME": "    전년동기대비", "LVL": 2,
+                "VAL1": "10.0", "VAL2": "20.0",
+                "VAL3": "30.0", "VAL4": "20.0", "VAL5": "16.7", "VAL6": "7.1"
             },
             {
-                "ACCOUNT_NM": "EPS",
-                "D_4": " 6000 ", "D_5": " 7500 ", "D_6": " 8000 ", "D_7": " 9000 "
+                "NAME": "EPS", "LVL": 1,
+                "VAL1": "3000", "VAL2": "4000",
+                "VAL3": "6563.57", "VAL4": "7500.00", "VAL5": None, "VAL6": "9000"
             },
             {
-                "ACCOUNT_NM": "영업이익(억원)",
-                "D_4": " 10,000.5 ", "D_5": " 12,000 ", "D_6": " 14,000 ", "D_7": " 15,000 "
-            }
+                "NAME": "PER", "LVL": 1,
+                "VAL1": "15.0", "VAL2": "12.0",
+                "VAL3": " 10.5 ", "VAL4": " 9.2 ", "VAL5": " 8.5 ", "VAL6": " 7.8 "
+            },
+            {
+                "NAME": "PBR", "LVL": 1,
+                "VAL1": "1.5", "VAL2": "1.3",
+                "VAL3": " 1.2 ", "VAL4": " 1.1 ", "VAL5": " 1.0 ", "VAL6": " 0.9 "
+            },
         ]
     }
-    mock_resp_json = MagicMock()
-    mock_resp_json.status_code = 200
-    mock_resp_json.json.return_value = json_data
+    consensus_html = f"""
+    <html>
+        <body>
+            <script>
+                $(document).ready(function () {{
+                    consensus.init({{
+                        cmp_cd: '005930',
+                        perforTrend: {json.dumps(perfor_trend, ensure_ascii=False)},
+                        perforTrendChart: {{}}
+                    }});
+                }});
+            </script>
+        </body>
+    </html>
+    """
+    mock_resp_consensus = MagicMock()
+    mock_resp_consensus.status_code = 200
+    mock_resp_consensus.url = "https://wcomp.fnguide.com/CompanyInfo/Consensus?cmp_cd=005930"
+    mock_resp_consensus.text = consensus_html
 
-    session.get.side_effect = [mock_resp_main, mock_resp_json]
+    session.get.side_effect = [mock_resp_main, mock_resp_consensus]
 
     result, err = crawl_stock(session, "005930", fallback_name="삼성전자")
     
@@ -134,14 +167,17 @@ def test_crawl_stock_success():
     assert result["name"] == "테스트전자"
     assert result["current_price"] == "70,000"
     assert result["market_cap"] == "420,000"
+    assert result["years"] == ["2025", "2026", "2027", "2028"]
     assert result["PER"] == ["10.5", "9.2", "8.5", "7.8"]
     assert result["PBR"] == ["1.2", "1.1", "1.0", "0.9"]
-    assert result["EPS"] == ["6000", "7500", "8000", "9000"]
+    assert result["EPS"] == ["6,564", "7,500", "-", "9,000"]
     assert result["영업이익"] == ["10,000", "12,000", "14,000", "15,000"]
     
-    # Assert main URL was called with wcomp.fnguide.com and cmp_cd
+    # Assert URLs were called with wcomp.fnguide.com and cmp_cd
     first_call_url = session.get.call_args_list[0][0][0]
+    second_call_url = session.get.call_args_list[1][0][0]
     assert "wcomp.fnguide.com/CompanyInfo/Snapshot?cmp_cd=005930" in first_call_url
+    assert "wcomp.fnguide.com/CompanyInfo/Consensus?cmp_cd=005930" in second_call_url
 
 
 def test_crawl_stock_fetch_main_fail():
@@ -275,7 +311,9 @@ def test_main_flow(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load):
     with patch("os.path.exists", side_effect=lambda path: path == "target-gicodes.csv"):
         with patch("json.dump") as mock_json_dump:
             with patch("crawler.write_github_summary") as mock_summary:
-                main()
+                with pytest.raises(SystemExit) as exc_info:
+                    main()
+                assert exc_info.value.code == 2
                 
                 # Check JSON dump contains 2 stocks:
                 # 1. Recovered Samsung (from cache)
@@ -345,28 +383,82 @@ def test_crawl_stock_real():
 # 8. Error Handling and Main Entry Point Tests
 # -------------------------------------------------------------------------
 @patch("time.sleep", return_value=None)
-def test_crawl_stock_consensus_json_fail(mock_sleep):
+def test_crawl_stock_consensus_page_fail(mock_sleep):
     session = MagicMock()
     # Main page OK
     mock_resp_main = MagicMock()
     mock_resp_main.status_code = 200
     mock_resp_main.content = '<html><body><span id="giName">테스트전자</span></body></html>'.encode('utf-8')
     
-    # Consensus JSON returns 404
-    mock_resp_json = MagicMock()
-    mock_resp_json.status_code = 404
+    # Consensus page returns 404
+    mock_resp_consensus = MagicMock()
+    mock_resp_consensus.status_code = 404
     
     def get_side_effect(url, **kwargs):
         if "Snapshot" in url or "SVD_Main.asp" in url:
             return mock_resp_main
         else:
-            return mock_resp_json
+            return mock_resp_consensus
             
     session.get.side_effect = get_side_effect
     
     result, err = crawl_stock(session, "005930", fallback_name="삼성전자")
     assert result is None
-    assert "Error fetching consensus JSON: HTTP 404" in err
+    assert "Error fetching consensus page: HTTP 404" in err
+
+
+def test_crawl_stock_consensus_error_redirect():
+    session = MagicMock()
+    mock_resp_main = MagicMock()
+    mock_resp_main.status_code = 200
+    mock_resp_main.content = '<html><body><span id="giName">테스트전자</span></body></html>'.encode('utf-8')
+
+    mock_resp_consensus = MagicMock()
+    mock_resp_consensus.status_code = 200
+    mock_resp_consensus.url = "https://wcomp.fnguide.com/Error/NotFound?404"
+    mock_resp_consensus.text = "<html><title>페이지 없음</title></html>"
+
+    session.get.side_effect = [mock_resp_main, mock_resp_consensus]
+
+    result, err = crawl_stock(session, "005930", fallback_name="삼성전자")
+    assert result is None
+    assert "redirected to error" in err
+
+
+def test_crawl_stock_consensus_missing_perfor_trend():
+    session = MagicMock()
+    mock_resp_main = MagicMock()
+    mock_resp_main.status_code = 200
+    mock_resp_main.content = '<html><body><span id="giName">테스트전자</span></body></html>'.encode('utf-8')
+
+    mock_resp_consensus = MagicMock()
+    mock_resp_consensus.status_code = 200
+    mock_resp_consensus.url = "https://wcomp.fnguide.com/CompanyInfo/Consensus?cmp_cd=005930"
+    mock_resp_consensus.text = "<html><body>No consensus script</body></html>"
+
+    session.get.side_effect = [mock_resp_main, mock_resp_consensus]
+
+    result, err = crawl_stock(session, "005930", fallback_name="삼성전자")
+    assert result is None
+    assert "perforTrend data not found" in err
+
+
+def test_crawl_stock_consensus_empty_header():
+    session = MagicMock()
+    mock_resp_main = MagicMock()
+    mock_resp_main.status_code = 200
+    mock_resp_main.content = '<html><body><span id="giName">테스트전자</span></body></html>'.encode('utf-8')
+
+    mock_resp_consensus = MagicMock()
+    mock_resp_consensus.status_code = 200
+    mock_resp_consensus.url = "https://wcomp.fnguide.com/CompanyInfo/Consensus?cmp_cd=005930"
+    mock_resp_consensus.text = 'consensus.init({ perforTrend: {"header": [], "data": []} });'
+
+    session.get.side_effect = [mock_resp_main, mock_resp_consensus]
+
+    result, err = crawl_stock(session, "005930", fallback_name="삼성전자")
+    assert result is None
+    assert "Empty header" in err
 
 
 def test_crawl_stock_exception():
@@ -422,6 +514,109 @@ def test_load_existing_stocks_remote_http_fail():
             mock_get.side_effect = requests.exceptions.ConnectionError("Network down")
             stocks_err = load_existing_stocks(filepath="non-existent.json")
             assert stocks_err == {}
+
+
+@patch("crawler.load_existing_stocks", return_value={})
+@patch("crawler.crawl_stock")
+@patch("time.sleep", return_value=None)
+@patch("os.makedirs")
+@patch("builtins.open")
+def test_main_consecutive_failures_abort(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load):
+    csv_content = (
+        "업종,기업명,종목코드\n"
+        "업종1,종목1,A000001\n"
+        "업종1,종목2,A000002\n"
+        "업종1,종목3,A000003\n"
+        "업종1,종목4,A000004\n"
+        "업종1,종목5,A000005\n"
+        "업종1,종목6,A000006\n"
+    )
+    mock_file_csv = MagicMock()
+    mock_file_csv.__enter__.return_value = csv_content.splitlines()
+    mock_open.return_value = mock_file_csv
+    mock_crawl.return_value = (None, "Consensus page redirected to error")
+
+    with patch("os.path.exists", side_effect=lambda path: path == "target-gicodes.csv"):
+        with patch("json.dump") as mock_json_dump:
+            with patch("crawler.write_github_summary") as mock_summary:
+                with pytest.raises(SystemExit) as exc_info:
+                    main()
+                assert exc_info.value.code == 1
+                # Aborts after 5 consecutive failures without attempting the 6th stock
+                assert mock_crawl.call_count == 5
+                # Does not overwrite data/stocks.json on fatal abort
+                mock_json_dump.assert_not_called()
+                mock_summary.assert_called_once()
+                _, kwargs = mock_summary.call_args
+                assert kwargs.get("aborted") is True
+
+
+@patch("crawler.load_existing_stocks", return_value={})
+@patch("crawler.crawl_stock")
+@patch("time.sleep", return_value=None)
+@patch("os.makedirs")
+@patch("builtins.open")
+def test_main_zero_success_exits_one(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load):
+    csv_content = (
+        "업종,기업명,종목코드\n"
+        "업종1,종목1,A000001\n"
+        "업종1,종목2,A000002\n"
+    )
+    mock_file_csv = MagicMock()
+    mock_file_csv.__enter__.return_value = csv_content.splitlines()
+    mock_open.return_value = mock_file_csv
+    mock_crawl.return_value = (None, "HTTP 500")
+
+    with patch("os.path.exists", side_effect=lambda path: path == "target-gicodes.csv"):
+        with patch("json.dump") as mock_json_dump:
+            with patch("crawler.write_github_summary") as mock_summary:
+                with pytest.raises(SystemExit) as exc_info:
+                    main()
+                assert exc_info.value.code == 1
+                mock_json_dump.assert_not_called()
+                mock_summary.assert_called_once()
+
+
+@patch("crawler.load_existing_stocks", return_value={})
+@patch("crawler.crawl_stock")
+@patch("time.sleep", return_value=None)
+@patch("os.makedirs")
+@patch("builtins.open")
+def test_main_all_success_exits_zero(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load):
+    csv_content = (
+        "업종,기업명,종목코드\n"
+        "자동차,현대차,005380\n"
+    )
+    mock_file_csv = MagicMock()
+    mock_file_csv.__enter__.return_value = csv_content.splitlines()
+    mock_file_json = MagicMock()
+    mock_open.side_effect = lambda filename, *args, **kwargs: mock_file_csv if filename == "target-gicodes.csv" else mock_file_json
+    mock_crawl.return_value = (
+        {
+            "gicode": "005380", "name": "현대차", "current_price": "200,000",
+            "market_cap": "50,000,000", "years": ["2025", "2026", "2027", "2028"],
+            "PER": ["1", "2", "3", "4"], "PBR": ["1", "2", "3", "4"],
+            "EPS": ["1", "2", "3", "4"], "영업이익": ["1", "2", "3", "4"]
+        },
+        None,
+    )
+
+    with patch("os.path.exists", side_effect=lambda path: path == "target-gicodes.csv"):
+        with patch("json.dump") as mock_json_dump:
+            with patch("crawler.write_github_summary") as mock_summary:
+                main()
+                mock_json_dump.assert_called_once()
+                mock_summary.assert_called_once()
+
+
+def test_write_github_summary_aborted(tmp_path):
+    summary_file = tmp_path / "summary_aborted.md"
+    with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": str(summary_file)}):
+        failures = [{"name": f"종목{i}", "gicode": f"A00000{i}", "error": "Error"} for i in range(1, 6)]
+        write_github_summary(0, failures, aborted=True)
+        content = summary_file.read_text(encoding="utf-8")
+        assert "조기 중단" in content
+        assert "실패**: 5개" in content
 
 
 @patch("crawler.load_existing_stocks", return_value={})
