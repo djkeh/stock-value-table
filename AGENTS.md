@@ -35,15 +35,16 @@ graph TD
 
 ### Connection Guidelines
 
-* **Use JSON API**: Avoid parsing HTML tables in `SVD_Consensus.asp`. Fetch `https://comp.fnguide.com/SVO2/json/data/01_06/01_{gicode}_A_D.json` instead.
-* **Extract Market Cap & Price**: Parse current price and market cap from `.us_table_ty1` on `SVD_Main.asp`.
+* **Use Embedded Consensus JSON**: Fetch `https://wcomp.fnguide.com/CompanyInfo/Consensus?cmp_cd={gicode}` and extract the embedded `perforTrend` JSON object (`header` and `data`). Dynamically select the last 4 years from `perforTrend.header` (`YYMM` -> `CD`). Detect HTTP 200 error redirects (`/Error/` in response URL) as failures.
+* **Extract Market Cap & Price**: Parse current price and market cap from `.us_table_ty1` on `https://wcomp.fnguide.com/CompanyInfo/Snapshot?cmp_cd={gicode}`.
 * **Random Delay**: Insert `random.uniform(2.0, 3.0)` delay between requests to prevent IP blocking.
 
 ### Error Recovery & Safe Caching
 
 * **Load Previous Cache**: On start, load local `data/stocks.json`. If missing, fetch from `gh-pages` branch (`https://raw.githubusercontent.com/{repo}/gh-pages/data/stocks.json`).
-* **Partial Fail Recovery**: If crawling fails for a stock, do not remove it or crash. Recover the stock's previous data from cache, update its category, and keep it in the final dataset.
-* **Job Summary**: Output execution success/failure counts to `GITHUB_STEP_SUMMARY` in Markdown.
+* **Partial Fail Recovery & Failure Alerts**: If crawling fails for a stock, recover its previous data from cache, update its category, and keep it in the final dataset so healthy stocks still deploy. When `main()` finishes with at least one success and at least one failure, exit with code `2` so `crawl.yml` deploys the recovered dataset and then fails the workflow at the final step to trigger GitHub notifications.
+* **Consecutive Failure Early Abort**: If `MAX_CONSECUTIVE_FAILURES` (5) stocks fail consecutively—or if zero stocks succeed—abort early without overwriting `data/stocks.json`, write the Job Summary, and exit with code `1` to block deployment and trigger failure alerts immediately.
+* **Job Summary**: Output execution success/failure counts (and early-abort status) to `GITHUB_STEP_SUMMARY` in Markdown.
 
 ---
 

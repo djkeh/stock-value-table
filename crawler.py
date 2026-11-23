@@ -1,4 +1,6 @@
 import os
+import re
+import sys
 import csv
 import json
 import time
@@ -9,6 +11,7 @@ from bs4 import BeautifulSoup
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'
 }
+MAX_CONSECUTIVE_FAILURES = 5
 
 def clean_and_format_op(val_str):
     """
@@ -47,6 +50,18 @@ def get_with_retry(session, url, headers, timeout=5, max_retries=3, backoff_fact
             print(f"      [Retry] Connection failed ({e}). Retrying in {sleep_time}s... ({attempt + 1}/{max_retries})")
             time.sleep(sleep_time)
 
+def extract_perfor_trend(html_text):
+    """
+    Extracts the embedded `perforTrend` JSON object from FnGuide Consensus HTML.
+    """
+    match = re.search(r'perforTrend\s*:\s*\{', html_text)
+    if not match:
+        raise ValueError("perforTrend data not found in consensus page")
+    start_idx = match.end() - 1
+    decoder = json.JSONDecoder()
+    data, _ = decoder.raw_decode(html_text, start_idx)
+    return data
+
 def crawl_stock(session, gicode, fallback_name=""):
     try:
         # 1. Fetch and Parse Main Page
@@ -84,45 +99,52 @@ def crawl_stock(session, gicode, fallback_name=""):
                     val = cells[1]
                     current_price = val.split('/')[0].strip()
  
-        # 2. Fetch and Parse Consensus JSON
-        # Path: /SVO2/json/data/01_06/01_{gicode}_A_D.json (Annual, Consolidated)
-        json_url = f"https://comp.fnguide.com/SVO2/json/data/01_06/01_{gicode}_A_D.json"
-        resp_json = get_with_retry(session, json_url, headers=headers, timeout=5)
-        if resp_json.status_code != 200:
-            print(f"[{gicode}] Error fetching consensus JSON: {resp_json.status_code}")
-            return None, f"Error fetching consensus JSON: HTTP {resp_json.status_code}"
+        # 2. Fetch and Parse Consensus Page (embedded perforTrend JSON)
+        consensus_url = f"https://wcomp.fnguide.com/CompanyInfo/Consensus?cmp_cd={gicode}"
+        resp_consensus = get_with_retry(session, consensus_url, headers=headers, timeout=5)
+        if resp_consensus.status_code != 200:
+            print(f"[{gicode}] Error fetching consensus page: {resp_consensus.status_code}")
+            return None, f"Error fetching consensus page: HTTP {resp_consensus.status_code}"
+        if isinstance(getattr(resp_consensus, "url", None), str) and "/Error/" in resp_consensus.url:
+            print(f"[{gicode}] Consensus page redirected to error: {resp_consensus.url}")
+            return None, f"Consensus page redirected to error: {resp_consensus.url}"
+
+        perfor_trend = extract_perfor_trend(resp_consensus.text)
+        header = perfor_trend.get("header") or []
+        target_headers = header[-4:]
+        if not target_headers:
+            return None, "Empty header in consensus perforTrend"
+
+        years = [str(h.get("YYMM", "")).split("/")[0] for h in target_headers]
+        target_keys = [h.get("CD", "") for h in target_headers]
+        n_years = len(target_keys)
+        
+        pbr_list = ["-"] * n_years
+        per_list = ["-"] * n_years
+        eps_list = ["-"] * n_years
+        op_list = ["-"] * n_years
+        
+        def extract_clean_values(row):
+            values = []
+            for k in target_keys:
+                raw = row.get(k)
+                cleaned = raw.strip() if isinstance(raw, str) else ""
+                values.append(cleaned if cleaned else "-")
+            return values
+
+        for item in perfor_trend.get("data") or []:
+            if item.get("LVL") not in (None, 1):
+                continue
+            account_nm = (item.get("NAME") or "").strip()
             
-        resp_json.encoding = 'utf-8-sig'
-        jsondata = resp_json.json()
-        
-        # Target years: 2025 (D_4), 2026 (D_5), 2027 (D_6), 2028 (D_7)
-        # We also collect the headers for years to ensure correctness
-        years = ["2025", "2026", "2027", "2028"]
-        target_keys = ['D_4', 'D_5', 'D_6', 'D_7']
-        
-        pbr_list = ["-"] * 4
-        per_list = ["-"] * 4
-        eps_list = ["-"] * 4
-        op_list = ["-"] * 4
-        
-        for item in jsondata.get('comp', []):
-            account_nm = item.get('ACCOUNT_NM', '')
-            
-            if account_nm.startswith("PBR"):
-                pbr_list = [item.get(k, '-').strip() for k in target_keys]
-            elif account_nm.startswith("PER"):
-                per_list = [item.get(k, '-').strip() for k in target_keys]
-            elif account_nm.startswith("EPS"):
-                eps_list = [item.get(k, '-').strip() for k in target_keys]
-            elif account_nm.startswith("영업이익"):
-                raw_ops = [item.get(k, '-').strip() for k in target_keys]
-                op_list = [clean_and_format_op(val) for val in raw_ops]
-        
-        # Replace empty values with "-"
-        pbr_list = [v if v != "" else "-" for v in pbr_list]
-        per_list = [v if v != "" else "-" for v in per_list]
-        eps_list = [v if v != "" else "-" for v in eps_list]
-        op_list = [v if v != "" else "-" for v in op_list]
+            if account_nm == "PBR":
+                pbr_list = extract_clean_values(item)
+            elif account_nm == "PER":
+                per_list = extract_clean_values(item)
+            elif account_nm == "EPS":
+                eps_list = [clean_and_format_op(val) for val in extract_clean_values(item)]
+            elif account_nm == "영업이익":
+                op_list = [clean_and_format_op(val) for val in extract_clean_values(item)]
         
         return {
             "gicode": gicode,
@@ -139,7 +161,7 @@ def crawl_stock(session, gicode, fallback_name=""):
         print(f"Error crawling {gicode}: {e}")
         return None, str(e)
 
-def write_github_summary(successful_count, failures):
+def write_github_summary(successful_count, failures, aborted=False):
     summary_file = os.environ.get('GITHUB_STEP_SUMMARY')
     if not summary_file:
         return
@@ -151,8 +173,12 @@ def write_github_summary(successful_count, failures):
     lines.append("")
     
     if failures:
-        lines.append("> [!WARNING]")
-        lines.append(f"> **일부 종목 수집 중 에러가 발생했습니다.** ({len(failures)}개 종목 실패)")
+        if aborted:
+            lines.append("> [!CAUTION]")
+            lines.append(f"> **연속 실패로 인해 크롤링이 조기 중단되었습니다.** ({len(failures)}개 종목 실패)")
+        else:
+            lines.append("> [!WARNING]")
+            lines.append(f"> **일부 종목 수집 중 에러가 발생했습니다.** ({len(failures)}개 종목 실패)")
         lines.append("")
         lines.append("### 📊 수집 현황 (Crawl Status)")
         lines.append(f"- **전체 종목**: {total}개")
@@ -219,6 +245,8 @@ def main():
     stocks_data = []
     failures = []
     successful_crawl_count = 0
+    consecutive_failures = 0
+    aborted = False
     
     with requests.Session() as session:
         with open(csv_path, "r", encoding="utf-8") as f:
@@ -234,6 +262,7 @@ def main():
                     stock_info["category"] = category
                     stocks_data.append(stock_info)
                     successful_crawl_count += 1
+                    consecutive_failures = 0
                     print(f"Successfully crawled {name}.")
                 else:
                     failures.append({
@@ -241,6 +270,7 @@ def main():
                         "gicode": gicode,
                         "error": error
                     })
+                    consecutive_failures += 1
                     # If crawling fails, try to preserve existing data for this stock
                     if gicode in existing_stocks:
                         saved_info = existing_stocks[gicode]
@@ -249,9 +279,17 @@ def main():
                         print(f"Failed to crawl {name}: {error}. Retained existing cached data.")
                     else:
                         print(f"Failed to crawl {name}: {error}. No existing cached data available.")
+                    if consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
+                        print(f"Aborting crawl: {consecutive_failures} consecutive failures reached.")
+                        aborted = True
+                        break
                 # Sleep 2~3 seconds randomly between requests to respect the server and prevent timeouts/blocking
                 time.sleep(random.uniform(2.0, 3.0))
-    
+
+    if aborted or successful_crawl_count == 0:
+        write_github_summary(successful_crawl_count, failures, aborted=aborted)
+        sys.exit(1)
+
     # Recalculate derived metrics (like disparity_rate)
     from recalculate import recalculate_data
     recalculate_data(stocks_data)
@@ -263,7 +301,10 @@ def main():
     print("All crawl data written to data/stocks.json.")
 
     # Write GitHub Actions Job Summary
-    write_github_summary(successful_crawl_count, failures)
+    write_github_summary(successful_crawl_count, failures, aborted=False)
+
+    if failures:
+        sys.exit(2)
 
 if __name__ == '__main__':
     main()
