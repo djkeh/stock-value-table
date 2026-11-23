@@ -589,4 +589,23 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
     });
+
+  // Load Crawl Metadata (last crawled date)
+  const lastCrawledEl = document.getElementById("last-crawled");
+  const lastCrawledDateEl = document.getElementById("last-crawled-date");
+  fetch("data/meta.json")
+    .then((response) => {
+      if (!response.ok) return null;
+      return response.json();
+    })
+    .then((meta) => {
+      const raw = meta && typeof meta.last_crawled_at === "string" ? meta.last_crawled_at.trim() : "";
+      const dateMatch = raw.match(/^\d{4}-\d{2}-\d{2}/);
+      if (dateMatch) {
+        lastCrawledDateEl.textContent = dateMatch[0];
+        lastCrawledDateEl.setAttribute("datetime", raw);
+        lastCrawledEl.hidden = false;
+      }
+    })
+    .catch(() => {});
 });

@@ -168,6 +168,13 @@ h1 {
   color: var(--text-secondary);
 }
 
+.last-crawled {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Theme Controls Layout */
 .theme-controls {
   display: flex;
