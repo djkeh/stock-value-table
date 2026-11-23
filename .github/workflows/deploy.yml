@@ -26,9 +26,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt pytest pytest-mock pytest-cov
 
-      - name: Run Python Crawler Tests with Coverage
+      - name: Run Python Tests with Coverage
         run: |
-          pytest --cov=crawler test_crawler.py --cov-report=json --cov-report=term:skip-covered
+          pytest --cov=crawler --cov=recalculate test_crawler.py test_recalculate.py --cov-report=json --cov-report=term:skip-covered
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
@@ -50,7 +50,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| 대상 컴포넌트 | 테스트 커버리지 (Coverage) |" >> $GITHUB_STEP_SUMMARY
           echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
-          python -c "import json; d=json.load(open('coverage.json')); print(f'| **Backend Crawler** (crawler.py) | {d[\"totals\"][\"percent_covered_display\"]}% |')" >> $GITHUB_STEP_SUMMARY
+          python -c "import json; d=json.load(open('coverage.json')); print(f'| **Backend** (crawler.py, recalculate.py) | {d[\"totals\"][\"percent_covered_display\"]}% |')" >> $GITHUB_STEP_SUMMARY
           node -e "const fs=require('fs'); const s=JSON.parse(fs.readFileSync('coverage/coverage-summary.json','utf8')); console.log('| **Frontend UI** (app.js) | ' + s.total.lines.pct + '% |');" >> $GITHUB_STEP_SUMMARY
 
       - name: Checkout gh-pages (for stocks.json)
