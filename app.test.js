@@ -949,5 +949,61 @@ describe('Stock Value Table Dashboard UI', () => {
     expect(tooltip.classList.contains('visible')).toBe(true);
     expect(tooltip.style.display).toBe('block');
   });
+
+  it('renders last crawled date below subtitle when data/meta.json succeeds', async () => {
+    const defaultImpl = mockFetch.getMockImplementation();
+    mockFetch.mockImplementation((url) => {
+      if (url === 'data/meta.json') {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ last_crawled_at: '2026-11-24T16:30:00+09:00' })
+        });
+      }
+      return defaultImpl(url);
+    });
+
+    await loadApp();
+
+    const lastCrawledEl = customDocument.getElementById('last-crawled');
+    const lastCrawledDateEl = customDocument.getElementById('last-crawled-date');
+    await vi.waitFor(() => {
+      expect(lastCrawledEl).not.toBeNull();
+      expect(lastCrawledEl.hidden).toBe(false);
+    });
+    expect(lastCrawledDateEl.textContent).toBe('2026-11-24');
+    expect(lastCrawledDateEl.getAttribute('datetime')).toBe('2026-11-24T16:30:00+09:00');
+  });
+
+  it('keeps last crawled date hidden when data/meta.json returns non-ok or throws', async () => {
+    const defaultImpl = mockFetch.getMockImplementation();
+    mockFetch.mockImplementation((url) => {
+      if (url === 'data/meta.json') {
+        return Promise.resolve({ ok: false, status: 404 });
+      }
+      return defaultImpl(url);
+    });
+
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+    expect(customDocument.getElementById('last-crawled').hidden).toBe(true);
+  });
+
+  it('keeps last crawled date hidden when data/meta.json fetch rejects', async () => {
+    const defaultImpl = mockFetch.getMockImplementation();
+    mockFetch.mockImplementation((url) => {
+      if (url === 'data/meta.json') {
+        return Promise.reject(new Error('Network error'));
+      }
+      return defaultImpl(url);
+    });
+
+    await loadApp();
+    await vi.waitFor(() => {
+      expect(customDocument.querySelectorAll('.main-row').length).toBe(3);
+    });
+    expect(customDocument.getElementById('last-crawled').hidden).toBe(true);
+  });
 });
 

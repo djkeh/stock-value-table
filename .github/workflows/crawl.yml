@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir -p build/data
           cp index.html index.css app.js target-gicodes.csv .gitignore build/
-          cp data/stocks.json build/data/
+          cp data/stocks.json data/meta.json build/data/
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

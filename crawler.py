@@ -5,6 +5,7 @@ import csv
 import json
 import time
 import random
+from datetime import datetime, timezone, timedelta
 import requests
 from bs4 import BeautifulSoup
 
@@ -233,6 +234,17 @@ def load_existing_stocks(filepath="data/stocks.json"):
             
     return {}
 
+def save_crawl_metadata(filepath="data/meta.json"):
+    kst = timezone(timedelta(hours=9))
+    metadata = {
+        "last_crawled_at": datetime.now(kst).isoformat(timespec="seconds")
+    }
+    parent_dir = os.path.dirname(filepath)
+    if parent_dir:
+        os.makedirs(parent_dir, exist_ok=True)
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(metadata, f, ensure_ascii=False, indent=2)
+
 def main():
     csv_path = "target-gicodes.csv"
     if not os.path.exists(csv_path):
@@ -294,10 +306,11 @@ def main():
     from recalculate import recalculate_data
     recalculate_data(stocks_data)
 
-    # Save output to data/stocks.json
+    # Save output to data/stocks.json and crawl metadata to data/meta.json
     os.makedirs("data", exist_ok=True)
     with open(stocks_path, "w", encoding="utf-8") as f:
         json.dump(stocks_data, f, ensure_ascii=False, indent=2)
+    save_crawl_metadata()
     print("All crawl data written to data/stocks.json.")
 
     # Write GitHub Actions Job Summary

@@ -9,6 +9,7 @@ from crawler import (
     crawl_stock,
     load_existing_stocks,
     write_github_summary,
+    save_crawl_metadata,
     main
 )
 # -------------------------------------------------------------------------
@@ -315,12 +316,11 @@ def test_main_flow(mock_open, mock_makedirs, mock_sleep, mock_crawl, mock_load):
                     main()
                 assert exc_info.value.code == 2
                 
-                # Check JSON dump contains 2 stocks:
-                # 1. Recovered Samsung (from cache)
-                # 2. Successfully crawled Hyundai
-                # (Kia should be skipped because crawl failed and it is not in cache)
-                mock_json_dump.assert_called_once()
-                written_data = mock_json_dump.call_args[0][0]
+                # Check JSON dump was called for stocks.json and meta.json
+                assert mock_json_dump.call_count == 2
+                written_data = mock_json_dump.call_args_list[0][0][0]
+                written_meta = mock_json_dump.call_args_list[1][0][0]
+                assert "last_crawled_at" in written_meta
                 assert len(written_data) == 2
                 
                 samsung_data = next(s for s in written_data if s["gicode"] == "005930")
@@ -605,7 +605,8 @@ def test_main_all_success_exits_zero(mock_open, mock_makedirs, mock_sleep, mock_
         with patch("json.dump") as mock_json_dump:
             with patch("crawler.write_github_summary") as mock_summary:
                 main()
-                mock_json_dump.assert_called_once()
+                assert mock_json_dump.call_count == 2
+                assert "last_crawled_at" in mock_json_dump.call_args_list[1][0][0]
                 mock_summary.assert_called_once()
 
 
@@ -617,6 +618,15 @@ def test_write_github_summary_aborted(tmp_path):
         content = summary_file.read_text(encoding="utf-8")
         assert "조기 중단" in content
         assert "실패**: 5개" in content
+
+
+def test_save_crawl_metadata(tmp_path):
+    meta_file = tmp_path / "data" / "meta.json"
+    save_crawl_metadata(str(meta_file))
+    assert meta_file.exists()
+    content = json.loads(meta_file.read_text(encoding="utf-8"))
+    assert "last_crawled_at" in content
+    assert content["last_crawled_at"].endswith("+09:00")
 
 
 @patch("crawler.load_existing_stocks", return_value={})

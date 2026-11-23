@@ -73,6 +73,11 @@ jobs:
             cp data/stocks.json build/data/
             echo "Warning: stocks.json not found on gh-pages, using fallback from repository."
           fi
+          if [ -d gh-pages-temp ] && [ -f gh-pages-temp/data/meta.json ]; then
+            cp gh-pages-temp/data/meta.json build/data/
+          elif [ -f data/meta.json ]; then
+            cp data/meta.json build/data/
+          fi
           rm -rf gh-pages-temp
 
       - name: Recalculate derived metrics in stocks.json
